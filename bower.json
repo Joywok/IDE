@@ -1,0 +1,22 @@
+{
+  "name": "nw-demo",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "翟磊 <zhailei2011@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "font-awsome#^4.7.0"
+  }
+}

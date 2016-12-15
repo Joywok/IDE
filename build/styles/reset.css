@@ -1,0 +1,149 @@
+body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background: #eeeeee;
+}
+
+a {
+  text-decoration: none !important;
+  color: #494949;
+}
+a:hover {
+  text-decoration: none;
+  color: #4174d9;
+}
+a:active {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+input {
+  border: none;
+  background: none;
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+input:hover {
+  outline: none;
+}
+
+.hide {
+  display: none;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.loading {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  background-color: #64DD17;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% {
+    -webkit-transform: perspective(120px);
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+  }
+}
+@keyframes sk-rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+.notice-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 22222222222;
+  transition: 0.5s;
+  text-align: center;
+}
+
+.notice-bar .notice-bar-w {
+  display: inline-block;
+  min-width: 206px;
+  height: 40px;
+  background: #fdeb9f;
+  border-radius: 5px;
+  line-height: 40px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 0 20px;
+}
+
+.notice-bar .notice-bar-w .notice-bar-c {
+  white-space: nowrap;
+}
+
+.notice-bar.moveing {
+  top: 40px;
+  transition: 0.5s;
+}
+
+.notice-bar.style-1 .notice-bar-w {
+  background: #666;
+  color: #fff;
+}
+
+.notice-bar.style-2 .notice-bar-w {
+  background: #007AFF;
+  color: #fff;
+}
+
+.notice-bar.style-3 .notice-bar-w {
+  background: #CD433E;
+  color: #fff;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -moz-binding: url("ellipsis.xml#ellipsis");
+  text-overflow: ellipsis;
+  display: block;
+}
