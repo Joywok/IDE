@@ -75149,120 +75149,116 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var app = (0, _dva2.default)();
-	app.model({
-	  namespace: 'count',
-	  state: {
-	    record: 0,
-	    current: 0
-	  },
-	  reducers: {
-	    add: function add(state) {
-	      var newCurrent = state.current + 1;
-	      console.log(_extends({}, state, {
-	        current: newCurrent
-	      }));
-	      return _extends({}, state, {
-	        current: newCurrent
-	      });
+	module.exports = function () {
+	  var app = (0, _dva2.default)();
+	  app.model({
+	    namespace: 'count',
+	    state: {
+	      record: 0,
+	      current: 0
 	    },
-	    minus: function minus(state) {
-	      return _extends({}, state, { current: state.current - 1 });
+	    reducers: {
+	      add: function add(state) {
+	        var newCurrent = state.current + 1;
+	        return _extends({}, state, {
+	          current: newCurrent
+	        });
+	      },
+	      minus: function minus(state) {
+	        return _extends({}, state, { current: state.current - 1 });
+	      }
 	    }
-	  }
-	});
+	  });
 
-	var CountApp = function (_Component) {
-	  _inherits(CountApp, _Component);
+	  var CountApp = function (_Component) {
+	    _inherits(CountApp, _Component);
 
-	  function CountApp() {
-	    _classCallCheck(this, CountApp);
+	    function CountApp() {
+	      _classCallCheck(this, CountApp);
 
-	    return _possibleConstructorReturn(this, (CountApp.__proto__ || Object.getPrototypeOf(CountApp)).apply(this, arguments));
-	  }
+	      return _possibleConstructorReturn(this, (CountApp.__proto__ || Object.getPrototypeOf(CountApp)).apply(this, arguments));
+	    }
 
-	  _createClass(CountApp, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: '' },
-	        _react2.default.createElement(
+	    _createClass(CountApp, [{
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(
 	          'div',
 	          { className: '' },
-	          'Record:',
-	          this.props.record
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: '' },
-	          'Current:',
-	          this.props.current
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var dispatch = this.props.dispatch;
+	          _react2.default.createElement(
+	            'div',
+	            { className: '' },
+	            'Record:',
+	            this.props.record
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: '' },
+	            'Current:',
+	            this.props.current
+	          )
+	        );
+	      }
+	    }, {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        var dispatch = this.props.dispatch;
 
-	      dispatch({ type: 'count/add' });
-	    }
-	  }]);
+	        dispatch({ type: 'count/add' });
+	      }
+	    }]);
 
-	  return CountApp;
-	}(_react.Component);
+	    return CountApp;
+	  }(_react.Component);
 
-	function mapStateToProps(state) {
-	  return state;
-	}
-	function App() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : app._models[0]["state"];
-	  var action = arguments[1];
+	  function mapStateToProps(state) {
+	    return state;
+	  }
+	  function App() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : app._models[0]["state"];
+	    var action = arguments[1];
 
-	  if (app._models['0'].reducers) {
-	    var hasFunc = _.filter(app._models['0'].reducers, function (i, key) {
-	      return key == action['type'];
-	    });
-	    if (hasFunc.length != 0) {
-	      return hasFunc[0](state);
+	    if (app._models['0'].reducers) {
+	      var hasFunc = _.filter(app._models['0'].reducers, function (i, key) {
+	        return key == action['type'];
+	      });
+	      if (hasFunc.length != 0) {
+	        return hasFunc[0](state);
+	      } else {
+	        return state;
+	      }
 	    } else {
 	      return state;
 	    }
-	  } else {
-	    return state;
 	  }
-	}
+	  var store = (0, _redux.createStore)(App);
+	  var RootApp = (0, _reactRedux.connect)(mapStateToProps)(CountApp);
 
-	var store = (0, _redux.createStore)(App);
-	var RootApp = (0, _reactRedux.connect)(mapStateToProps)(CountApp);
+	  var Main = function (_Component2) {
+	    _inherits(Main, _Component2);
 
-	var Main = function (_Component2) {
-	  _inherits(Main, _Component2);
+	    function Main() {
+	      _classCallCheck(this, Main);
 
-	  function Main() {
-	    _classCallCheck(this, Main);
-
-	    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
-	  }
-
-	  _createClass(Main, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactRedux.Provider,
-	        { store: store },
-	        _react2.default.createElement(RootApp, null)
-	      );
+	      return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
 	    }
-	  }]);
+
+	    _createClass(Main, [{
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(
+	          _reactRedux.Provider,
+	          { store: store },
+	          _react2.default.createElement(RootApp, null)
+	        );
+	      }
+	    }]);
+
+	    return Main;
+	  }(_react.Component);
 
 	  return Main;
-	}(_react.Component);
-
-	module.exports = Main;
-
-	// module.exports = RootApp
+	}();
 
 /***/ },
 /* 717 */
