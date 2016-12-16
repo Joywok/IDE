@@ -1,5 +1,5 @@
 import React, { PropTypes , Component} from 'react';
-import { Router, Route, IndexRoute, Link ,hashHistory} from 'dva/router';
+import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory} from 'dva/router';
 class Dashboard extends Component {
   render() {
     return (
@@ -32,6 +32,7 @@ class App extends Component {
     }
   }
 }
+console.log('xxx');
 const routeConfig = [
   { path: '/',
     component: App,
@@ -39,7 +40,13 @@ const routeConfig = [
     childRoutes:[
       {path: 'login', component:require('./login')},
       {path: 'apps', component:require('./apps')},
-      {path: 'info', component:require('./info')},
+      {path: 'info', component:require('./info'),
+        indexRoute:{component:require('./edit')},
+        childRoutes:[
+          {path:'debug',component:require('./debug')},
+          {path:'project',component:require('./project')}
+        ]
+      },
     ]
   }
 ]

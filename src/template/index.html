@@ -23,10 +23,18 @@
   window.zhailei = 'zhailei'
   window.addEventListener('message', function(message){
     fs.writeFile(basurl+'/test.js',message["data"],{encoding:'utf8'},function(){
-
     })
-    // console.log(arguments,'父页面里面')
   }, false);
+
+  require('nw.gui').Window.get().showDevTools()
+  const gulp = require('gulp');
+  gulp.task('styles', ()=>{
+  	gulp.watch([basurl+'/src/styles/*.scss'],function(){
+  		console.log('xxxxxxx')
+  	});
+	});
+	console.log(gulp.tasks.styles.fn())
+
 </script>
 <style type="text/css">
 	body{

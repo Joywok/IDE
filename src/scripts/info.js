@@ -1,5 +1,5 @@
 import dva from 'dva';
-import { Router, Route } from 'dva/router';
+import { Router, Route ,Link} from 'dva/router';
 import React,{ Component }from 'react';
 import { createStore } from 'redux';
 import { Provider ,connect} from 'react-redux';
@@ -26,9 +26,14 @@ module.exports = function(){
   });
   class CountApp extends Component{
   	render(){	
-      console.log(basurl)
+      console.log(this.props);
   		return (
-  	    <div className="xxxxx">
+  	    <div className="info">
+          123123123123123123<br/>
+          <Link to="/info">edit</Link><br/>
+          <Link to="/info/debug">debug</Link><br/>
+          <Link to="/info/project">project</Link><br/>
+          {this.props.children}
   	    </div>
   	  );
   	}
@@ -37,6 +42,7 @@ module.exports = function(){
       // dispatch({type: 'count/add'})
       let fs = require('fs');
       setTimeout(function(){
+        return 
         $('.xxxxx').html('');
         var oHead = document.getElementsByClassName('xxxxx')[0];
         var oScript= document.createElement("iframe");
@@ -94,7 +100,7 @@ module.exports = function(){
   class Main extends Component{
     render(){
       return (<Provider store={store}>
-                <RootApp />
+                <RootApp {...this.props} />
               </Provider>
               )
     }

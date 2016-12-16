@@ -15,7 +15,7 @@
   },
   "nodejs": true,
   "permissions": "system",
-  "chromium-args": "-ignore-certificate-errors",
+  "chromium-args": "-ignore-certificate-errors --enable-logging=stderr",
   "webview": {
     "partitions": [
       {
