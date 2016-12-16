@@ -32,12 +32,14 @@
       }
     ]
   },
+  "no-edit-menu":false,
   "entry": {
     "index": "./src/scripts/index.js"
   },
   "dependencies": {
     "css-loader": "^0.26.1",
     "dva": "^1.1.0",
+    "fs": "^0.0.1-security",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "style-loader": "^0.13.1"

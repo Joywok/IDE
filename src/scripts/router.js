@@ -19,9 +19,13 @@ class App extends Component {
   }
   componentDidMount(){
     if(user['id'] && user['name']){
-      if(this.props.location.pathname == '/apps'){
+      if(project.length!=0){
+        this.props.history.push('/info');  
       }else{
-        this.props.history.push('/apps');  
+        if(this.props.location.pathname == '/apps'){
+        }else{
+          this.props.history.push('/apps');  
+        }  
       }
     }else{
       this.props.history.push('/login');  

@@ -35698,8 +35698,12 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      if (user['id'] && user['name']) {
-	        if (this.props.location.pathname == '/apps') {} else {
-	          this.props.history.push('/apps');
+	        if (project.length != 0) {
+	          this.props.history.push('/info');
+	        } else {
+	          if (this.props.location.pathname == '/apps') {} else {
+	            this.props.history.push('/apps');
+	          }
 	        }
 	      } else {
 	        this.props.history.push('/login');
@@ -75262,9 +75266,175 @@
 
 /***/ },
 /* 717 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _dva = __webpack_require__(2);
+
+	var _dva2 = _interopRequireDefault(_dva);
+
+	var _router = __webpack_require__(434);
+
+	var _react = __webpack_require__(6);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(201);
+
+	var _reactRedux = __webpack_require__(194);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	module.exports = function () {
+	  var app = (0, _dva2.default)();
+	  app.model({
+	    namespace: 'count',
+	    state: {
+	      record: 0,
+	      current: 0
+	    },
+	    reducers: {
+	      add: function add(state) {
+	        var newCurrent = state.current + 1;
+	        return _extends({}, state, {
+	          current: newCurrent
+	        });
+	      },
+	      minus: function minus(state) {
+	        return _extends({}, state, { current: state.current - 1 });
+	      }
+	    }
+	  });
+
+	  var CountApp = function (_Component) {
+	    _inherits(CountApp, _Component);
+
+	    function CountApp() {
+	      _classCallCheck(this, CountApp);
+
+	      return _possibleConstructorReturn(this, (CountApp.__proto__ || Object.getPrototypeOf(CountApp)).apply(this, arguments));
+	    }
+
+	    _createClass(CountApp, [{
+	      key: 'render',
+	      value: function render() {
+	        console.log(basurl);
+	        return _react2.default.createElement('div', { className: 'xxxxx' });
+	      }
+	    }, {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        var dispatch = this.props.dispatch;
+	        // dispatch({type: 'count/add'})
+
+	        var fs = __webpack_require__(718);
+	        setTimeout(function () {
+	          $('.xxxxx').html('');
+	          var oHead = document.getElementsByClassName('xxxxx')[0];
+	          var oScript = document.createElement("iframe");
+	          oScript.id = "foo";
+	          oScript.src = 'file:///' + basurl + '/src/template/editor.html';
+	          oScript.onload = function () {
+	            fs.readFile(basurl + '/webpack.config.js', {
+	              encoding: 'utf-8'
+	            }, function (err, data) {
+	              console.log('发送数据');
+	              oScript.contentWindow.postMessage(data, "*");
+	            });
+	          };
+	          oHead.appendChild(oScript);
+	          return;
+	          var iframeWin = document.getElementById("foo").contentWindow;
+	          console.log(iframeWin, '1231231');
+	          fs.readFile(basurl + '/webpack.config.js', {
+	            encoding: 'utf-8'
+	          }, function (err, data) {
+	            console.log('发送数据');
+	            iframeWin.postMessage(data, "*");
+	          });
+	          return;
+
+	          $('.xxxxx').html('');
+	          var oHead = document.getElementsByClassName('xxxxx')[0];
+	          var oScript = document.createElement("iframe");
+	          oScript.id = "foo";
+	          oScript.partition = "trusted";
+	          // oScript.src='file:///'+basurl+'/src/template/template.html?src=xxxxxxxxx';
+	          oScript.src = 'chrome-extension://lblocnhdapdghmpkknoijhgonjfikalb/src/template/template.html';
+	          oHead.appendChild(oScript);
+	          console.log(oScript, '1231');
+	        }, 0);
+	      }
+	    }]);
+
+	    return CountApp;
+	  }(_react.Component);
+
+	  function mapStateToProps(state) {
+	    return state;
+	  }
+	  function App() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : app._models[0]["state"];
+	    var action = arguments[1];
+
+	    if (app._models['0'].reducers) {
+	      var hasFunc = _.filter(app._models['0'].reducers, function (i, key) {
+	        return key == action['type'];
+	      });
+	      if (hasFunc.length != 0) {
+	        return hasFunc[0](state);
+	      } else {
+	        return state;
+	      }
+	    } else {
+	      return state;
+	    }
+	  }
+	  var store = (0, _redux.createStore)(App);
+	  var RootApp = (0, _reactRedux.connect)(mapStateToProps)(CountApp);
+
+	  var Main = function (_Component2) {
+	    _inherits(Main, _Component2);
+
+	    function Main() {
+	      _classCallCheck(this, Main);
+
+	      return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+	    }
+
+	    _createClass(Main, [{
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(
+	          _reactRedux.Provider,
+	          { store: store },
+	          _react2.default.createElement(RootApp, null)
+	        );
+	      }
+	    }]);
+
+	    return Main;
+	  }(_react.Component);
+
+	  return Main;
+	}();
+
+/***/ },
+/* 718 */
 /***/ function(module, exports) {
 
-	"use strict";
+	module.exports = require("fs");
 
 /***/ }
 /******/ ]);

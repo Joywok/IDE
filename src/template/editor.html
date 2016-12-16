@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<h2>Monaco Editor Sample</h2>
+<div id="container" style="width:800px;height:600px;border:1px solid grey"></div>
+<script src="../../node_modules/monaco-editor/min/vs/loader.js"></script>
+<script>
+	var editor;
+	require.config({ paths: { 'vs': '../../node_modules/monaco-editor/min/vs' }});
+	require(['vs/editor/editor.main'], function() {
+		function onMessage(message){
+			console.log(message,'123');
+			editor = monaco.editor.create(document.getElementById('container'), {
+				value: [
+					message["data"]
+				].join('\n'),
+				language: 'javascript'
+			});
+		}
+		window.addEventListener('message', onMessage, false);
+	});
+	$(function(){
+		let ctrlKey = false
+		let sCode = false
+		$('body').keydown(function(evt){
+			if(evt.keyCode == 17){
+				ctrlKey = true
+			}
+			if(evt.keyCode == 83){
+				sCode = true
+			}
+			if(evt.keyCode == 91){
+				ctrlKey = true
+			}
+			if(ctrlKey && sCode ){
+				// console.log('xxxx',window.editor.getValue());
+				window.parent.postMessage(window.editor.getValue(), "*");
+			}
+		})
+		$('body').keyup(function(evt){
+			ctrlKey = false;
+			sCode =false
+		})
+	})
+</script>
+</body>
+</html>
