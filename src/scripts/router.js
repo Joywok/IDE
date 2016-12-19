@@ -18,6 +18,18 @@ class App extends Component {
     )
   }
   componentDidMount(){
+    // request
+    //   .get('/some-url')
+    //   .end(function(err, res){
+    //     // Do something
+    //   });
+
+    if(ide.version !='0.0.2'){
+    }
+    console.log(ide.version,'123123');
+    // if(ide.version)
+
+    return 
     if(user['id'] && user['name']){
       if(project.length!=0){
         this.props.history.push('/info');  
@@ -41,10 +53,25 @@ const routeConfig = [
       {path: 'login', component:require('./login')},
       {path: 'apps', component:require('./apps')},
       {path: 'info', component:require('./info'),
-        indexRoute:{component:require('./edit')},
         childRoutes:[
+          // {path:'edit',getComponents(location, callback) {
+          //   require.ensure([], function (require) {
+          //     callback(null, require('./edit'));
+          //   },'edit')
+          // }},
+          // {path:'debug',getComponents(location, callback) {
+          //   require.ensure([], function (require) {
+          //     callback(null, require('./debug'));
+          //   },'debug')
+          // }},
+          // {path:'project',getComponents(location, callback) {
+          //   require.ensure([], function (require) {
+          //     callback(null, require('./project'));
+          //   },'project')
+          // }},
+          {path:'edit',component:require('./edit')},
           {path:'debug',component:require('./debug')},
-          {path:'project',component:require('./project')}
+          {path:'project',component:require('./project')},
         ]
       },
     ]

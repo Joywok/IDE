@@ -29,8 +29,7 @@ module.exports = function(){
       console.log(this.props);
   		return (
   	    <div className="info">
-          123123123123123123<br/>
-          <Link to="/info">edit</Link><br/>
+          <Link to="/info/edit">edit</Link><br/>
           <Link to="/info/debug">debug</Link><br/>
           <Link to="/info/project">project</Link><br/>
           {this.props.children}
@@ -40,6 +39,7 @@ module.exports = function(){
     componentDidMount(){
       const {dispatch} = this.props;
       // dispatch({type: 'count/add'})
+      this.props.history.push('/info/edit');
       let fs = require('fs');
       setTimeout(function(){
         return 
@@ -67,7 +67,6 @@ module.exports = function(){
           iframeWin.postMessage(data, "*");
         })
         return 
-
         $('.xxxxx').html('')
         var oHead = document.getElementsByClassName('xxxxx')[0];
         var oScript= document.createElement("iframe");

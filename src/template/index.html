@@ -7,6 +7,8 @@
   <title>Dva Demo</title>
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../../build/styles/reset.css" />
+  <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script>
 </head>
 <body>
 <div class="main" id="main">
@@ -14,41 +16,32 @@
 </body>
 <script type="text/javascript">
 	const basurl = process.cwd()
-	const $ = require('jquery');
-	const _ = require('underscore');
 	const fs = require('fs');
+  const ide = require(basurl+'/package.json');
 	const user = require(basurl+'/config.json');
 	const project = require(basurl+'/project.json');
+  console.log(ide,user,project)
 	const __dirname = basurl;
-  window.zhailei = 'zhailei'
-  window.addEventListener('message', function(message){
-    fs.writeFile(basurl+'/test.js',message["data"],{encoding:'utf8'},function(){
-    })
-  }, false);
-
+  const request = require('superagent/superagent');
+  // window.zhailei = 'zhailei'
+  // window.addEventListener('message', function(message){
+  //   fs.writeFile(basurl+'/test.js',message["data"],{encoding:'utf8'},function(){
+  //   })
+  // }, false);
   require('nw.gui').Window.get().showDevTools()
   const gulp = require('gulp');
+  const util = require("gulp-util");
   gulp.task('styles', ()=>{
-  	gulp.watch([basurl+'/src/styles/*.scss'],function(){
-  		console.log('xxxxxxx')
-  	});
+  	// console.log('1231231');
+  	// gulp.watch([basurl+'/src/styles/*.scss'],function(){
+  	// 	console.log('xxxxxxx')
+  	// });
 	});
 	console.log(gulp.tasks.styles.fn())
-
+  process.on('uncaughtException', function(e) {
+  	console.log(e,'process')
+  });
 </script>
-<style type="text/css">
-	body{
-		background: #32a62e;
-	}
-	#foo{
-		position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 100px;
-    width: 100%;
-    height: 620px;
-	}
-</style>
 <script type="text/javascript" src="../scripts/main.js"></script>
 <script src="../../build/scripts/index.js"></script>
 </html>

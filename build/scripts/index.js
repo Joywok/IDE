@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "build/scripts/";
+/******/ 	__webpack_require__.p = "/build/scripts/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -35697,6 +35697,17 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // request
+	      //   .get('/some-url')
+	      //   .end(function(err, res){
+	      //     // Do something
+	      //   });
+
+	      if (ide.version != '0.0.2') {}
+	      console.log(ide.version, '123123');
+	      // if(ide.version)
+
+	      return;
 	      if (user['id'] && user['name']) {
 	        if (project.length != 0) {
 	          this.props.history.push('/info');
@@ -35719,8 +35730,23 @@
 	  component: App,
 	  indexRoute: { component: Dashboard },
 	  childRoutes: [{ path: 'login', component: __webpack_require__(435) }, { path: 'apps', component: __webpack_require__(716) }, { path: 'info', component: __webpack_require__(717),
-	    indexRoute: { component: __webpack_require__(719) },
-	    childRoutes: [{ path: 'debug', component: __webpack_require__(720) }, { path: 'project', component: __webpack_require__(721) }]
+	    childRoutes: [
+	    // {path:'edit',getComponents(location, callback) {
+	    //   require.ensure([], function (require) {
+	    //     callback(null, require('./edit'));
+	    //   },'edit')
+	    // }},
+	    // {path:'debug',getComponents(location, callback) {
+	    //   require.ensure([], function (require) {
+	    //     callback(null, require('./debug'));
+	    //   },'debug')
+	    // }},
+	    // {path:'project',getComponents(location, callback) {
+	    //   require.ensure([], function (require) {
+	    //     callback(null, require('./project'));
+	    //   },'project')
+	    // }},
+	    { path: 'edit', component: __webpack_require__(719) }, { path: 'debug', component: __webpack_require__(722) }, { path: 'project', component: __webpack_require__(723) }]
 	  }]
 	}];
 	module.exports = function (_ref) {
@@ -75337,11 +75363,9 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'info' },
-	          '123123123123123123',
-	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
 	            _router.Link,
-	            { to: '/info' },
+	            { to: '/info/edit' },
 	            'edit'
 	          ),
 	          _react2.default.createElement('br', null),
@@ -75366,6 +75390,7 @@
 	        var dispatch = this.props.dispatch;
 	        // dispatch({type: 'count/add'})
 
+	        this.props.history.push('/info/edit');
 	        var fs = __webpack_require__(718);
 	        setTimeout(function () {
 	          return;
@@ -75393,7 +75418,6 @@
 	            iframeWin.postMessage(data, "*");
 	          });
 	          return;
-
 	          $('.xxxxx').html('');
 	          var oHead = document.getElementsByClassName('xxxxx')[0];
 	          var oScript = document.createElement("iframe");
@@ -75492,7 +75516,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var request = __webpack_require__(711);
-
 	module.exports = function () {
 		var data = {};
 		function App() {
@@ -75519,9 +75542,24 @@
 				value: function render() {
 					return _react2.default.createElement(
 						'div',
-						{ className: '' },
-						'Edit'
+						{ className: 'phone-container' },
+						_react2.default.createElement('iframe', { id: 'phone-outset', src: 'file:///' + basurl + '/src/template/phone.html' })
 					);
+				}
+			}, {
+				key: 'componentDidMount',
+				value: function componentDidMount() {
+					var phoneOut = document.getElementById('phone-outset');
+					phoneOut.onload = function () {
+						var oHead = document.getElementsByClassName('phone-container')[0];
+						var phoneInset = document.createElement("iframe");
+						phoneInset.id = "phone-inset";
+						phoneInset.src = 'file:///' + basurl + '/src/template/phone-inset.html';
+						phoneInset.onload = function () {
+							phoneInset.contentWindow.JoywokMobileApp = phoneOut.contentWindow.JoywokMobileApp;
+						};
+						oHead.appendChild(phoneInset);
+					};
 				}
 			}]);
 
@@ -75561,7 +75599,9 @@
 	}();
 
 /***/ },
-/* 720 */
+/* 720 */,
+/* 721 */,
+/* 722 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -75656,7 +75696,7 @@
 	}();
 
 /***/ },
-/* 721 */
+/* 723 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

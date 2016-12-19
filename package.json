@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version":"0.0.1",
   "name": "nw-demo",
   "main": "./src/template/index.html",
   "window": {
@@ -15,7 +16,7 @@
   },
   "nodejs": true,
   "permissions": "system",
-  "chromium-args": "-ignore-certificate-errors --enable-logging=stderr",
+  "chromium-args": "-ignore-certificate-errors --enable-logging=stderr --enable-logging=stderr",
   "webview": {
     "partitions": [
       {
@@ -32,7 +33,7 @@
       }
     ]
   },
-  "no-edit-menu":false,
+  "no-edit-menu": false,
   "entry": {
     "index": "./src/scripts/index.js"
   },
@@ -40,6 +41,7 @@
     "css-loader": "^0.26.1",
     "dva": "^1.1.0",
     "fs": "^0.0.1-security",
+    "gulp-util": "^3.0.7",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "style-loader": "^0.13.1"

@@ -49,25 +49,25 @@ module.exports = {
     index:[path.resolve(__dirname, 'src/scripts/index.js')],
     router:[path.resolve(__dirname, 'src/scripts/router.js')]
   },
-  target: 'electron',
+  target: 'node-webkit',
   //入口文件输出配置
   output: {
     path: path.resolve(__dirname, 'build/scripts'),
     filename: '[name].js',
     chunkFilename: "[name].chunk.js",
-    publicPath:"build/scripts/"
+    publicPath:"/build/scripts/"
   },
   module: {
     //加载器配置
     loaders: [
       {test: /\.js$/,loader: 'babel-loader'},
-      {test: /.css$/, loader: "style!css"},
+      {test: /\.css$/,loader: "style-loader!css-loader"},
       {test: /.scss$/, loader: "style!sass"}
     ]
   },
   plugins: [
     new webpack.DefinePlugin({ "global.GENTLY": false }),
     new webpack.DefinePlugin({'process.env': {'NODE_ENV': '"production"'}}),
-     new CopyWebpackPlugin([{from: 'node_modules/monaco-editor/min/vs',to: 'vs'}])
+    new CopyWebpackPlugin([{from: 'node_modules/monaco-editor/min/vs',to: 'vs'}])
   ]
 };

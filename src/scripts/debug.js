@@ -25,7 +25,6 @@ module.exports = function(){
 	}
 	let RootApp = connect(select)(Controller)
 	let store = createStore(App);
-
 	class Main extends Component{
 		render(){
 			return (<Provider store={store}>

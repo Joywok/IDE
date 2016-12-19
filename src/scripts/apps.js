@@ -24,7 +24,7 @@ module.exports = function(){
     }
   });
   class CountApp extends Component{
-  	render(){	
+  	render(){
   		return (
   	    <div className="">
   	     <div className="">Record:{this.props.record}</div>
@@ -34,7 +34,7 @@ module.exports = function(){
   	}
     componentDidMount(){
       const {dispatch} = this.props;
-      dispatch({type: 'count/add'})
+      dispatch({type: 'count/add'});
     }
   }
   function mapStateToProps(state) {
@@ -46,7 +46,7 @@ module.exports = function(){
       if(hasFunc.length!=0){
         return (hasFunc[0](state))
       }else{
-        return state  
+        return state
       }
     }else{
       return state
