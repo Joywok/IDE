@@ -1,0 +1,159 @@
+body {
+  overflow: hidden;
+}
+
+.info-tree-view {
+  position: absolute;
+  left: 0px;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  border-left: 1px solid #d8d8d8;
+}
+
+.info-tree-view .info-tree-view-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 30px;
+  padding: 0 15px;
+  line-height: 30px;
+  font-size: 15px;
+  border-bottom: 1px solid #d8d8d8;
+  background: #f0f0f0;
+  color: #000;
+}
+
+.info-tree-view-title .info-tree-view-tilte-val {
+  display: block;
+  margin-right: 20px;
+}
+
+.info-tree-view-title .info-tree-view-tilte-refresh {
+  float: right;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.info-tree-view .info-tree-view-list {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 5px 0 5px 15px;
+  background: #fff;
+}
+
+.info-tree-view-i .info-tree-view-i-child {
+  padding-left: 15px;
+}
+
+.info-tree-view-i .info-tree-view-i-s {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.info-tree-view-i .info-tree-view-i-s .info-tree-view-i-ico {
+  float: left;
+}
+
+.info-tree-view-i .info-tree-view-i-s .info-tree-view-i-ico .no-icon {
+  width: 13px;
+  display: block;
+  height: 30px;
+}
+
+.info-tree-view-i .info-tree-view-i-s .info-tree-view-i-val {
+  float: left;
+  margin-left: 5px;
+}
+
+.info-tree-view-i .info-tree-view-i-s .info-tree-view-i-opear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  text-align: center;
+  display: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.info-tree-view-i > .info-tree-view-i-child {
+  display: none;
+}
+
+.info-tree-view-i.show-child > .info-tree-view-i-child {
+  display: block;
+}
+
+.info-tree-view-i-s:hover > .info-tree-view-i-val {
+  color: #4174d9;
+}
+
+.info-tree-view-i-s:hover > .info-tree-view-i-opear {
+  display: block;
+}
+
+.editor-container {
+  position: absolute;
+  top: 0;
+  left: 300px;
+  right: 0;
+  bottom: 0;
+  border-left: 1px solid #d8d8d8;
+}
+
+.editor-container-tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  border-bottom: 1px solid #d8d8d8;
+}
+.editor-container-tabs .editor-tabs-i {
+  float: left;
+  overflow: hidden;
+  max-width: 100px;
+}
+.editor-container-tabs .editor-tabs-i .editor-tabs-i-w {
+  position: relative;
+  padding: 0 10px;
+  cursor: pointer;
+}
+.editor-container-tabs .editor-tabs-i .editor-tabs-i-val {
+  line-height: 28px;
+  max-width: 80px;
+  margin-right: 10px;
+}
+.editor-container-tabs .editor-tabs-i .editor-tabs-i-close {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.editor-container-tabs .editor-tabs-i.active {
+  border-bottom: 2px solid #56c62f;
+}
+
+.editor-main {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.editor-main .editor-main-i {
+  width: 100%;
+  height: 100%;
+}

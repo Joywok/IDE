@@ -19,3 +19,7 @@ gulp.task('styles', ['styles:sass']);
 gulp.task('default',function(){
 	 gulp.watch(['src/styles/*.scss'],['styles:sass']);
 });
+
+gulp.task('zhailei',function(){
+  console.log('xxxxx');
+})

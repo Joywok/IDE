@@ -2,6 +2,11 @@
 	{
 		"id":"xxxxxx",
 		"name":"xxxxxx",
-		"src":""
+		"src":"file:///Users/zhailei/Desktop/App",
+		"tools":{
+			"babel":true,
+			"completion":true,
+			"compress":true
+		}
 	}	
 ]

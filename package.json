@@ -1,14 +1,15 @@
 {
   "private": true,
-  "version":"0.0.1",
+  "version": "0.0.1",
   "name": "nw-demo",
-  "main": "./src/template/index.html",
+  "main": "src/template/index.html",
   "window": {
     "title": "Joywok IDE",
     "toolbar": false,
     "frame": true,
     "width": 840,
-    "height": 620
+    "height": 620,
+    "min_height": 620
   },
   "webkit": {
     "plugin": true,
@@ -16,7 +17,8 @@
   },
   "nodejs": true,
   "permissions": "system",
-  "chromium-args": "-ignore-certificate-errors --enable-logging=stderr --enable-logging=stderr",
+  "chromium-args": "-ignore-certificate-errors",
+  "node-remote": "http://192.168.1.73",
   "webview": {
     "partitions": [
       {
@@ -34,17 +36,25 @@
     ]
   },
   "no-edit-menu": false,
-  "entry": {
-    "index": "./src/scripts/index.js"
-  },
+  "entry": {},
   "dependencies": {
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "child_process": "^1.0.2",
+    "chokidar": "^1.6.1",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "dva": "^1.1.0",
     "fs": "^0.0.1-security",
+    "fs-extra": "^1.0.0",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-sass": "^3.0.0",
     "gulp-util": "^3.0.7",
+    "imagemin-pngquant": "^5.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "style-loader": "^0.13.1"
+    "request": "^2.79.0",
+    "style-loader": "^0.13.1",
+    "tar": "^2.2.1"
   },
   "devDependencies": {
     "atool-build": "^0.9.0",

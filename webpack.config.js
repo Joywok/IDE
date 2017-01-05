@@ -36,7 +36,6 @@
 //       loader.test = /\.css$/;
 //     }
 //   });
-
 //   return webpackConfig;
 // };
 
@@ -44,10 +43,13 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: {
     index:[path.resolve(__dirname, 'src/scripts/index.js')],
-    router:[path.resolve(__dirname, 'src/scripts/router.js')]
+    'router/router':[path.resolve(__dirname, 'src/scripts/router/router.js')],
+    'editor/index':[path.resolve(__dirname, 'src/scripts/editor/index.js')],
+    // 'components/editview':[path.resolve(__dirname, 'src/scripts/components/editview.js')],
   },
   target: 'node-webkit',
   //入口文件输出配置
@@ -55,7 +57,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build/scripts'),
     filename: '[name].js',
     chunkFilename: "[name].chunk.js",
-    publicPath:"/build/scripts/"
+    publicPath:"build/scripts/"
   },
   module: {
     //加载器配置
@@ -68,6 +70,6 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({ "global.GENTLY": false }),
     new webpack.DefinePlugin({'process.env': {'NODE_ENV': '"production"'}}),
-    new CopyWebpackPlugin([{from: 'node_modules/monaco-editor/min/vs',to: 'vs'}])
+    
   ]
 };

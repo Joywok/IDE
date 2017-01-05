@@ -6,42 +6,84 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dva Demo</title>
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../../build/styles/reset.css" />
   <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script>
+  <script type="text/javascript" src="../../bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+  <link rel="stylesheet" href="../../build/styles/info.css">
 </head>
-<body>
+<body id="body">
 <div class="main" id="main">
 </div>
+<webview id="aaa" class="hide" partition="trusted"></webview>
 </body>
 <script type="text/javascript">
 	const basurl = process.cwd()
 	const fs = require('fs');
-  const ide = require(basurl+'/package.json');
+  // const ide = require(basurl+'/package.json');
 	const user = require(basurl+'/config.json');
-	const project = require(basurl+'/project.json');
-  console.log(ide,user,project)
+	const projects = require(basurl+'/project.json');
+  console.log(user,projects,basurl);
 	const __dirname = basurl;
-  const request = require('superagent/superagent');
-  // window.zhailei = 'zhailei'
-  // window.addEventListener('message', function(message){
-  //   fs.writeFile(basurl+'/test.js',message["data"],{encoding:'utf8'},function(){
-  //   })
-  // }, false);
+  const request = require('request');
+  const fsExtra = require('fs-extra');
+  const chokidar = require('chokidar');
+  // function geFileList(path){
+  //   var filesList = [];
+  //   var targetObj = {};
+  //   readFile(path,filesList,targetObj);
+  //   return filesList;
+  // }
+  // //遍历读取文件
+  // function readFile(path,filesList,targetObj){
+  //   files = fs.readdirSync(path);//需要用到同步读取
+  //   files.forEach(walk);
+  //   function walk(file){  
+  //     states = fs.statSync(path+'/'+file);         
+  //     if(states.isDirectory()){
+  //       var item ;
+  //       if(targetObj["children"]){
+  //         item = {name:file,children:[]};
+  //         targetObj["children"].push(item);
+  //       }else{
+  //         item = {name:file,children:[]};
+  //         filesList.push(item);
+  //       }
+  //       readFile(path+'/'+file,filesList,item);
+  //     }else{   
+  //       //创建一个对象保存信息
+  //       var obj = new Object();
+  //       obj.size = states.size;//文件大小，以字节为单位
+  //       obj.name = file;//文件名
+  //       obj.path = path+'/'+file; //文件绝对路径
+  //       if(targetObj["children"]){
+  //         var item = {name:file,value:obj.path}
+  //         targetObj["children"].push(item);
+  //       }else{
+  //         var item = {name:file,value:obj.path};
+  //         filesList.push(item);
+  //       }
+  //     }     
+  //   }
+  // }
+  // var filesList = geFileList("/Users/zhailei/Desktop/Test");
+  // console.log(filesList)
+  // const gui = require('nw.gui')
+
   require('nw.gui').Window.get().showDevTools()
-  const gulp = require('gulp');
-  const util = require("gulp-util");
-  gulp.task('styles', ()=>{
-  	// console.log('1231231');
-  	// gulp.watch([basurl+'/src/styles/*.scss'],function(){
-  	// 	console.log('xxxxxxx')
-  	// });
-	});
-	console.log(gulp.tasks.styles.fn())
-  process.on('uncaughtException', function(e) {
-  	console.log(e,'process')
-  });
+  // const gulp = require('gulp');
+  // const util = require("gulp-util");
+  // const rename = require('gulp-rename');
+  // const imagemin = require('gulp-imagemin');
+  // const pngquant = require('imagemin-pngquant');
+  // const uglify = require('gulp-uglify');
+  // const concat = require('gulp-concat');
 </script>
-<script type="text/javascript" src="../scripts/main.js"></script>
+<script type="text/javascript">
+  $(function(){
+  })
+</script>
+<script type="text/javascript" src="../scripts/components/main.js"></script>
 <script src="../../build/scripts/index.js"></script>
 </html>
