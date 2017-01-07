@@ -9,7 +9,7 @@ import { RaisedButton ,TextField,FlatButton} from 'material-ui';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // 引入css
-require('../../../build/styles/login.css');
+require('../../styles/login.css');
 
 var localstore = new Store('Joywok:saas:login');
 var cache = localstore.find({id:'login'});

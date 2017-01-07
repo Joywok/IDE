@@ -10,16 +10,24 @@ module.exports = function(app){
 			let self = this;
 			return (<div className={"info-debug "+(this.props.sidebar=='debug'?'':'hide')}>
 								<div className="info-debug-console" id="info-debug-console">
-									<webview id="cdt" partition="trusted" class="xxxxx" src="about:blank"></webview>
 								</div>
 							</div>)
 		}
 		componentDidMount(){
-			let cdt = document.getElementById('cdt');
-			setTimeout(function(){
-				console.log('xxxxxxx','showDevTools');
-				document.getElementById('aaa').showDevTools(true, cdt);
-			},300);
+			let webview = document.createElement('webview');
+			webview.setAttribute('partition', 'trusted');
+			webview.id = 'cdt'
+			webview.addEventListener('contentload', function(e) {
+				document.getElementById('aaa').showDevTools(true, webview);
+			});
+			webview.addEventListener('loadstop',function(e){
+				console.log('loadstop')
+			})
+			webview.addEventListener('loadcommit',function(e){
+				console.log('loadcommit')
+			})
+			webview.setAttribute('src','about:blank');
+			document.getElementById('info-debug-console').appendChild(webview);
 		}
 		shouldComponentUpdate(data){
       if(data['sidebar'] == 'debug'){

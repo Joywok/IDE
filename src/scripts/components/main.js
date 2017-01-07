@@ -13,14 +13,11 @@ $.notice = function(options){
         },options.delay)
     },10)
 }
-
-
-Store = function(name) {
+window.Store = function(name) {
   this.name = name;
   var store = localStorage.getItem(this.name);
   this.data = (store && JSON.parse(store)) || {};
 };
-
 _.extend(Store.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.

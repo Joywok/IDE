@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(437);
+	module.exports = __webpack_require__(436);
 
 
 /***/ },
@@ -22071,13 +22071,10 @@
 /***/ },
 /* 434 */,
 /* 435 */,
-/* 436 */,
-/* 437 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22099,513 +22096,196 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	console.log('xxxxx,editor.js');
+	module.exports = function (app, store) {
+		var Controller = function (_Component) {
+			_inherits(Controller, _Component);
 
-	var FileType = {
-	  html: 'html',
-	  js: 'javascript',
-	  css: 'css',
-	  json: 'json',
-	  less: 'less'
+			function Controller() {
+				_classCallCheck(this, Controller);
+
+				return _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).apply(this, arguments));
+			}
+
+			_createClass(Controller, [{
+				key: 'render',
+				value: function render() {
+					var _this2 = this;
+
+					return _react2.default.createElement(
+						'div',
+						{ className: "info-project " + (this.props.sidebar == 'project' ? '' : 'hide') },
+						_react2.default.createElement(
+							'div',
+							{ className: 'info-project-w' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-icon' },
+								_react2.default.createElement('i', { className: 'fa fa-code' })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-name' },
+								this.props.project['name']
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-appid' },
+								'AppID:',
+								this.props.project['id']
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-i-c' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-label' },
+										'\u672C\u5730\u5F00\u53D1\u76EE\u5F55'
+									),
+									_react2.default.createElement(
+										'button',
+										{ className: 'info-project-i-btn', type: 'button', onClick: function onClick(e) {
+												return _this2.openFolder(e);
+											} },
+										'\u6253\u5F00'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-content' },
+										this.props.project.src
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-i-c' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-label' },
+										'\u6700\u65B0\u66F4\u65B0\u65F6\u95F4'
+									),
+									_react2.default.createElement(
+										'button',
+										{ className: 'info-project-i-btn', type: 'button' },
+										'\u9884\u89C8'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-content' },
+										'\u9879\u76EE\u672A\u5173\u8054AppID'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-i-c' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-label' },
+										'\u6700\u8FD1\u4E0A\u4F20\u65F6\u95F4'
+									),
+									_react2.default.createElement(
+										'button',
+										{ className: 'info-project-i-btn', type: 'button', onClick: function onClick(e) {
+												return _this2.uploadProject(e);
+											} },
+										'\u4E0A\u4F20'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-content' },
+										'\u9879\u76EE\u672A\u5173\u8054AppID'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-tools' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-tools-i' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-status' },
+										_react2.default.createElement('input', { type: 'checkbox', id: 'checkbox-1', defaultChecked: this.props.project.tools.babel })
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-val' },
+										'\u5F00\u542FES6\u8F6CES5(\u4E0A\u4F20\u540E\u81EA\u52A8\u8F6C\u4E49)'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-tools-i' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-status' },
+										_react2.default.createElement('input', { type: 'checkbox', id: 'checkbox-2', defaultChecked: this.props.project.tools.completion })
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-val' },
+										'\u5F00\u542F\u4E0A\u4F20\u4EE3\u7801\u6837\u5F0F\u6587\u4EF6\u81EA\u52A8\u8865\u5168(\u4E0A\u4F20\u540E\u81EA\u52A8\u8865\u5168)'
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-tools-i' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-status' },
+										_react2.default.createElement('input', { type: 'checkbox', id: 'checkbox-3', defaultChecked: this.props.project.tools.compress })
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-tools-val' },
+										'\u5F00\u542F\u4EE3\u7801\u538B\u7F29(\u4E0A\u4F20\u540E\u81EA\u52A8\u538B\u7F29)'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'info-project-remove', type: 'button', onClick: function onClick(e) {
+										return _this2.removeProject(e);
+									} },
+								'\u5220\u9664\u9879\u76EE'
+							)
+						)
+					);
+				}
+			}, {
+				key: 'openFolder',
+				value: function openFolder() {
+					// console.log(this.props.project.src)
+					var src = this.props.project.src.split('file://')[1] + '/index.html';
+					console.log(src);
+					gui.Shell.showItemInFolder(src);
+				}
+			}, {
+				key: 'uploadProject',
+				value: function uploadProject() {}
+			}, {
+				key: 'changeTools',
+				value: function changeTools(evt, type) {}
+			}, {
+				key: 'removeProject',
+				value: function removeProject() {}
+			}]);
+
+			return Controller;
+		}(_react.Component);
+
+		return Controller;
 	};
-	var watcher = chokidar.watch(project['src'].split('file://')[1], {
-	  ignored: /(^|[\/\\])\../,
-	  persistent: true
-	});
-	var log = console.log.bind(console);
-	setTimeout(function () {
-	  watcher.on('add', function (path) {
-	    return log('File ' + path + ' has been added');
-	  }).on('change', function (path) {
-	    return log('File ' + path + ' has been changed');
-	  }).on('unlink', function (path) {
-	    return log('File ' + path + ' has been removed');
-	  }).on('addDir', function (path) {
-	    return log('Directory ' + path + ' has been added');
-	  }).on('unlinkDir', function (path) {
-	    return log('Directory ' + path + ' has been removed');
-	  }).on('error', function (error) {
-	    return log('Watcher error: ' + error);
-	  }).on('ready', function () {
-	    return log('Initial scan complete. Ready for changes');
-	  }).on('raw', function (event, path, details) {
-	    log('Raw event info:', event, path, details);
-	  });
-	}, 500);
-	console.log(project, listData);
-	var data = {
-	  project: project,
-	  listData: listData,
-	  tabs: [],
-	  nowTabs: {}
-	};
-	function changeTreeView(data) {
-	  return _.extend({}, { type: 'changeTreeView', data: data });
-	}
-	function _changeEdit(data) {
-	  return _.extend({}, { type: 'changeEdit', data: data });
-	}
-	function addEditor(data) {
-	  return _.extend({}, { type: 'addEditor', data: data });
-	}
-	function _closeFile(data) {
-	  return _.extend({}, { type: 'closeFile', data: data });
-	}
-	function editorRefresh() {
-	  return _.extend({}, { type: 'editorRefresh' });
-	}
-	function changeEditWindow() {
-	  return _.extend({}, { type: 'changeEditWindow' });
-	}
-	function Reducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : data;
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'changeTreeView':
-	      return _.extend({}, state, { listData: action['data'], tabs: [], nowTabs: {} });
-	      break;
-	    case 'changeEdit':
-	      return _.extend({}, state, { nowTabs: action['data'] });
-	      break;
-	    case 'addEditor':
-	      var nowTabs;
-	      if (state.tabs.length != 0) {
-	        var tabs = state.tabs;
-	        var nowData = _.filter(tabs, function (i) {
-	          return i['id'] == action['data']['id'];
-	        });
-	        if (nowData.length != 0) {
-	          nowTabs = nowData[0];
-	        } else {
-	          tabs.push(action['data']);
-	          nowTabs = tabs[tabs.length - 1];
-	        }
-	      } else {
-	        var tabs = [];
-	        tabs.push(action['data']);
-	        nowTabs = tabs[0];
-	      }
-	      return _.extend({}, state, {
-	        tabs: tabs,
-	        nowTabs: nowTabs
-	      });
-	      break;
-	    case 'closeFile':
-	      var tabs = [];
-	      tabs = _.filter(state['tabs'], function (i) {
-	        return i['id'] != action['data']['id'];
-	      });
-	      return _.extend({}, state, {
-	        tabs: tabs,
-	        nowTabs: tabs.length != 0 ? tabs[tabs.length - 1] : {}
-	      });
-	      break;
-	    case 'editorRefresh':
-	      return _.extend({}, state, {
-	        tabs: [],
-	        nowTabs: {}
-	      });
-	      break;
-	    case 'changeEditWindow':
-	      return _.extend({}, state);
-	      break;
-	    default:
-	      return state;
-	  }
-	}
-	var App = (0, _redux.combineReducers)({
-	  Reducer: Reducer
-	});
-	var store = (0, _redux.createStore)(App);
-	var target = void 0;
-	window.addEventListener('message', function (e) {
-	  console.log('这里走了么少时诵诗书，儿子里面');
-	  if (!target) target = e;
-	  var data = e.data;
-	  if (data.type == 'window') {
-	    console.log('window重新初始化了');
-	    var width = $('.editor-main').width();
-	    var height = $('.editor-main').height();
-	    $('.editor-main-i').css({
-	      width: width + 'px',
-	      height: height + 'px'
-	    });
-	    store.dispatch(changeEditWindow());
-	  } else {}
-	});
-
-	var ChildeView = function (_Component) {
-	  _inherits(ChildeView, _Component);
-
-	  function ChildeView() {
-	    _classCallCheck(this, ChildeView);
-
-	    return _possibleConstructorReturn(this, (ChildeView.__proto__ || Object.getPrototypeOf(ChildeView)).apply(this, arguments));
-	  }
-
-	  _createClass(ChildeView, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      var children = void 0;
-	      var icon = void 0;
-	      if (this.props.children) {
-	        children = _react2.default.createElement(
-	          'div',
-	          { className: 'info-tree-view-i-child' },
-	          this.props.children.map(function (item) {
-	            return _react2.default.createElement(ChildeView, item);
-	          })
-	        );
-	        icon = _react2.default.createElement('i', { className: 'fa fa-folder' });
-	      } else {
-	        icon = _react2.default.createElement('div', { className: 'no-icon' });
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'info-tree-view-i' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'info-tree-view-i-s', onClick: function onClick(e) {
-	              return _this2.clickChild(e);
-	            } },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'info-tree-view-i-ico' },
-	            icon
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'info-tree-view-i-val' },
-	            this.props.name
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'info-tree-view-i-opear' },
-	            _react2.default.createElement('i', { className: 'fa fa-gears' })
-	          )
-	        ),
-	        children
-	      );
-	    }
-	  }, {
-	    key: 'clickChild',
-	    value: function clickChild(evt) {
-	      var dispatch = this.props.dispatch;
-	      var target = $(evt.currentTarget);
-	      var parent = target.parent();
-	      if (this.props.type == 'folder') {
-	        if (parent.hasClass('show-child')) {
-	          parent.removeClass('show-child');
-	          target.find('.fa').removeClass('fa-folder-open').addClass('fa-folder');
-	        } else {
-	          parent.addClass('show-child');
-	          target.find('.fa').removeClass('fa-folder').addClass('fa-folder-open');
-	        }
-	      } else {
-	        dispatch(addEditor(this.props));
-	      }
-	    }
-	  }]);
-
-	  return ChildeView;
-	}(_react.Component);
-
-	var TreeView = function (_Component2) {
-	  _inherits(TreeView, _Component2);
-
-	  function TreeView() {
-	    _classCallCheck(this, TreeView);
-
-	    return _possibleConstructorReturn(this, (TreeView.__proto__ || Object.getPrototypeOf(TreeView)).apply(this, arguments));
-	  }
-
-	  _createClass(TreeView, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      var data = this.props.Reducer;
-	      var self = this;
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'info-tree-view' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'info-tree-view-title' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'info-tree-view-tilte-refresh', onClick: function onClick(e) {
-	                return _this4.refresh(e);
-	              } },
-	            _react2.default.createElement('i', { className: 'fa fa-refresh' })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'info-tree-view-tilte-val' },
-	            data.project['name']
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'info-tree-view-list' },
-	          data.listData.map(function (item) {
-	            return _react2.default.createElement(ChildeView, _extends({}, item, { dispatch: self.props.dispatch }));
-	          })
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'refresh',
-	    value: function refresh(e) {
-	      fileId = 0;
-	      oldFile = [];
-	      var listData = geFileList(project['src'].split('file://')[1]);
-	      listData = sortFolder(listData);
-	      var dispatch = this.props.dispatch;
-	      dispatch(changeTreeView(listData));
-	    }
-	  }]);
-
-	  return TreeView;
-	}(_react.Component);
-
-	var EditContainer = function (_Component3) {
-	  _inherits(EditContainer, _Component3);
-
-	  function EditContainer(props) {
-	    _classCallCheck(this, EditContainer);
-
-	    var _this5 = _possibleConstructorReturn(this, (EditContainer.__proto__ || Object.getPrototypeOf(EditContainer)).call(this, props));
-
-	    _this5.allEdit = [];
-	    return _this5;
-	  }
-
-	  _createClass(EditContainer, [{
-	    key: 'render',
-	    value: function render() {
-	      console.log(this.allEdit, '123123123123');
-	      var data = this.props.Reducer;
-	      var self = this;
-	      return _react2.default.createElement('div', { className: 'editor-main' });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var self = this;
-	      var ctrlKey = false;
-	      var sCode = false;
-	      $('.editor-main').delegate('.editor-main-i', 'keydown', function (evt) {
-	        var data = self.props.Reducer;
-	        var nowData = _.filter(data['tabs'], function (i) {
-	          return i['id'] == data['nowTabs']['id'];
-	        })[0];
-	        if (evt.keyCode == 17) {
-	          ctrlKey = true;
-	        }
-	        if (evt.keyCode == 83) {
-	          sCode = true;
-	        }
-	        if (evt.keyCode == 91) {
-	          ctrlKey = true;
-	        }
-	        if (ctrlKey && sCode) {
-	          fs.writeFile(nowData['value'], self['editor_' + nowData['id']].getValue());
-	          target.source.postMessage({
-	            type: 'changeFile'
-	          }, '*');
-	        }
-	      });
-	      $('.editor-main').delegate('.editor-main-i', 'keyup', function () {
-	        ctrlKey = false;
-	        sCode = false;
-	      });
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(options) {
-	      var self = this;
-	      var data = options['Reducer'];
-	      var dispatch = options['dispatch'];
-	      var width = $('.editor-main').width();
-	      var height = $('.editor-main').height();
-	      if (data['nowTabs']["id"] && data['nowTabs']["id"].length != 0) {
-	        var nowData = _.filter(data['tabs'], function (i) {
-	          return i['id'] == data['nowTabs']["id"];
-	        });
-	        if (nowData.length != 0) {
-	          nowData = nowData[0];
-	          $('.editor-main-i').addClass('hide');
-	          if (this['editor_' + nowData['id']]) {
-	            $('#editor-' + nowData['id']).removeClass('hide');
-	          } else {
-	            this.allEdit.push(nowData);
-	            $(".editor-main").append('<div class="editor-main-i "id="editor-' + nowData['id'] + '" style="width:' + width + 'px;height:' + height + 'px"></div>');
-	            var fileType = nowData['value'].split('.');
-	            fileType = fileType[fileType.length - 1];
-	            var code = fs.readFileSync(nowData["value"]);
-	            this['editor_' + nowData['id']] = monaco.editor.create(document.getElementById('editor-' + nowData['id']), {
-	              value: [code].join('\n'),
-	              autoSize: true,
-	              language: FileType[fileType]
-	            });
-	          }
-	        }
-	      } else {
-	        $(".editor-main").html('');
-	      }
-	      _.each(this.allEdit, function (i) {
-	        self['editor_' + i['id']] && self['editor_' + i['id']].layout({
-	          width: width,
-	          height: height
-	        });
-	      });
-	      return false;
-	    }
-	  }, {
-	    key: 'closeFile',
-	    value: function closeFile(data) {
-	      this.allEdit = _.filter(this.allEdit, function (i) {
-	        return i['id'] != data['id'];
-	      });
-	      this['editor_' + data['id']] = null;
-	      $('#editor-' + data['id']).remove();
-	    }
-	  }, {
-	    key: 'refresh',
-	    value: function refresh() {
-	      var self = this;
-	      var dispatch = this.props.dispatch;
-	      _.each(this.allEdit, function (i) {
-	        self['editor_' + i['id']] = null;
-	      });
-	      $(".editor-main").html('');
-	      this.allEdit = [];
-	      dispatch(editorRefresh());
-	    }
-	  }]);
-
-	  return EditContainer;
-	}(_react.Component);
-
-	var Edit = function (_Component4) {
-	  _inherits(Edit, _Component4);
-
-	  function Edit() {
-	    _classCallCheck(this, Edit);
-
-	    return _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).apply(this, arguments));
-	  }
-
-	  _createClass(Edit, [{
-	    key: 'render',
-	    value: function render() {
-	      var data = this.props.Reducer;
-	      var self = this;
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'editor-container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'editor-container-tabs' },
-	          data.tabs.map(function (i) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: "editor-tabs-i " + (data['nowTabs']['id'] == i["id"] ? 'active' : ''), onClick: function onClick(e) {
-	                  return self.changeEdit(e, i);
-	                } },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'editor-tabs-i-w' },
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'editor-tabs-i-val ellipsis' },
-	                  i["name"]
-	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'editor-tabs-i-close', onClick: function onClick(e) {
-	                      return self.closeFile(e, i);
-	                    } },
-	                  _react2.default.createElement('i', { className: 'fa fa-close' })
-	                )
-	              )
-	            );
-	          })
-	        ),
-	        _react2.default.createElement(EditContainer, _extends({}, this.props, { ref: 'children' }))
-	      );
-	    }
-	  }, {
-	    key: 'changeEdit',
-	    value: function changeEdit(e, i) {
-	      var dispatch = this.props.dispatch;
-	      dispatch(_changeEdit(i));
-	    }
-	  }, {
-	    key: 'closeFile',
-	    value: function closeFile(e, i) {
-	      this.refs.children.closeFile(i);
-	      var dispatch = this.props.dispatch;
-	      dispatch(_closeFile(i));
-	      e.stopPropagation();
-	    }
-	  }, {
-	    key: 'refresh',
-	    value: function refresh() {
-	      this.refs.children.refresh();
-	    }
-	  }]);
-
-	  return Edit;
-	}(_react.Component);
-
-	var Controller = function (_Component5) {
-	  _inherits(Controller, _Component5);
-
-	  function Controller() {
-	    _classCallCheck(this, Controller);
-
-	    return _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).apply(this, arguments));
-	  }
-
-	  _createClass(Controller, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'main-w' },
-	        _react2.default.createElement(TreeView, _extends({}, this.props, { refresh: this.refresh })),
-	        _react2.default.createElement(Edit, _extends({}, this.props, { ref: 'edit' }))
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
-	    key: 'refresh',
-	    value: function refresh() {
-	      this.refs.edit.refresh();
-	    }
-	  }]);
-
-	  return Controller;
-	}(_react.Component);
-
-	function select(state) {
-	  return state;
-	}
-	var RootApp = (0, _reactRedux.connect)(select)(Controller);
-
-	var rootElement = document.getElementById('main');
-	(0, _reactDom.render)(_react2.default.createElement(
-	  _reactRedux.Provider,
-	  { store: store },
-	  _react2.default.createElement(RootApp, null)
-	), rootElement);
 
 /***/ }
 /******/ ]);

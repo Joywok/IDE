@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><title></title><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../../build/styles/reset.css"><script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script><script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script><link rel="stylesheet" href="../../build/styles/editview.css"></head><body id="body"><div class="main" id="main"></div></body><script type="text/javascript">let fs;
+	let project;
+	let fsExtra;
+  let chokidar;        
+	let specailFile = ['.DS_Store']
+	let listData = []
+	let fileId = 0;
+	let oldFile = [];
+	function geFileList(path){
+    let filesList = [];
+    let targetObj = {};
+    readFile(path,filesList,targetObj);
+    return filesList;
+  }
+  function readFile(path,filesList,targetObj){
+    let files = fs.readdirSync(path);
+    files.forEach(walk);
+    function walk(file){  
+      let states = fs.statSync(path+'/'+file); 
+      if(states.isDirectory()){
+        let item ;
+        if(targetObj["children"]){
+        	item = {id:fileId,name:file,children:[],value:path+'/'+file,type:'folder'};
+        	fileId ++ 
+        	oldFile.push(item)
+          targetObj["children"].push(item);
+        }else{
+          item = {id:fileId,name:file,children:[],value:path+'/'+file,type:'folder'};
+          fileId ++ 
+          filesList.push(item);
+          oldFile.push(item)
+        }
+        readFile(path+'/'+file,filesList,item);
+      }else{   
+        let obj = new Object();
+        obj.size = states.size;
+        obj.name = file;
+        obj.path = path+'/'+file; 
+        if(_.filter(specailFile,function(i){
+        	return i== file
+        }).length!=0) return 
+        if(targetObj["children"]){
+          let item = {id:fileId,name:file,value:obj.path}
+          oldFile.push(item);
+          fileId ++ 
+          targetObj["children"].push(item);
+        }else{
+          let item = {id:fileId,name:file,value:obj.path};
+          fileId ++ 
+          oldFile.push(item)
+          filesList.push(item);
+        }
+      }     
+    }
+  }
+  function sortFolder(data){
+    if(data && data.length!=0){
+      return _.sortBy(data,function(i){
+        if(i.children){
+          i.children = sortFolder(i['children'])
+        }
+        return i['children']
+      })
+    }else{
+      return []
+    }
+  }
+	$(function(){
+		fs = window.fs;
+		project = window.project;
+		fsExtra = window.fsExtra;
+		chokidar = window.chokidar;
+	  listData = geFileList(project['src'].split('file://')[1])
+	  listData = sortFolder(listData);
+		var s = document.createElement('script');
+    s.onload = function () {
+      require.config({
+        paths: {
+          'vs': '../../node_modules/monaco-editor/min/vs'
+        },
+      })
+      require(['vs/editor/editor.main'], function () {
+      	window.monaco = monaco;
+      	console.log('xxxxxxxx');
+      })
+    }
+    s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
+   	document.getElementById('body').appendChild(s);
+		var script = document.createElement('script');
+		script.src = '../../build/scripts/editor/index.js'
+		document.getElementById('body').appendChild(script)
+	})</script></html>

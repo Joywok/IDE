@@ -43,12 +43,24 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 module.exports = {
   entry: {
     index:[path.resolve(__dirname, 'src/scripts/index.js')],
-    'router/router':[path.resolve(__dirname, 'src/scripts/router/router.js')],
+    'components/main':[path.resolve(__dirname, 'src/scripts/components/main.js')],
+    'components/phone':[path.resolve(__dirname, 'src/scripts/components/phone.js')],
+    'editinfo/debug':[path.resolve(__dirname, 'src/scripts/editinfo/debug.js')],
+    'editinfo/edit':[path.resolve(__dirname, 'src/scripts/editinfo/edit.js')],
+    'editinfo/project':[path.resolve(__dirname, 'src/scripts/editinfo/project.js')],
     'editor/index':[path.resolve(__dirname, 'src/scripts/editor/index.js')],
+    'jssdk/jssdk':[path.resolve(__dirname, 'src/scripts/jssdk/jssdk.js')],
+    'jssdk/jssdk-callHander':[path.resolve(__dirname, 'src/scripts/jssdk/jssdk-callHander.js')],
+    'menu/index':[path.resolve(__dirname, 'src/scripts/menu/index.js')],
+    'nav/apps':[path.resolve(__dirname, 'src/scripts/nav/apps.js')],
+    'nav/info':[path.resolve(__dirname, 'src/scripts/nav/info.js')],
+    'nav/login':[path.resolve(__dirname, 'src/scripts/nav/login.js')],
+    'platform/update':[path.resolve(__dirname, 'src/scripts/platform/update.js')],
+    'platform/windows':[path.resolve(__dirname, 'src/scripts/platform/windows.js')],
+    'router/router':[path.resolve(__dirname, 'src/scripts/router/router.js')],
     // 'components/editview':[path.resolve(__dirname, 'src/scripts/components/editview.js')],
   },
   target: 'node-webkit',

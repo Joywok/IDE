@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html;charset=utf-8"><link rel="stylesheet" type="text/css" href="../../build/styles/edit.css"><script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script><style type="text/css">#container{
+			position: fixed;top:0;right: 0;bottom: 0;left: 0;
+		}</style></head><body><div id="main" class="main"></div><script type="text/javascript" src="../../build/scripts/editor/index.js"></script><script>var editor;
+	window.addEventListener('message', function(e){
+		target = e;
+		// alert('xxxxxxx');
+		console.log(123123123,'123123123123')
+	  // e.source.postMessage({command:'xxxxxx'},'*')
+	});
+  window.onload = function () {
+    var s = document.createElement('script');
+    s.onload = function () {
+      require.config({
+        paths: {
+          'vs': '../../node_modules/monaco-editor/min/vs'
+        },
+      })
+      require(['vs/editor/editor.main'], function () {
+      	window.monaco = monaco
+    // 		editor = monaco.editor.create(document.getElementById('main'), {
+				// 	value: [
+				// 		'Hello Word;'
+				// 	].join('\n'),
+				// 	autoSize:true,
+				// 	language: 'javascript'
+				// });
+      })
+    }
+    s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
+    document.head.appendChild(s)
+  }</script><script>// window.changeEditor = function(data){
+	// 	if(monaco && editor){
+	// 		editor.layout({
+ //        width: data["w"],
+ //        height: data["h"]
+ //      })
+	// 	}
+	// }
+	// window.changeFile = function(){
+	// }
+	$(function(){
+		
+	})</script></body></html>

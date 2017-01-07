@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dva Demo</title><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../styles/reset.css"><script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script><script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script><script type="text/javascript" src="../../bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script><link rel="stylesheet" href="../styles/info.css"></head><body id="body"><div class="main" id="main"></div><webview id="aaa" class="hide" partition="trusted"></webview></body><script type="text/javascript">const basurl = process.cwd()
+	const fs = require('fs');
+  const ide = require(basurl+'/package.json');
+	const user = require(basurl+'/config.json');
+	const projects = require(basurl+'/project.json');
+  console.log(ide,user,projects,basurl);
+	const __dirname = basurl;
+  const request = require('request');
+  const fsExtra = require('fs-extra');
+  const chokidar = require('chokidar');
+  const unzip = require('unzip');
+  const gui = require('nw.gui');
+  require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script></html>

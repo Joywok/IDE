@@ -5,10 +5,5 @@
 	"id":"fo14dl1sb0ispe5p",
 	"name":"翟磊",
 	"role":"",
-	"supervise":"1",
-	"project":{
-		"id":"xxxx",
-		"name":"test",
-		"path":"/Users/zhailei/Desktop/Test/"
-	}
+	"supervise":"1"
 }

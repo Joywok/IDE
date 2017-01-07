@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>更新代码</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="../../build/styles/reset.css" />
+</head>
+<body>
+<div class="update-code">
+	<div class="update-code-close" onClick="window.close()"><i class="fa fa-close"></i></div>
+	<div class="update-code-title">
+		<div class="update-code-icon"><i class="fa fa-code"></i></div>
+		<div class="update-code-msg">
+			<h1 class="title">有新版本</h1>
+			<p class="content"></p>
+		</div>
+	</div>
+	<div class="update-code-btn" class="btn"><span onClick="window.restart()">重启</span></div>
+</div>
+</body>
+<style type="text/css">
+*{
+	margin:0;padding: 0;
+}
+.update-code{
+	position: relative;
+	background: #fff;
+	text-align: left;
+	overflow: hidden;
+}
+.update-code .update-code-close{
+	position: absolute;top:10px;right: 10px;font-size: 12px;color: #000;
+	cursor: pointer;z-index: 2222222;
+	display: block
+}
+.update-code .update-code-title{
+	height: 90px;
+	overflow: hidden;
+	padding:0 20px 0 10px;
+}
+.update-code-title .update-code-icon{
+	float: left;
+	font-size: 60px;color: #41ba3d;
+}
+.update-code-title .update-code-msg{
+	display: block;
+	margin:0 0 0 80px;
+	max-height: 90px;overflow: hidden;
+}
+.update-code-msg h1{
+	margin:20px 0 0 0;
+	font-size: 16px;color: #000;
+	line-height: 1;
+}
+.update-code-msg p{
+	margin-top: 10px;
+	font-size: 13px;color: #000;
+}
+.update-code .update-code-btn{
+	border-top: 1px solid #ececec;
+	padding:0 20px;
+	height: 36px;
+	line-height: 36px;
+	cursor: pointer;
+}
+.update-code .update-code-btn span{
+	cursor: pointer;
+}
+</style>
+</html>

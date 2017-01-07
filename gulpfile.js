@@ -1,8 +1,10 @@
 'use strict';
-var gulp = require('gulp');//引入gulp
-var del = require('del');//引入删除文件
-var $ = require('gulp-load-plugins')();
-
+let gulp = require('gulp');//引入gulp
+let del = require('del');//引入删除文件
+let imagemin = require('gulp-imagemin');
+let pngquant = require('imagemin-pngquant');
+let htmlmin = require('gulp-htmlmin');
+let $ = require('gulp-load-plugins')();
 gulp.task('styles:sass', ()=>{
   var sass = require('gulp-ruby-sass');
   var concat = require('gulp-concat');
@@ -15,11 +17,24 @@ gulp.task('styles:sass', ()=>{
     .pipe($.size({title:'build/styles'}));
 });
 gulp.task('styles', ['styles:sass']);
-
-gulp.task('default',function(){
-	 gulp.watch(['src/styles/*.scss'],['styles:sass']);
+gulp.task('html', function() {
+  return gulp.src('src/template/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('build/template/'));
 });
-
-gulp.task('zhailei',function(){
-  console.log('xxxxx');
+gulp.task('mini',function(){
+	return gulp.src('src/images/**/')
+		.pipe(imagemin({
+			progressive: true,
+			svgoPlugins: [{removeViewBox: false}],
+			use: [pngquant()]
+		}))
+		.pipe(gulp.dest('src/images'));
+})
+gulp.task('default',function(){
+  gulp.watch(['src/template/*.html'],['html']);
+  gulp.watch(['src/styles/*.scss'],['styles:sass']);
+});
+gulp.task('public',function(){
+  
 })

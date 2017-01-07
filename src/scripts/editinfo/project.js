@@ -39,19 +39,19 @@ module.exports = function(app,store){
 											<div className="info-project-tools-status">
 												<input type="checkbox" id="checkbox-1" defaultChecked={this.props.project.tools.babel}/>
 											</div>
-											<div className="info-project-tools-val">开启ES6转ES5</div>
+											<div className="info-project-tools-val">开启ES6转ES5(上传后自动转义)</div>
 										</div>
 										<div className="info-project-tools-i">
 											<div className="info-project-tools-status">
 												<input type="checkbox" id="checkbox-2" defaultChecked={this.props.project.tools.completion}/>
 											</div>
-											<div className="info-project-tools-val">开启上传代码样式文件自动补全</div>
+											<div className="info-project-tools-val">开启上传代码样式文件自动补全(上传后自动补全)</div>
 										</div>
 										<div className="info-project-tools-i">
 											<div className="info-project-tools-status">
 												<input type="checkbox" id="checkbox-3" defaultChecked={this.props.project.tools.compress}/>
 											</div>
-											<div className="info-project-tools-val">开启代码压缩</div>
+											<div className="info-project-tools-val">开启代码压缩(上传后自动压缩)</div>
 										</div>
 									</div>
 									<button className="info-project-remove" type="button" onClick={(e)=>this.removeProject(e)}>删除项目</button>
