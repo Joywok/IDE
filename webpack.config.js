@@ -48,6 +48,7 @@ module.exports = {
     index:[path.resolve(__dirname, 'src/scripts/index.js')],
     'components/main':[path.resolve(__dirname, 'src/scripts/components/main.js')],
     'components/phone':[path.resolve(__dirname, 'src/scripts/components/phone.js')],
+    'components/phone-inset':[path.resolve(__dirname, 'src/scripts/components/phone-inset.js')],
     'editinfo/debug':[path.resolve(__dirname, 'src/scripts/editinfo/debug.js')],
     'editinfo/edit':[path.resolve(__dirname, 'src/scripts/editinfo/edit.js')],
     'editinfo/project':[path.resolve(__dirname, 'src/scripts/editinfo/project.js')],
@@ -82,6 +83,5 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({ "global.GENTLY": false }),
     new webpack.DefinePlugin({'process.env': {'NODE_ENV': '"production"'}}),
-    
   ]
 };

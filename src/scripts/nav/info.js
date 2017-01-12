@@ -6,9 +6,31 @@ import { Provider ,connect} from 'react-redux';
 import { EventEmitter } from 'events';
 module.exports = function(){
   let project = projects[0];
+  let url = project['src'].split('file://')[1];
   const app = dva();
   const emitter = new EventEmitter();
   console.log(event)
+  const appServer = express();
+  console.log(project);
+  appServer.use(bodyParser())
+  appServer.set('view engine', 'html');
+  appServer.use(express.static(url));
+  appServer.get('/', function (req, res) {
+    res.sendfile(url+'/index.html')
+  });
+  var server = appServer.listen(10000,'127.0.0.1',function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('Example app listening at http://%s:%s', host, port);
+    let date = Date.parse(new Date())/1000;
+    $("#phone-inset").attr({src:"http://127.0.0.1:10000?time="+date});
+    $("#phone-inset").removeClass('hide')
+    // setTimeout(function(){
+    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+    // })
+    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
+  });
+
   const nowWin = require('nw.gui').Window.get();
   app.model({
     namespace: 'info',
@@ -21,7 +43,12 @@ module.exports = function(){
       showPlatformVal:'iPhone 4',
       phoneW:320,
       phoneH:480,
-      filesList:[]
+      filesList:[],
+      title:'Joywok',
+      btns:[],
+      footer:[],
+      tabs:[],
+      tabsBg:''
     },
     reducers: {
       changeSidebar(state,action){
@@ -42,6 +69,46 @@ module.exports = function(){
       },
       addFileList(state,action){
         return _.extend({},state,{filesList:action['data']});
+      },
+      changeTitle:function(state,action){
+        return _.extend({},state,{title:action['data']});
+      },
+      setFuncBtns:function(state,action){
+        return _.extend({},state,{btns:action['data']});
+      },
+      setFuncBtnStatus:function(state,action){
+        let btns = [];
+        _.each(state["btns"],function(i){
+          if(i['type'] == action['data']['type']){
+            i['disabled'] = (action['data']['disabled']=='disable'?true:false)
+            btns.push(i)
+          }else{
+            btns.push(i)
+          }
+        })
+        return _.extend({},state,{btns:btns});
+      },
+      showTabs:function(state,action){
+        return _.extend({},state,{tabs:action['data']['tabs'],tabsBg:action['data']['style']});
+      },
+      changeTabs:function(state,action){
+        let tabs = [];
+        _.each(state["tabs"],function(i){
+          if(i['num'] == action['data']['num']){
+            i['active'] = true
+            tabs.push(i)
+          }else{
+            i['active'] = false
+            tabs.push(i)
+          }
+        })
+        return _.extend({},state,{tabs:tabs});
+      },
+      hideTabs:function(state){
+        return _.extend({},state,{tabs:[],tabsBg:''});
+      },
+      resetNormal:function(state){
+        return _.extend({},state,{tabs:[],tabsBg:'',btns:[],footer:[],title:'Joywok'});
       }
     }
   });

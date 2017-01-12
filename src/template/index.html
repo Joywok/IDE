@@ -10,17 +10,18 @@
   <link rel="stylesheet" href="../styles/reset.css" />
   <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script>
-  <script type="text/javascript" src="../../bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
   <link rel="stylesheet" href="../styles/info.css">
 </head>
 <body id="body">
 <div class="main" id="main">
 </div>
-<webview id="aaa" class="hide" partition="trusted"></webview>
+<webview id="aaa" partition ="trusted"></webview>
 </body>
 <script type="text/javascript">
 	const basurl = process.cwd()
 	const fs = require('fs');
+  const path = require('path');
+  const bodyParser = require('body-parser');
   const ide = require(basurl+'/package.json');
 	const user = require(basurl+'/config.json');
 	const projects = require(basurl+'/project.json');
@@ -29,11 +30,31 @@
   const request = require('request');
   const fsExtra = require('fs-extra');
   const chokidar = require('chokidar');
-  const unzip = require('unzip');
   const gui = require('nw.gui');
-  require('nw.gui').Window.get().showDevTools()
+  const targz = require('tar.gz');
+  const express = require('express');
+  // require('nw.gui').Window.get().showDevTools()
 </script>
 <script type="text/javascript" src="../scripts/components/main.js"></script>
 <script type="text/javascript" src="../scripts/platform/update.js"></script>
-<script src="../scripts/index.js"></script>
+<!-- <script src="../scripts/index.js"></script> -->
+<script type="text/javascript">
+  $(function(){
+    $("body").append('<input type="file" nwdirectory id="choseDirectory"/>')
+    var chooser = $('#choseDirectory');
+    chooser.unbind('change');
+    chooser.change(function(evt) {
+      let val = $(this).val()
+      projects[0]['src'] = "file://"+val;
+      targz().extract('a.tgz', val, function(err){
+        if(err) console.log('Something is wrong ', err.stack);
+        chooser.remove();
+        let script = document.createElement('script');
+        script.src = '../scripts/index.js'
+        document.getElementById('body').appendChild(script)
+      });
+    });
+    chooser.click();  
+  })
+</script>
 </html>

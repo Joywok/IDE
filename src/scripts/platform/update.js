@@ -21,8 +21,7 @@ window.newNotication = function(){
 				var len = 0;
 				var data = [];
 				request
-					// .get('http://192.168.1.73/public/platforms/Joywok.dmg')
-					.get('http://192.168.1.73/test/a.zip')
+					.get('http://192.168.1.73/test/a.tgz')
 					.on( 'response', function ( data ) {
 						len = parseInt(data.headers['content-length']);
 					})
@@ -33,16 +32,14 @@ window.newNotication = function(){
 						console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
 					})
 					.on('end',function(){
-						fsExtra.mkdirs('cache')
-						fs.createReadStream('a.zip')
-							.on('end',function(){
-								console.log('压缩完了')
-								fsExtra.remove('a.zip');
-								fsExtra.remove('test');
-							})
-							.pipe(unzip.Extract({ path: 'cache/' }));
+						console.log('下载完了');
+						targz().extract('a.tgz', '.', function(err){
+						  if(err) console.log('Something is wrong ', err.stack);
+						  fsExtra.remove('a.tgz', function (err){});
+						  console.log('Job done!');
+						});
 					})
-					.pipe(fs.createWriteStream('a.zip'))
+					.pipe(fs.createWriteStream('a.tgz'))
 			}
 			newWin.window.close = function(){
 				newWin.close();

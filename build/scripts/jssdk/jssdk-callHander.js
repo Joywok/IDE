@@ -45,39 +45,39 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(733);
+	module.exports = __webpack_require__(691);
 
 
 /***/ },
 
-/***/ 733:
+/***/ 691:
 /***/ function(module, exports) {
 
 	'use strict';
 
-	window.JoywokMobileApp = {
-	  callHandler: function callHandler(func_name, data, callBack) {
-	    this[func_name](data, callBack);
-	  },
-	  setTitle: function setTitle(data, callBack) {
-	    console.log('123123123123');
-	  },
-	  checkJsApi: function checkJsApi() {},
-	  getInfo: function getInfo() {},
-	  pushWebView: function pushWebView() {},
-	  newWebView: function newWebView() {},
-	  closeWebView: function closeWebView() {},
-	  setFuncBtns: function setFuncBtns() {},
-	  setFuncBtnStatus: function setFuncBtnStatus() {},
-	  showTabs: function showTabs() {},
-	  hideTabs: function hideTabs() {},
-	  mailto: function mailto() {},
-	  back: function back() {},
-	  onSelectTab: function onSelectTab() {},
-	  onNavBtnClick: function onNavBtnClick() {},
-	  getAuthCode: function getAuthCode() {},
-	  openImages: function openImages() {}
-	};
+	function initBridge() {
+	  this.init = function (callback) {
+	    callback('xxxxx', function () {});
+	  };
+	  this.callHandler = function (func_name, data, callback) {
+	    console.log(func_name, data);
+	  };
+	  this.registerHandler = function () {}, this.setTitle = function () {};
+	  this.checkJsApi = function () {};
+	  this.getInfo = function () {};
+	  this.pushWebView = function () {};
+	  this.newWebView = function () {};
+	  this.closeWebView = function () {};
+	  this.setFuncBtns = function () {};
+	  this.setFuncBtnStatus = function () {};
+	  this.showTabs = function () {};
+	  this.hideTabs = function () {};
+	  this.mailto = function () {};
+	  this.back = function () {};
+	  this.AuthCode = function () {};
+	  return this;
+	}
+	window.JoywokMobileApp = window.WebViewJavascriptBridge = new initBridge();
 
 /***/ }
 

@@ -7,11 +7,28 @@ import { Provider ,connect} from 'react-redux';
 module.exports = function(app,store){
 	class Controller extends Component{
 		render(){
-			return (<div className={"info-edit "+(this.props.sidebar=='edit'?'':'hide')}>
-                <iframe id="editor-view" className="edit-view" src={'file://'+basurl+'/src/template/editView.html'}/>
+			return (<div className={"info-edit "+(this.props.sidebar=='edit'?'':'hide')} id="info-edit">
+								<iframe id="editor-view" allownw className="edit-view" src={'file://'+basurl+'/build/template/editView.html'}/>
 							</div>)
 		}
 		componentDidMount(){
+			// <webview id="editor-view" partition ="trusted" allownw className="edit-view" src={}></webview>
+			// let webview = document.createElement('webview');
+			// webview.id = 'editor-view';
+			// webview.setAttribute('partition', 'trusted');
+			// webview.setAttribute('class', 'edit-view');
+			// webview.setAttribute('allownw', 'true');
+			// document.getElementById('info-edit').appendChild(webview);
+			// webview.addEventListener('dialog', function (e) {
+   //    	if(e.messageType == 'alert'){
+   //    		window.alert(e['messageText'])
+   //    	}else{
+   //    		e.preventDefault()
+   //    	}
+   //    })
+			// webview.setAttribute('src','file://'+basurl+'/build/template/editView.html')
+			// return 
+			// <iframe id="editor-view" allownw className="edit-view" src={'file://'+basurl+'/src/template/editView.html'}/>
 			let self = this;
 			let editor = document.getElementById("editor-view");
 			editor.onload = function(){
@@ -32,9 +49,9 @@ module.exports = function(app,store){
       }else{
         $('.info-edit').addClass('hide')
       }
-      document.getElementById("editor-view").contentWindow.postMessage({
-        type:'window'
-      },'*');
+      // document.getElementById("editor-view").contentWindow.postMessage({
+      //   type:'window'
+      // },'*');
 			return false
 		}
 		change(data){

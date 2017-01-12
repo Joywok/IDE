@@ -16,9 +16,9 @@
 </body>
 <script type="text/javascript">
 	let fs;
-	let project;
-	let fsExtra;
-  let chokidar;        
+  let project;
+  let chokidar;
+  let fsExtra;
 	let specailFile = ['.DS_Store']
 	let listData = []
 	let fileId = 0;
@@ -83,29 +83,31 @@
     }
   }
 	$(function(){
-		fs = window.fs;
-		project = window.project;
-		fsExtra = window.fsExtra;
-		chokidar = window.chokidar;
-	  listData = geFileList(project['src'].split('file://')[1])
-	  listData = sortFolder(listData);
-		var s = document.createElement('script');
-    s.onload = function () {
-      require.config({
-        paths: {
-          'vs': '../../node_modules/monaco-editor/min/vs'
-        },
-      })
-      require(['vs/editor/editor.main'], function () {
-      	window.monaco = monaco;
-      	console.log('xxxxxxxx');
-      })
-    }
-    s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
-   	document.getElementById('body').appendChild(s);
-		var script = document.createElement('script');
-		script.src = '../../build/scripts/editor/index.js'
-		document.getElementById('body').appendChild(script)
+    setTimeout(function(){
+      fs = window.fs;
+      project = window.project;
+      fsExtra = window.fsExtra;
+      chokidar = window.chokidar;
+      listData = geFileList(project['src'].split('file://')[1]);
+      listData = sortFolder(listData);
+      console.log(listData,'123123');
+      var s = document.createElement('script');
+      s.onload = function () {
+        require.config({
+          paths: {
+            'vs': '../../node_modules/monaco-editor/min/vs'
+          },
+        })
+        require(['vs/editor/editor.main'], function () {
+          window.monaco = monaco;
+        })
+      }
+      s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
+      document.getElementById('body').appendChild(s);
+      var script = document.createElement('script');
+      script.src = '../../build/scripts/editor/index.js'
+      document.getElementById('body').appendChild(script)
+    })
 	})
 </script>
 </html>

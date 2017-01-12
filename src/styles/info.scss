@@ -1,3 +1,10 @@
+body{
+	position: fixed;overflow: hidden;
+}
+.main{
+	position: absolute;top:0;right: 0;bottom: 0;left: 0;
+	overflow:hidden;
+}
 .ide-info{
   position: fixed;top:0;right:0;bottom:0;left:0;
   .ide-info-sidebar{
@@ -212,6 +219,114 @@
 		box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 		background: #fff;
 		margin-bottom: 30px;
+		overflow:hidden;
+	}
+	.info-edit-phone-container .phone-header{
+		position: absolute;top:0;left: 0;right: 0;height: 39px;
+		line-height: 39px;
+		font-size: 16px;
+		padding:0 20px;
+		border-bottom: 1px solid #d7d7d7;
+		text-align: center;
+	}
+	.phone-header .phone-title{
+	}
+	.phone-header .phone-btns{
+		float: right;
+	}
+	.phone-header.has-btns{
+		text-align: left;
+	}
+	.phone-header.has-btns .phone-btns-i{
+		margin-left: 10px;
+	}
+	.phone-header.has-btns .phone-btns-i:first-child{
+		margin-left: 0;
+	}
+	.phone-btns-i.phone-btns-i-0{
+		display: block;
+		margin:11px 0 0 0;
+		width: 14px;height: 16px;
+		background: url(/build/images/btns/filter.png);
+		background-size: cover;
+	}
+	.phone-btns-i.phone-btns-i-1{
+		display: block;
+		margin:16px 0 0 0;
+		width: 18px;height: 8px;
+		background: url(/build/images/btns/more.png);
+		background-size: cover;
+	}
+	.phone-btns-i.phone-btns-i-2{
+		display: block;
+		margin:16px 0 0 0;
+		width: 18px;height: 8px;
+		background: url(/build/images/btns/more.png);
+		background-size: cover;
+	}
+	.phone-btns-i.phone-btns-i-3{
+		display: block;
+		margin:11px 0 0 0;
+		width: 16px;height: 16px;
+		background: url(/build/images/btns/add.png);
+		background-size: cover;	
+	}
+	.phone-btns-i.phone-btns-i-specail{
+		font-size: 13px;
+		line-height: 39px;
+	}
+	.phone-btns-i[disabled]{
+		cursor: default;color: #b0b0b0;-webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+	}
+	.phone-header.has-btns .phone-title{
+		float: left;
+	}
+	.info-edit-phone-container .phone-container{
+		position: absolute;top:40px;left:0;right: 0;bottom: 45px;
+	}
+	.phone-container.has-tabs{
+		top:88px;
+	}
+	.info-edit-phone-container .phone-tabs{
+		position: absolute;top:38px;left: 0;right: 0;height: 50px;
+	}
+	.phone-tabs .phone-tabs-i{
+		float: left;
+		position: relative;height: 50px;line-height: 50px;
+		text-align: center;
+		cursor: pointer;
+	}
+	.phone-tabs-i .phone-tabs-i-val{
+		line-height: 50px;height: 50px;color: #b0b0b0
+	}
+	.phone-tabs-i.active{
+		cursor: default;
+	}
+	.phone-tabs-i.active .phone-tabs-i-val{
+		color: #fff;
+	}
+	.phone-tabs-i.active .phone-tabs-i-bg{
+		position: absolute;left:0;right: 0;bottom: 2px;height: 2px;background: #fff;
+	}
+	.phone-tabs-num-2 .phone-tabs-i{width: 49%}
+	.phone-tabs-num-3 .phone-tabs-i{width: 32%}
+	.phone-tabs-num-4 .phone-tabs-i{width: 24%}
+	.phone-tabs-num-5 .phone-tabs-i{width: 19%}
+	.phone-tabs-num-6 .phone-tabs-i{width: 15%}
+	.phone-tabs-num-7 .phone-tabs-i{width: 13%}
+	.phone-tabs-num-8 .phone-tabs-i{width: 12%}
+	.tabs-bg-blue{background: blue;color: #fff;}
+	.tabs-bg-red{background: red;color: #fff;}
+	.tabs-bg-yellow{background: yellow;color: #fff;}
+	.tabs-bg-green{background: green;color: #fff;}
+	.info-edit-phone-container .phone-footer{
+		border-top: 1px solid #d7d7d7;
+		position: absolute;bottom:0;left: 0;right: 0;height: 45px;
 	}
 }
 
@@ -244,6 +359,7 @@ iframe{
 
 }
 #phone-inset{
-	position: absolute;left:0;right: 0;top:30px;bottom:30px;
+	position: absolute;left:0;right: 0;top:0px;bottom:0px;
 	height: auto;
+	overflow: hidden;
 }

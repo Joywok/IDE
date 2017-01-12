@@ -1,24 +1,26 @@
-window.JoywokMobileApp = {
-  callHandler:function(func_name,data,callBack){
-    this[func_name](data,callBack)
+function initBridge(){
+  this.init = function(callback){
+    callback('xxxxx',function(){})
+  }
+  this.callHandler = function(func_name,data,callback){
+    console.log(func_name,data)
+  }
+  this.registerHandler = function(){
   },
-  setTitle:function(data,callBack){
-    console.log('123123123123');
-  },
-  checkJsApi:function(){},
-  getInfo:function(){},
-  pushWebView:function(){},
-  newWebView:function(){},
-  closeWebView:function(){},
-  setFuncBtns:function(){},
-  setFuncBtnStatus:function(){},
-  showTabs:function(){},
-  hideTabs:function(){},
-  mailto:function(){},
-  back:function(){},
-  onSelectTab:function(){},
-  onNavBtnClick:function(){},
-  getAuthCode:function(){},
-  openImages:function(){}
+  this.setTitle = function(){}
+  this.checkJsApi = function(){}
+  this.getInfo = function(){}
+  this.pushWebView = function(){}
+  this.newWebView = function(){}
+  this.closeWebView = function(){}
+  this.setFuncBtns = function(){}
+  this.setFuncBtnStatus = function(){}
+  this.showTabs = function(){}
+  this.hideTabs = function(){}
+  this.mailto = function(){}
+  this.back = function(){}
+  this.AuthCode = function(){
+  }
+  return this;
 }
-
+window.JoywokMobileApp = window.WebViewJavascriptBridge = new initBridge()

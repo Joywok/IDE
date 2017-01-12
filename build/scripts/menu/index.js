@@ -45,25 +45,25 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(727);
+	module.exports = __webpack_require__(687);
 
 
 /***/ },
 
-/***/ 726:
+/***/ 686:
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
 
-/***/ 727:
+/***/ 687:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(726);
+		var gui = __webpack_require__(686);
 		var menu = new gui.Menu({ type: 'menubar' });
 		var menuItems = new gui.Menu();
 		var platform = 'darwin' === process.platform ? 'cmd' : 'ctrl';

@@ -1,5 +1,4 @@
 'use strict'
-console.log('xxxxx,editor.js')
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { createStore , combineReducers} from 'redux';
@@ -29,7 +28,6 @@ setTimeout(function(){
       log('Raw event info:', event, path, details);
     });
 },500)
-console.log(project,listData)
 let data = {
   project:project,
   listData:listData,
@@ -112,11 +110,9 @@ const App = combineReducers({
 let store = createStore(App);
 let target;
 window.addEventListener('message', function(e){
-  console.log('这里走了么少时诵诗书，儿子里面')
   if(!target) target = e;
   let data = e.data;
   if(data.type == 'window'){
-    console.log('window重新初始化了')
     let width = $('.editor-main').width();
     let height = $('.editor-main').height();
     $('.editor-main-i').css({

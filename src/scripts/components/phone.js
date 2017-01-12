@@ -25,6 +25,10 @@ module.exports = function(app){
 				height:this.props.phoneH+'px',
 				marginLeft:-+(this.props.phoneW/2)+'px'
 			}
+			let phoneInsetStyle = {
+				top:(this.props.tabs.length!=0?"90px":'40px'),
+				bottom:(this.props.footer.length!=0?'45px':'0px')
+			}
 			return (<div className="info-edit-phone">
 								<div className="info-edit-phone-opear">
 									<div className="info-phone-platform">
@@ -43,27 +47,59 @@ module.exports = function(app){
 										</div>
 									</div>
 								</div>
-								<div className="info-edit-phone-container" style={phoneCstyle}>
-									<iframe id="phone-outset" src={'file://'+basurl+'/src/template/phone.html'}/>
-									<iframe id="phone-inset"/>
+								<div className="info-edit-phone-container" id="info-edit-phone-container" style={phoneCstyle}>
+							 		<div className={"phone-header "+(this.props.btns.length!=0?'has-btns':'')+(this.props.tabsBg.length!=0?' has-tabs tabs-bg-'+this.props.tabsBg:'')}>
+							 			<div className="phone-title">{this.props.title}</div>
+							 			{this.props.btns.length!=0?<div className="phone-btns">{this.props.btns.map(function(i){
+							 				return <button onClick={(e)=>self.NavBtnClick(e,i)} disabled={i["disabled"]} className={"phone-btns-i "+(i["type"]>3?'phone-btns-i-specail':('phone-btns-i-'+i["type"]))} type="button">{i["name"]?i["name"]:''}</button>
+							 			})}</div>:''}
+							 		</div>
+						 			{this.props.tabs.length!=0?<div className={"phone-tabs "+(' phone-tabs-num-'+this.props.tabs.length+' ')+(this.props.tabsBg.length!=0?' tabs-bg-'+this.props.tabsBg:'')}>{
+							 			this.props.tabs.map(function(i){
+							 				return <div className={"phone-tabs-i "+(i['active']?'active':'')} onClick={(e)=>self.TabClick(e,i)}>
+							 								<div className="phone-tabs-i-val">{i["val"]}</div>
+							 								<div className="phone-tabs-i-bg"></div>
+							 							</div>
+							 			})
+							 		}</div>:''}
+							 		<div className={"phone-container "+(this.props.tabs.length!=0?'has-tabs':'')} id="phone-container" style={phoneInsetStyle}></div>
+							 		{this.props.footer.length!=0?<div className="phone-footer"></div>:''}
+							 		<div className="phone-specail hide"></div>
 								</div>
 							</div>
 							)
 		}
 		componentDidMount(){
-			let phoneOut = document.getElementById('phone-outset');
-			let phoneIn = document.getElementById('phone-inset');
-			let editor = document.getElementById('editor');
-			let consoleContainer = document.getElementById('aaa');
 			let self = this;
-			phoneOut.onload = function(){
-        phoneIn.src = self.props.project["src"]+'/index.html'
-        // file:///'+basurl+'/src/template/phone-inset.html'
-        phoneIn.onload=function(){
-					phoneIn.contentWindow.JoywokMobileApp = phoneOut.contentWindow.JoywokMobileApp 
-        }
-        consoleContainer.src = self.props.project["src"]+'/index.html'
-			}
+			let webview = document.createElement('webview');
+			webview.setAttribute('partition', 'trusted');
+			webview.setAttribute('allownw', 'true');
+			webview.setAttribute('class', 'hide');
+			webview.id = 'phone-inset';
+			document.getElementById('phone-container').appendChild(webview);
+			webview.addEventListener('permissionrequest', function (s) {
+        s.request.allow()
+      })
+      webview.addEventListener('dialog', function (e) {
+      	if(e.messageType == 'alert'){
+      		window.alert(e['messageText'])
+      	}else{
+      		e.preventDefault()
+      	}
+      })
+      webview.addEventListener('permissionrequest',function(e){
+      	e.request.allow();
+      })
+			webview.addEventListener('contentload', function(e) {
+				e.target.contentWindow.postMessage({
+					type:'init'
+				},'*');
+			});
+			// webview.addEventListener('consolemessage', function(e) {
+			//   console.log('Guest page logged a message: ', e.message);
+			// });
+			// webview.setUserAgentOverride(this.props.showPlatformVal)
+			webview.setAttribute('src', 'http://127.0.0.1:10000')
 		}
 		showPlatform(evt){
 			let target = $(evt.currentTarget);
@@ -88,6 +124,25 @@ module.exports = function(app){
 		handleChange(){
 		}
 		change(data){
+		}
+		NavBtnClick(e,i){
+			phoneInset.postMessage({
+				type:'register',
+				register:'onNavBtnClick',
+				data:i
+			},'*')
+		}
+		TabClick(e,i){
+			let dispatch = this.props.dispatch;
+			dispatch({
+        type:'info/changeTabs',
+        data:i
+      })
+      phoneInset.postMessage({
+				type:'register',
+				register:'onSelectTab',
+				data:i["num"]
+			},'*')
 		}
 	}
 	return Controller

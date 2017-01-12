@@ -17,21 +17,23 @@ module.exports = function(app){
 			let webview = document.createElement('webview');
 			webview.setAttribute('partition', 'trusted');
 			webview.id = 'cdt'
+			webview.addEventListener('loadcommit',function(e){
+				console.log('loadcommit')
+			})
 			webview.addEventListener('contentload', function(e) {
-				document.getElementById('aaa').showDevTools(true, webview);
+				// setTimeout(function(){
+				// },0)
 			});
 			webview.addEventListener('loadstop',function(e){
 				console.log('loadstop')
-			})
-			webview.addEventListener('loadcommit',function(e){
-				console.log('loadcommit')
 			})
 			webview.setAttribute('src','about:blank');
 			document.getElementById('info-debug-console').appendChild(webview);
 		}
 		shouldComponentUpdate(data){
       if(data['sidebar'] == 'debug'){
-        $('.info-debug').removeClass('hide')
+        $('.info-debug').removeClass('hide');
+        document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
       }else{
         $('.info-debug').addClass('hide')
       }

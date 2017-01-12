@@ -45,12 +45,12 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(734);
+	module.exports = __webpack_require__(692);
 
 
 /***/ },
 
-/***/ 734:
+/***/ 692:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -76,9 +76,7 @@
 					var cur = 0;
 					var len = 0;
 					var data = [];
-					request
-					// .get('http://192.168.1.73/public/platforms/Joywok.dmg')
-					.get('http://192.168.1.73/test/a.zip').on('response', function (data) {
+					request.get('http://192.168.1.73/test/a.tgz').on('response', function (data) {
 						len = parseInt(data.headers['content-length']);
 					}).on("data", function (chunk) {
 						data.push(chunk);
@@ -86,13 +84,13 @@
 						cur += chunk.length;
 						console.log("Downloading " + parseInt(100.0 * cur / len) + "% ");
 					}).on('end', function () {
-						fsExtra.mkdirs('cache');
-						fs.createReadStream('a.zip').on('end', function () {
-							console.log('压缩完了');
-							fsExtra.remove('a.zip');
-							fsExtra.remove('test');
-						}).pipe(unzip.Extract({ path: 'cache/' }));
-					}).pipe(fs.createWriteStream('a.zip'));
+						console.log('下载完了');
+						targz().extract('a.tgz', '.', function (err) {
+							if (err) console.log('Something is wrong ', err.stack);
+							fsExtra.remove('a.tgz', function (err) {});
+							console.log('Job done!');
+						});
+					}).pipe(fs.createWriteStream('a.tgz'));
 				};
 				newWin.window.close = function () {
 					newWin.close();
