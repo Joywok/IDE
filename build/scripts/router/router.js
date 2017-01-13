@@ -5978,11 +5978,7 @@
 	  _createClass(Dashboard, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'Dashboard'
-	      );
+	      return _react2.default.createElement('div', null);
 	    }
 	  }]);
 

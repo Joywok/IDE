@@ -38,12 +38,11 @@ gulp.task('mini',function(){
 		}))
 		.pipe(gulp.dest('build/images'));
 })
-gulp.task('default',function(){
+gulp.task('default',["html","styles"],function(){
   gulp.watch(['src/template/*.html'],['html']);
   gulp.watch(['src/styles/*.scss'],['styles:sass']);
 });
 gulp.task('platform',function(){
-  console.log('123123123123');
   var nw = new NwBuilder({
       files: './aaaaa/**/*', // use the glob format
       platforms: ['osx64','win64'],
