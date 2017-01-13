@@ -37,13 +37,13 @@
       if(states.isDirectory()){
         let item ;
         if(targetObj["children"]){
-        	item = {id:fileId,name:file,children:[],value:path+'/'+file,type:'folder'};
-        	fileId ++ 
+        	item = {id:fileId+'',name:file,children:[],value:path+'/'+file,type:'folder'};
+        	fileId++ 
         	oldFile.push(item)
           targetObj["children"].push(item);
         }else{
-          item = {id:fileId,name:file,children:[],value:path+'/'+file,type:'folder'};
-          fileId ++ 
+          item = {id:fileId+'',name:file,children:[],value:path+'/'+file,type:'folder'};
+          fileId++ 
           filesList.push(item);
           oldFile.push(item)
         }
@@ -57,13 +57,13 @@
         	return i== file
         }).length!=0) return 
         if(targetObj["children"]){
-          let item = {id:fileId,name:file,value:obj.path}
+          let item = {id:fileId+'',name:file,value:obj.path}
           oldFile.push(item);
-          fileId ++ 
+          fileId++ 
           targetObj["children"].push(item);
         }else{
-          let item = {id:fileId,name:file,value:obj.path};
-          fileId ++ 
+          let item = {id:fileId+'',name:file,value:obj.path};
+          fileId++ 
           oldFile.push(item)
           filesList.push(item);
         }
@@ -95,14 +95,14 @@
       s.onload = function () {
         require.config({
           paths: {
-            'vs': '../../node_modules/monaco-editor/min/vs'
+            'vs': '../../build/scripts/components/min/vs'
           },
         })
         require(['vs/editor/editor.main'], function () {
           window.monaco = monaco;
         })
       }
-      s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
+      s.src = "../../build/scripts/components/min/vs/loader.js"
       document.getElementById('body').appendChild(s);
       var script = document.createElement('script');
       script.src = '../../build/scripts/editor/index.js'

@@ -19,6 +19,10 @@ gulp.task('styles:sass', ()=>{
     .pipe(gulp.dest('build/styles'))
     .pipe($.size({title:'build/styles'}));
 });
+gulp.task('specail:js',function(){
+  return gulp.src(['src/scripts/components/min/**/*'])
+    .pipe(gulp.dest('build/scripts/components/min/'));
+})
 gulp.task('styles', ['styles:sass']);
 gulp.task('html', function() {
   return gulp.src('src/template/*.html')
@@ -39,12 +43,14 @@ gulp.task('default',function(){
   gulp.watch(['src/styles/*.scss'],['styles:sass']);
 });
 gulp.task('platform',function(){
+  console.log('123123123123');
   var nw = new NwBuilder({
       files: './aaaaa/**/*', // use the glob format
-      platforms: ['osx64'],
+      platforms: ['osx64','win64'],
       downloadUrl: 'https://dl.nwjs.io/',
       buildDir:'./platform',
-      cacheDir:'./platform'
+      cacheDir:'./platform',
+      version:'0.19.5'
   });
   //Log stuff you want
   nw.on('log',  console.log);

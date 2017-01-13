@@ -19,7 +19,6 @@
   "permissions": "system",
   "chromium-args": "-ignore-certificate-errors",
   "node-remote": "http://127.0.0.1:10000",
-  "inject-js-start": "src/scripts/test.js",
   "webview": {
     "partitions": [
       {
@@ -43,40 +42,27 @@
     "body-parser": "^1.15.2",
     "child_process": "^1.0.2",
     "chokidar": "^1.6.1",
-    "cookie": "^0.3.1",
-    "cookie-signature": "^1.0.6",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "dva": "^1.1.0",
-    "encodeurl": "^1.0.1",
-    "etag": "^1.7.0",
     "express": "^4.14.0",
-    "finalhandler": "^0.5.1",
-    "forwarded": "^0.1.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^1.0.0",
+    "gulp-exec": "^2.1.3",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.1.1",
     "gulp-sass": "^3.0.0",
     "gulp-util": "^3.0.7",
     "imagemin-pngquant": "^5.0.0",
-    "ipaddr.js": "^1.2.0",
     "jszip": "^3.1.3",
     "nw-builder": "^3.1.3",
-    "proxy-addr": "^1.1.2",
-    "raw-body": "^2.2.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "request": "^2.79.0",
-    "send": "^0.14.1",
-    "serve-static": "^1.11.1",
     "style-loader": "^0.13.1",
     "tar": "^2.2.1",
-    "tar-fs": "^1.15.0",
     "tar.gz": "^1.0.5",
-    "unpipe": "^1.0.0",
-    "unzip": "^0.1.11",
-    "utils-merge": "^1.0.0"
+    "unzip": "^0.1.11"
   },
   "devDependencies": {
     "atool-build": "^0.9.0",
@@ -128,7 +114,7 @@
     "start": "dora --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js",
-    "public": "cp -R a.tgz payload package.json nwjc node_modules minidump_stackwalk chromedriver build bower_components ../public/.",
-    "edit": "cp -R a.tgz payload package.json project.json config.json nwjc node_modules minidump_stackwalk chromedriver build bower_components aaaaa/."
+    "public": "cp -R a.tgz payload package_1.json nwjc node_modules_1 minidump_stackwalk chromedriver build bower_components ../public/.",
+    "edit": "cp -R a.tgz package_1.json project.json config.json node_modules_1 build bower_components aaaaa/."
   }
 }

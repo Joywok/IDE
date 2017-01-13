@@ -9,9 +9,7 @@ module.exports = function(){
   let url = project['src'].split('file://')[1];
   const app = dva();
   const emitter = new EventEmitter();
-  console.log(event)
   const appServer = express();
-  console.log(project);
   appServer.use(bodyParser())
   appServer.set('view engine', 'html');
   appServer.use(express.static(url));

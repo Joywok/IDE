@@ -10,6 +10,7 @@ let FileType = {
   json:'json',
   less:'less'
 }
+
 let watcher = chokidar.watch(project['src'].split('file://')[1], {
   ignored: /(^|[\/\\])\../,
   persistent: true

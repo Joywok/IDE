@@ -27,9 +27,9 @@ module.exports = function(app,store,emitter){
     store.dispatch({
       type:'info/resetNormal',
     })
-    // setTimeout(function(){
-    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-    // },0)
+    setTimeout(function(){
+      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+    },0)
   }
   emitter.on('reload',reloadWindow)
   window.addEventListener('message',function(e){

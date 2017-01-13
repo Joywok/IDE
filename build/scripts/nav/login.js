@@ -61681,7 +61681,7 @@
 	       * Promise support
 	       *
 	       * @param {Function} resolve
-	       * @param {Function} reject
+	       * @param {Function} [reject]
 	       * @return {Request}
 	       */
 
@@ -61835,6 +61835,10 @@
 	          throw new Error('.field(name, val) name can not be empty');
 	        }
 
+	        if (this._data) {
+	          console.error(".field() can't be used if .send() is used. Please use only .send() or only .field() & .attach()");
+	        }
+
 	        if (isObject(name)) {
 	          for (var key in name) {
 	            this.field(key, name[key]);
@@ -61969,6 +61973,10 @@
 	      RequestBase.prototype.send = function (data) {
 	        var isObj = isObject(data);
 	        var type = this._header['content-type'];
+
+	        if (this._formData) {
+	          console.error(".send() can't be used if .attach() or .field() is used. Please use only .send() or only .field() & .attach()");
+	        }
 
 	        if (isObj && !this._data) {
 	          if (Array.isArray(data)) {
@@ -63184,10 +63192,15 @@
 	        this._setTimeouts();
 
 	        // initiate request
-	        if (this.username && this.password) {
-	          xhr.open(this.method, this.url, true, this.username, this.password);
-	        } else {
-	          xhr.open(this.method, this.url, true);
+	        try {
+	          if (this.username && this.password) {
+	            xhr.open(this.method, this.url, true, this.username, this.password);
+	          } else {
+	            xhr.open(this.method, this.url, true);
+	          }
+	        } catch (err) {
+	          // see #1149
+	          return this.callback(err);
 	        }
 
 	        // CORS

@@ -13,20 +13,42 @@
   const gui = require('nw.gui');
   const targz = require('tar.gz');
   const express = require('express');
-  // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><!-- <script src="../scripts/index.js"></script> --><script type="text/javascript">$(function(){
-    $("body").append('<input type="file" nwdirectory id="choseDirectory"/>')
-    var chooser = $('#choseDirectory');
-    chooser.unbind('change');
-    chooser.change(function(evt) {
-      let val = $(this).val()
-      projects[0]['src'] = "file://"+val;
-      targz().extract('a.tgz', val, function(err){
-        if(err) console.log('Something is wrong ', err.stack);
-        chooser.remove();
-        let script = document.createElement('script');
-        script.src = '../scripts/index.js'
-        document.getElementById('body').appendChild(script)
+  const platform = (process.platform == 'darwin'?'mac':'win')
+  require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><!-- <script src="../scripts/index.js"></script> --><script type="text/javascript">$(function(){
+    if(projects.length==0){
+      $("body").append('<input type="file" nwdirectory id="choseDirectory"/>')
+      var chooser = $('#choseDirectory');
+      chooser.unbind('change');
+      chooser.change(function(evt) {
+        let val = $(this).val();
+        let data = {
+          "id":"xxxxxx",
+          "name":"xxxxxx",
+          "src":'file://'+val,
+          "tools":{
+            "babel":true,
+            "completion":true,
+            "compress":true
+          },
+          "appId":"6396ecf2cae620a838243a1f8858ddee",
+          "corpId":"w6WXvWEqrmWZUTfA",
+          "nonceStr":"sdfgrt76834fgdg344",
+          "signature":"NOwxCwVAlKP5CNh0anR0PK5LoDghoR0P"
+        } 
+        projects.push(data);
+        fs.writeFile('project.json',JSON.stringify(projects))
+        targz().extract('a.tgz', val, function(err){
+          if(err) console.log('Something is wrong ', err.stack);
+          chooser.remove();
+          let script = document.createElement('script');
+          script.src = '../scripts/index.js'
+          document.getElementById('body').appendChild(script)
+        });
       });
-    });
-    chooser.click();  
+      chooser.click(); 
+    }else{
+      let script = document.createElement('script');
+      script.src = '../scripts/index.js'
+      document.getElementById('body').appendChild(script)
+    }
   })</script></html>

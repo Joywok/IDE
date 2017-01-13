@@ -22202,9 +22202,7 @@
 				key: 'openFolder',
 				value: function openFolder() {
 					// console.log(this.props.project.src)
-					var src = this.props.project.src.split('file://')[1] + '/index.html';
-					console.log(src);
-					gui.Shell.showItemInFolder(src);
+					gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1] + '/index.html');
 				}
 			}, {
 				key: 'uploadProject',
@@ -22214,7 +22212,12 @@
 				value: function changeTools(evt, type) {}
 			}, {
 				key: 'removeProject',
-				value: function removeProject() {}
+				value: function removeProject() {
+					fs.writeFile('project.json', JSON.stringify([]), function () {
+						console.log('12312312');
+						nowWin.reload();
+					});
+				}
 			}]);
 
 			return Controller;

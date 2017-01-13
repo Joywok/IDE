@@ -1,0 +1,62 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "name": "nw-demo",
+  "main": "build/template/index.html",
+  "window": {
+    "title": "Joywok IDE",
+    "toolbar": false,
+    "frame": true,
+    "width": 840,
+    "height": 620,
+    "min_height": 620
+  },
+  "webkit": {
+    "plugin": true,
+    "page-cache": false
+  },
+  "nodejs": true,
+  "permissions": "system",
+  "chromium-args": "-ignore-certificate-errors",
+  "node-remote": "http://127.0.0.1:10000",
+  "inject-js-start": "src/scripts/test.js",
+  "webview": {
+    "partitions": [
+      {
+        "name": "trusted",
+        "accessible_resources": [
+          "<all_urls>"
+        ]
+      },
+      {
+        "name": "devtools",
+        "accessible_resources": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  },
+  "no-edit-menu": false,
+  "entry": {},
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chokidar": "^1.6.1",
+    "fs-extra": "^1.0.0",
+    "express": "^4.14.0",
+    "request": "^2.79.0",
+    "tar.gz": "^1.0.5"
+  },
+  "devDependencies": {
+    "material-ui": "^0.16.4",
+    "del": "^2.2.2",
+    "path": "^0.12.7",
+    "superagent": "^3.1.0"
+  },
+  "scripts": {
+    "start": "dora --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
+    "build": "atool-build",
+    "test": "atool-test-mocha ./src/**/*-test.js",
+    "public": "cp -R a.tgz payload package.json nwjc node_modules minidump_stackwalk chromedriver build bower_components ../public/.",
+    "edit": "cp -R a.tgz package.json project.json config.json node_modules build bower_components aaaaa/."
+  }
+}

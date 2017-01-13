@@ -22042,6 +22042,7 @@
 	  json: 'json',
 	  less: 'less'
 	};
+
 	var watcher = chokidar.watch(project['src'].split('file://')[1], {
 	  ignored: /(^|[\/\\])\../,
 	  persistent: true

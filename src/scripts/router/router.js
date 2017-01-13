@@ -47,21 +47,23 @@ class App extends Component {
     //   console.log(error, stdout, stderr)
     // })
     // return 
-    if(user['id'] && user['name']){
-      if(projects.length!=0){
-        if(this.props.location.pathname.indexOf('/info')>-1){
-        }else{
-          this.props.history.push('/info');  // 
-        }
-      }else{
-        if(this.props.location.pathname == '/apps'){
-        }else{
-          this.props.history.push('/apps');  
-        }  
-      }
-    }else{
-      this.props.history.push('/login');  
-    }
+    alert('这里走了么')
+    // if(user['id'] && user['name']){
+    //   if(projects.length!=0){
+    //     if(this.props.location.pathname.indexOf('/info')>-1){
+    //     }else{
+    //       console.log('走的这里面吧')
+    //       this.props.history.push('/info');  // 
+    //     }
+    //   }else{
+    //     if(this.props.location.pathname == '/apps'){
+    //     }else{
+    //       this.props.history.push('/apps');  
+    //     }  
+    //   }
+    // }else{
+    //   this.props.history.push('/login');  
+    // }
   }
 }
 const routeConfig = [
@@ -69,10 +71,9 @@ const routeConfig = [
     component: App,
     indexRoute: { component:Dashboard},
     childRoutes:[
-      {path: 'login', component:require('./../nav/login')},
-      {path: 'apps', component:require('./../nav/apps')},
-      {path: 'info', component:require('./../nav/info'),
-      },
+      // {path: 'login', component:require('./../nav/login')},
+      // {path: 'apps', component:require('./../nav/apps')},
+      {path: 'info', component:require('./../nav/info')}
     ]
   }
 ]

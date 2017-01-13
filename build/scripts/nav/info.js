@@ -31504,9 +31504,7 @@
 				key: 'openFolder',
 				value: function openFolder() {
 					// console.log(this.props.project.src)
-					var src = this.props.project.src.split('file://')[1] + '/index.html';
-					console.log(src);
-					gui.Shell.showItemInFolder(src);
+					gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1] + '/index.html');
 				}
 			}, {
 				key: 'uploadProject',
@@ -31516,7 +31514,12 @@
 				value: function changeTools(evt, type) {}
 			}, {
 				key: 'removeProject',
-				value: function removeProject() {}
+				value: function removeProject() {
+					fs.writeFile('project.json', JSON.stringify([]), function () {
+						console.log('12312312');
+						nowWin.reload();
+					});
+				}
 			}]);
 
 			return Controller;
@@ -35781,9 +35784,7 @@
 	  var url = project['src'].split('file://')[1];
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();
-	  console.log(event);
 	  var appServer = express();
-	  console.log(project);
 	  appServer.use(bodyParser());
 	  appServer.set('view engine', 'html');
 	  appServer.use(express.static(url));
@@ -36192,9 +36193,9 @@
 	    store.dispatch({
 	      type: 'info/resetNormal'
 	    });
-	    // setTimeout(function(){
-	    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-	    // },0)
+	    setTimeout(function () {
+	      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+	    }, 0);
 	  }
 	  emitter.on('reload', reloadWindow);
 	  window.addEventListener('message', function (e) {

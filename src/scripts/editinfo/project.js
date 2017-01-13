@@ -60,18 +60,17 @@ module.exports = function(app,store){
 		}
 		openFolder(){
 			// console.log(this.props.project.src)
-			let src = this.props.project.src.split('file://')[1]+'/index.html';
-			console.log(src)
-			gui.Shell.showItemInFolder(src);
+			gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1]+'/index.html');
 		}
 		uploadProject(){
-			
 		}
 		changeTools(evt,type){
-
 		}
 		removeProject(){
-			
+			fs.writeFile('project.json',JSON.stringify([]),function(){
+				console.log('12312312');
+				nowWin.reload();
+			});
 		}
 	}
 	return Controller

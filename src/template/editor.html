@@ -27,7 +27,7 @@
     s.onload = function () {
       require.config({
         paths: {
-          'vs': '../../node_modules/monaco-editor/min/vs'
+          'vs': '../../build/scripts/components/min/vs'
         },
       })
       require(['vs/editor/editor.main'], function () {
@@ -41,7 +41,7 @@
 				// });
       })
     }
-    s.src = "../../node_modules/monaco-editor/min/vs/loader.js"
+    s.src = "../../build/scripts/components/min/vs/loader.js"
     document.head.appendChild(s)
   }
 </script>
