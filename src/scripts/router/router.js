@@ -13,6 +13,7 @@ class Dashboard extends Component {
 }
 class App extends Component {
   render() {
+    console.log(this.props.children,'22222');
     return (
         <div className="main-w">
           {this.props.children}
@@ -47,23 +48,21 @@ class App extends Component {
     //   console.log(error, stdout, stderr)
     // })
     // return 
-    alert('这里走了么')
-    // if(user['id'] && user['name']){
-    //   if(projects.length!=0){
-    //     if(this.props.location.pathname.indexOf('/info')>-1){
-    //     }else{
-    //       console.log('走的这里面吧')
-    //       this.props.history.push('/info');  // 
-    //     }
-    //   }else{
-    //     if(this.props.location.pathname == '/apps'){
-    //     }else{
-    //       this.props.history.push('/apps');  
-    //     }  
-    //   }
-    // }else{
-    //   this.props.history.push('/login');  
-    // }
+    if(user['id'] && user['name']){
+      if(projects.length!=0){
+        if(this.props.location.pathname.indexOf('/info')>-1){
+        }else{
+          this.props.history.push('/info');
+        }
+      }else{
+        if(this.props.location.pathname == '/apps'){
+        }else{
+          this.props.history.push('/apps');  
+        }  
+      }
+    }else{
+      this.props.history.push('/login');  
+    }
   }
 }
 const routeConfig = [
@@ -73,7 +72,23 @@ const routeConfig = [
     childRoutes:[
       // {path: 'login', component:require('./../nav/login')},
       // {path: 'apps', component:require('./../nav/apps')},
-      {path: 'info', component:require('./../nav/info')}
+      // {path: 'info', component:require('./../nav/info')}
+      {path:'login',name:'login',getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./../nav/login'));
+        },'login');
+      }},
+
+      {path:'apps',name:'apps',getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./../nav/apps'));
+        },'apps');
+      }},
+      {path:'info',name:'info',getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./../nav/info'));
+        },'info');
+      }}
     ]
   }
 ]

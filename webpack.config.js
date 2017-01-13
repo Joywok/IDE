@@ -56,9 +56,9 @@ module.exports = {
     'jssdk/jssdk':[path.resolve(__dirname, 'src/scripts/jssdk/jssdk.js')],
     'jssdk/jssdk-callHander':[path.resolve(__dirname, 'src/scripts/jssdk/jssdk-callHander.js')],
     'menu/index':[path.resolve(__dirname, 'src/scripts/menu/index.js')],
-    'nav/apps':[path.resolve(__dirname, 'src/scripts/nav/apps.js')],
-    'nav/info':[path.resolve(__dirname, 'src/scripts/nav/info.js')],
-    'nav/login':[path.resolve(__dirname, 'src/scripts/nav/login.js')],
+    // 'nav/apps':[path.resolve(__dirname, 'src/scripts/nav/apps.js')],
+    // 'nav/info':[path.resolve(__dirname, 'src/scripts/nav/info.js')],
+    // 'nav/login':[path.resolve(__dirname, 'src/scripts/nav/login.js')],
     'platform/update':[path.resolve(__dirname, 'src/scripts/platform/update.js')],
     'platform/windows':[path.resolve(__dirname, 'src/scripts/platform/windows.js')],
     'router/router':[path.resolve(__dirname, 'src/scripts/router/router.js')],
@@ -68,9 +68,9 @@ module.exports = {
   //入口文件输出配置
   output: {
     path: path.resolve(__dirname, 'build/scripts'),
+    publicPath:"/build/scripts/",
     filename: '[name].js',
-    chunkFilename: "[name].chunk.js",
-    publicPath:"build/scripts/"
+    chunkFilename: "nav/[name].js"
   },
   module: {
     //加载器配置

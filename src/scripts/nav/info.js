@@ -123,7 +123,7 @@ module.exports = function(){
     }
   }
   let store = createStore(App);
-  const menu = require('./../menu/index')(emitter);
+  const menu = require('./../menu/index')(emitter);  
   const Phone = require('./../components/phone.js')(app,store);
   const Edit = require('./../editinfo/edit')(app,store);
   const Debug = require('./../editinfo/debug')(app,store);
