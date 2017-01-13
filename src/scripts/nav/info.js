@@ -22,10 +22,13 @@ module.exports = function(){
     console.log('Example app listening at http://%s:%s', host, port);
     let date = Date.parse(new Date())/1000;
     $("#phone-inset").attr({src:"http://127.0.0.1:10000?time="+date});
-    $("#phone-inset").removeClass('hide')
+    $("#phone-inset").removeClass('hide');
+    // $("#phone-inset")[0].onload = function(){
+    //   alert('xxxxxx');
+    // }
     // setTimeout(function(){
     //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-    // })
+    // },0)
     // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
   });
 

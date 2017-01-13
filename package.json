@@ -9,7 +9,8 @@
     "frame": true,
     "width": 840,
     "height": 620,
-    "min_height": 620
+    "min_height": 620,
+    "icon":"build/images/ico-s.png"
   },
   "webkit": {
     "plugin": true,
@@ -18,6 +19,7 @@
   "nodejs": true,
   "permissions": "system",
   "chromium-args": "-ignore-certificate-errors",
+  "show_in_taskbar":true,
   "node-remote": "http://127.0.0.1:10000",
   "webview": {
     "partitions": [

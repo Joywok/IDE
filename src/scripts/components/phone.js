@@ -91,6 +91,7 @@ module.exports = function(app){
       	e.request.allow();
       })
 			webview.addEventListener('contentload', function(e) {
+				$("#phone-inset").removeClass('hide')
 				e.target.contentWindow.postMessage({
 					type:'init'
 				},'*');
@@ -99,7 +100,7 @@ module.exports = function(app){
 			//   console.log('Guest page logged a message: ', e.message);
 			// });
 			// webview.setUserAgentOverride(this.props.showPlatformVal)
-			webview.setAttribute('src', 'http://127.0.0.1:10000')
+			// webview.setAttribute('src', 'http://127.0.0.1:10000')
 		}
 		showPlatform(evt){
 			let target = $(evt.currentTarget);
