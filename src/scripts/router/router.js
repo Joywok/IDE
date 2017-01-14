@@ -1,6 +1,7 @@
 import React, { PropTypes , Component} from 'react';
 import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory} from 'dva/router';
 
+window.hashHistory = hashHistory;
 
 class Dashboard extends Component {
   render() {
@@ -84,6 +85,13 @@ const routeConfig = [
           cb(null, require('./../nav/apps'));
         },'apps');
       }},
+
+      {path:'apps/build',name:'build',getComponent(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, require('./../nav/build'));
+        },'apps');
+      }},
+
       {path:'info',name:'info',getComponent(nextState, cb) {
         require.ensure([], require => {
           cb(null, require('./../nav/info'));

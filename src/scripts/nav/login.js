@@ -133,22 +133,36 @@ class Controller extends Component{
   submit(){
     const { dispatch } = this.props
     dispatch(changeBtn({isdis:true,loginVal:'登录中…'}))
-    var data = {"email":this.props.email,"pname":this.props.passwd};
+    var data = {"email":this.props.email,"password":this.props.passwd};
     request
-      .post('http://blogs-1774886889.cn-north-1.elb.amazonaws.com.cn/siteconsole/login/post')
+      .post('http://127.0.0.1/ide/account/login')
       .send(data)
       .end(function(err,res){
         let data = JSON.parse(res["text"]);
-        if(data["ret"] == 'error'){
-          dispatch(changeBtn({isdis:false,loginVal:'登录'}))
-          if(data['cmt']['code'] == 'jw_reg_nouser'){
-            dispatch(changeError({nameError:'用户名不存在'}))
-          }else{
-            dispatch(changeError({passwdError:'密码错误'}))
-          }
+        console.log(data);
+        if(data["errorcode"]){
+            dispatch(changeError({nameError:'用户名或密码错误！'}))
         }else{
-          
-          ipcRenderer.send('openinfo',data);
+          for(var i in data.data.user_info.contact){
+            if(data.data.user_info.contact[i].type == "mobile"){
+              var mobile = data.data.user_info.contact[i].val;
+            }
+          }
+          var userinfo = {
+            "email" : data.data.user_info.account,
+            "id"  : data.data.id,
+            "name" : data.data.user_info.name,
+            "title" : data.data.user_info.title,
+            "mobile" : mobile,
+            "avatar" : {
+              "avatar_l" : data.data.user_info.avatar_l,
+              "avatar_s" : data.data.user_info.avatar_s
+            },
+            "role" : data.data.roles
+          }
+          fs.writeFile('config.json',JSON.stringify(userinfo),function(){
+            hashHistory.push("/info");
+          })
         }
       });
   }

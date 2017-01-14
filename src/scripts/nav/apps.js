@@ -3,38 +3,55 @@ import { Router, Route } from 'dva/router';
 import React,{ Component }from 'react';
 import { createStore } from 'redux';
 import { Provider ,connect} from 'react-redux';
+
+require('../../styles/apps.css');
+
+var config = fs.readFileSync('config.json', 'utf-8');
+config = JSON.parse(config);
+
 module.exports = function(){
   const app = dva();
   app.model({
-    namespace: 'count',
+    namespace: 'apps',
     state: {
-      record: 0,
-      current: 0,
+      list: {},
+      userinfo: config
     },
     reducers: {
       add(state) {
-        const newCurrent = state.current + 1;
+        const newCurrent = state.list + 1;
         return { ...state,
-          current: newCurrent,
+          list: newCurrent,
         };
       },
-      minus(state) {
-        return { ...state, current: state.current - 1};
+      list(state) {
+        const list = state.list;
+        return { ...state,
+          list: list,
+        };
       }
     }
   });
-  class CountApp extends Component{
+  class Apps extends Component{
   	render(){
   		return (
-  	    <div className="">
-  	     <div className="">Record:{this.props.record}</div>
-        <div className="">Current:{this.props.current}</div>
-  	    </div>
+  	   <div className="apps">
+          <div className="avatar"><img src={"http://loc.joywok.com" + this.props.userinfo.avatar.avatar_l}/></div>
+          <div className="name">大神：{this.props.userinfo.name}</div>
+          <hr />
+          <div className="list">
+            <div className="item">
+              <img src="/add.png"/>
+              <span>添加项目</span>
+            </div>
+          </div>
+          <hr />
+  	   </div>
   	  );
   	}
     componentDidMount(){
       const {dispatch} = this.props;
-      dispatch({type: 'count/add'});
+      dispatch({type: 'apps/list'});
     }
   }
   function mapStateToProps(state) {
@@ -53,7 +70,7 @@ module.exports = function(){
     }
   }
   let store = createStore(App);
-  const RootApp = connect(mapStateToProps)(CountApp);
+  const RootApp = connect(mapStateToProps)(Apps);
   class Main extends Component{
     render(){
       return (<Provider store={store}>
@@ -62,5 +79,12 @@ module.exports = function(){
               )
     }
   }
+
+  var project = fs.readFileSync('project.json', 'utf-8');
+  project = JSON.parse(project);
+  if(project.length != 0){
+
+  }
+
   return Main
 }()
