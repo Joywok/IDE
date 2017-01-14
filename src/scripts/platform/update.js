@@ -37,6 +37,7 @@ window.newNotication = function(){
 					fsExtra.remove('update.tgz', function (err){});
 					console.log('Job done!');
 					newWin.close();
+					window.AppRestart();
 				});
 			}
 			newWin.window.close = function(){
