@@ -172,7 +172,7 @@ class ChildeView extends Component{
     }
   }
 }
-class TreeView  extends Component{
+class TreeView extends Component{
   render(){
     let data = this.props.Reducer;
     let self = this;

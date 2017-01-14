@@ -30933,7 +30933,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// 1. Initialize
-	var app = (0, _dva2.default)();
+	window.app = (0, _dva2.default)();
 	// 2. Plugins
 	//app.use({});
 	// 3. Model
@@ -30964,6 +30964,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	window.hashHistory = _router.hashHistory;
 
 	var Dashboard = function (_Component) {
 	  _inherits(Dashboard, _Component);
@@ -31039,9 +31041,11 @@
 	            this.props.history.push('/info');
 	          }
 	        } else {
-	          if (this.props.location.pathname == '/apps') {} else {
-	            this.props.history.push('/apps');
-	          }
+	          this.props.history.push('/info');
+	          // if(this.props.location.pathname == '/apps'){
+	          // }else{
+	          //   this.props.history.push('/apps');  
+	          // }  
 	        }
 	      } else {
 	        this.props.history.push('/login');

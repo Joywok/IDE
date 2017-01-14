@@ -1,6 +1,6 @@
 import dva from 'dva';
 // 1. Initialize
-const app = dva();
+window.app = dva();
 // 2. Plugins
 //app.use({});
 // 3. Model

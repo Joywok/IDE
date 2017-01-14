@@ -1,7 +1,7 @@
 import React, { PropTypes , Component} from 'react';
 import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory} from 'dva/router';
 
-
+window.hashHistory = hashHistory;
 class Dashboard extends Component {
   render() {
     return (
@@ -54,10 +54,11 @@ class App extends Component {
           this.props.history.push('/info');
         }
       }else{
-        if(this.props.location.pathname == '/apps'){
-        }else{
-          this.props.history.push('/apps');  
-        }  
+        this.props.history.push('/info');
+        // if(this.props.location.pathname == '/apps'){
+        // }else{
+        //   this.props.history.push('/apps');  
+        // }  
       }
     }else{
       this.props.history.push('/login');  
