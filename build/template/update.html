@@ -1,5 +1,15 @@
-<!DOCTYPE html><html><head><title>更新代码</title><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../../build/styles/reset.css"></head><body><div class="update-code"><div class="update-code-close" onclick="window.close()"><i class="fa fa-close"></i></div><div class="update-code-title"><div class="update-code-icon"><i class="fa fa-code"></i></div><div class="update-code-msg"><h1 class="title">有新版本</h1><p class="content"></p></div></div><div class="update-code-btn" class="btn"><span onclick="window.restart()">重启</span></div></div></body><style type="text/css">*{
+<!DOCTYPE html><html><head><title>更新代码</title><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../../build/styles/reset.css"></head><body><div class="update-code"><div class="update-code-close" onclick="window.close()"><i class="fa fa-close"></i></div><div class="update-code-title"><div class="update-code-icon"><i class="fa fa-code"></i></div><div class="update-code-msg"><h1 class="title">有新版本</h1><p class="content"></p><progress value="0" max="100" class="progress hide"></progress></div></div><div class="update-code-btn" class="btn"><span onclick="window.restart()">更新</span></div></div></body><style type="text/css">*{
 	margin:0;padding: 0;
+}
+body{
+	-webkit-app-region: drag;
+	overflow: hidden;
+}
+.hide{
+	display: none;
+}
+::-prefix-progress-bar{
+	background:#b0b0b0;
 }
 .update-code{
 	position: relative;
@@ -10,7 +20,7 @@
 .update-code .update-code-close{
 	position: absolute;top:10px;right: 10px;font-size: 12px;color: #000;
 	cursor: pointer;z-index: 2222222;
-	display: block
+	display: block;
 }
 .update-code .update-code-title{
 	height: 90px;
@@ -40,8 +50,8 @@
 	padding:0 20px;
 	height: 36px;
 	line-height: 36px;
-	cursor: pointer;
 }
 .update-code .update-code-btn span{
+	float: left;
 	cursor: pointer;
 }</style></html>

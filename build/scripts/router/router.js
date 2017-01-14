@@ -6009,33 +6009,11 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      // fsExtra.copy('build', 'tmp', function (err) {
-	      //   if (err) return console.error(err)
-	      //   console.log("success!")
-	      // });
-	      // if(ide.version!='0.0.2'){
-	      //   newNotication();
-	      //   return 
-	      //   var body = "";
-	      //   var cur = 0;
-	      //   var len = 0;
-	      //   request
-	      //     .get('http://192.168.1.73/public/platforms/Joywok.dmg')
-	      //     .on( 'response', function ( data ) {
-	      //       len = parseInt(data.headers['content-length']);
-	      //     })
-	      //     .on("data", function(chunk) {
-	      //       body += chunk;
-	      //       cur += chunk.length;
-	      //       console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
-	      //     })
-	      //     .pipe(fs.createWriteStream('Joywok.dmg'))
-	      // }
+	      window.checkVersion();
 	      // const child_process = require('child_process').exec;
 	      // child_process(`cp`, function(error, stdout, stderr){
 	      //   console.log(error, stdout, stderr)
 	      // })
-	      // return 
 	      if (user['id'] && user['name']) {
 	        if (projects.length != 0) {
 	          if (this.props.location.pathname.indexOf('/info') > -1) {} else {
@@ -6066,17 +6044,17 @@
 	  // {path: 'info', component:require('./../nav/info')}
 	  { path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(8, function (require) {
-	        cb(null, __webpack_require__(402));
+	        cb(null, __webpack_require__(403));
 	      });
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(9, function (require) {
-	        cb(null, __webpack_require__(683));
+	        cb(null, __webpack_require__(684));
 	      });
 	    }
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(10, function (require) {
-	        cb(null, __webpack_require__(684));
+	        cb(null, __webpack_require__(685));
 	      });
 	    }
 	  }]

@@ -26321,7 +26321,8 @@ webpackJsonp([10],[
 /* 681 */,
 /* 682 */,
 /* 683 */,
-/* 684 */
+/* 684 */,
+/* 685 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26344,7 +26345,7 @@ webpackJsonp([10],[
 
 	var _reactRedux = __webpack_require__(156);
 
-	var _events = __webpack_require__(685);
+	var _events = __webpack_require__(686);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26382,7 +26383,7 @@ webpackJsonp([10],[
 	    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
 	  });
 
-	  var nowWin = __webpack_require__(686).Window.get();
+	  var nowWin = __webpack_require__(687).Window.get();
 	  app.model({
 	    namespace: 'info',
 	    state: {
@@ -26482,12 +26483,12 @@ webpackJsonp([10],[
 	    }
 	  }
 	  var store = (0, _redux.createStore)(App);
-	  var menu = __webpack_require__(687)(emitter);
+	  var menu = __webpack_require__(688)(emitter);
 	  var Phone = __webpack_require__(2)(app, store);
 	  var Edit = __webpack_require__(359)(app, store);
 	  var Debug = __webpack_require__(358)(app, store);
 	  var Project = __webpack_require__(360)(app, store);
-	  var windows = __webpack_require__(688)(app, store, emitter);
+	  var windows = __webpack_require__(689)(app, store, emitter);
 
 	  var CountApp = function (_Component) {
 	    _inherits(CountApp, _Component);
@@ -26586,7 +26587,7 @@ webpackJsonp([10],[
 	      value: function componentDidMount() {
 	        var dispatch = this.props.dispatch;
 
-	        var fs = __webpack_require__(689);
+	        var fs = __webpack_require__(690);
 	        setTimeout(function () {
 	          return;
 	          $('.xxxxx').html('');
@@ -26671,25 +26672,25 @@ webpackJsonp([10],[
 	}();
 
 /***/ },
-/* 685 */
+/* 686 */
 /***/ function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ },
-/* 686 */
+/* 687 */
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
-/* 687 */
+/* 688 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(686);
+		var gui = __webpack_require__(687);
 		var nowWin = gui.Window.get();
 		var tray = new gui.Tray({ icon: platform == "mac" ? 'build/images/ico-s.png' : 'build/images/ico-b.png', alticon: true }); //window下面可以
 		tray.tooltip = '点击打开';
@@ -26749,13 +26750,13 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 688 */
+/* 689 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(686).Window.get();
-	var Screen = __webpack_require__(686).Screen.Init();
+	var nowWin = __webpack_require__(687).Window.get();
+	var Screen = __webpack_require__(687).Screen.Init();
 	window.phoneInset;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];
@@ -26857,7 +26858,7 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 689 */
+/* 690 */
 /***/ function(module, exports) {
 
 	module.exports = require("fs");

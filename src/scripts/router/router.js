@@ -1,6 +1,10 @@
 import React, { PropTypes , Component} from 'react';
 import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory} from 'dva/router';
 
+
+
+
+
 window.hashHistory = hashHistory;
 class Dashboard extends Component {
   render() {
@@ -20,33 +24,11 @@ class App extends Component {
     )
   }
   componentDidMount(){
-    // fsExtra.copy('build', 'tmp', function (err) {
-    //   if (err) return console.error(err)
-    //   console.log("success!")
-    // });
-    // if(ide.version!='0.0.2'){
-    //   newNotication();
-    //   return 
-    //   var body = "";
-    //   var cur = 0;
-    //   var len = 0;
-    //   request
-    //     .get('http://192.168.1.73/public/platforms/Joywok.dmg')
-    //     .on( 'response', function ( data ) {
-    //       len = parseInt(data.headers['content-length']);
-    //     })
-    //     .on("data", function(chunk) {
-    //       body += chunk;
-    //       cur += chunk.length;
-    //       console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
-    //     })
-    //     .pipe(fs.createWriteStream('Joywok.dmg'))
-    // }
+    window.checkVersion();
     // const child_process = require('child_process').exec;
     // child_process(`cp`, function(error, stdout, stderr){
     //   console.log(error, stdout, stderr)
     // })
-    // return 
     if(user['id'] && user['name']){
       if(projects.length!=0){
         if(this.props.location.pathname.indexOf('/info')>-1){
