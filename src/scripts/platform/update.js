@@ -1,8 +1,24 @@
 'use strict';
+let nowVersion = ide.verion;
+window.AppRestart = function() {
+    var child,
+    child_process = require("child_process"),
+    gui = require('nw.gui'),
+    win = gui.Window.get();
+    if (process.platform == "darwin")  {
+        child = child_process.spawn("open", ["-n", "-a", process.execPath.match(/^([^\0]+?\.app)\//)[1]], {detached:true});
+    } else {
+        child = child_process.spawn(process.execPath, [], {detached: true});
+    }
+    child.unref();
+    win.hide();
+    gui.App.quit();
+}
 window.newNotication = function(){
 	let nowWin = gui.Screen.screens[0]['bounds'];
 	let newWin;
 	gui.Window.open('file://'+basurl+'/build/template/update.html', {
+		// position:"center",
 		x:nowWin['width']-375,
 	  y:40,
 	  width: 360,
@@ -10,36 +26,19 @@ window.newNotication = function(){
     frame: false
 	},function(new_win){
 		newWin = new_win;
-		newWin.on('loaded',function(){
+		newWin.on('document-end',function(){
 			let target = $(newWin.window.document);
 			let title = target.find('.title');
 			let content = target.find('.content'); 
-			content.html('新版本0.0.1已经准备好，立刻重启更新？');
+			content.html('新版本'+nowVersion+'已经准备好，立刻重启更新？');
 			newWin.window.restart = function(){
-				var body = "";
-				var cur = 0;
-				var len = 0;
-				var data = [];
-				request
-					.get('http://192.168.1.73/test/a.tgz')
-					.on( 'response', function ( data ) {
-						len = parseInt(data.headers['content-length']);
-					})
-					.on("data", function(chunk) {
-						data.push(chunk);
-						body += chunk;
-						cur += chunk.length;
-						console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
-					})
-					.on('end',function(){
-						console.log('下载完了');
-						targz().extract('a.tgz', '.', function(err){
-						  if(err) console.log('Something is wrong ', err.stack);
-						  fsExtra.remove('a.tgz', function (err){});
-						  console.log('Job done!');
-						});
-					})
-					.pipe(fs.createWriteStream('a.tgz'))
+					targz().extract('update.tgz', '.', function(err){
+					if(err) console.log('Something is wrong ', err.stack);
+					fsExtra.remove('update.tgz', function (err){});
+					console.log('Job done!');
+					newWin.close();
+					window.AppRestart();
+				});
 			}
 			newWin.window.close = function(){
 				newWin.close();
@@ -47,4 +46,35 @@ window.newNotication = function(){
 		})
 	});
 }
+window.UpdateDownload = function(){
+	let body = "";
+	let cur = 0;
+	let len = 0;
+	let data = [];
+	request
+		.get('http://192.168.1.73/test/a.tgz')
+		.on( 'response', function ( data ) {
+			len = parseInt(data.headers['content-length']);
+		})
+		.on("data", function(chunk) {
+			data.push(chunk);
+			body += chunk;
+			cur += chunk.length;
+			console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
+		})
+		.on('end',function(){
+			window.newNotication();
+		})
+		.pipe(fs.createWriteStream('update.tgz'))
+}
 
+window.checkVersion = function(){
+	request
+		.get('http://192.168.1.73/ide/version/check')
+		.on('end',function(data){
+			if(ide.verion != data){
+				nowVersion = data;
+				window.UpdateDownload();
+			}
+		})
+}
