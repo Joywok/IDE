@@ -134,7 +134,7 @@ class Controller extends Component{
     dispatch(changeBtn({isdis:true,loginVal:'登录中…'}))
     var data = {"email":this.props.email,"password":this.props.passwd};
     request
-      .post('http://127.0.0.1/ide/account/login')
+      .post(serverUrl+'/ide/account/login')
       .send(data)
       .end(function(err,res){
         let data = JSON.parse(res["text"]);

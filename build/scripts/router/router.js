@@ -5999,7 +5999,6 @@
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.children, '22222');
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'main-w' },
@@ -6010,21 +6009,13 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      window.checkVersion();
-	      // const child_process = require('child_process').exec;
-	      // child_process(`cp`, function(error, stdout, stderr){
-	      //   console.log(error, stdout, stderr)
-	      // })
 	      if (user['id'] && user['name']) {
 	        if (projects.length != 0) {
 	          if (this.props.location.pathname.indexOf('/info') > -1) {} else {
 	            this.props.history.push('/info');
 	          }
 	        } else {
-	          this.props.history.push('/info');
-	          // if(this.props.location.pathname == '/apps'){
-	          // }else{
-	          //   this.props.history.push('/apps');  
-	          // }  
+	          this.props.history.push('/apps');
 	        }
 	      } else {
 	        this.props.history.push('/login');
@@ -6038,23 +6029,19 @@
 	var routeConfig = [{ path: '/',
 	  component: App,
 	  indexRoute: { component: Dashboard },
-	  childRoutes: [
-	  // {path: 'login', component:require('./../nav/login')},
-	  // {path: 'apps', component:require('./../nav/apps')},
-	  // {path: 'info', component:require('./../nav/info')}
-	  { path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
+	  childRoutes: [{ path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(8, function (require) {
-	        cb(null, __webpack_require__(403));
+	        cb(null, __webpack_require__(402));
 	      });
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(9, function (require) {
-	        cb(null, __webpack_require__(684));
+	        cb(null, __webpack_require__(683));
 	      });
 	    }
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(10, function (require) {
-	        cb(null, __webpack_require__(685));
+	        cb(null, __webpack_require__(686));
 	      });
 	    }
 	  }]

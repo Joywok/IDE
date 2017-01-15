@@ -1,5 +1,5 @@
 'use strict';
-let nowVersion = ide.verion;
+let nowVersion = ide.version;
 window.AppRestart = function() {
     var child,
     child_process = require("child_process"),
@@ -18,7 +18,6 @@ window.newNotication = function(){
 	let nowWin = gui.Screen.screens[0]['bounds'];
 	let newWin;
 	gui.Window.open('file://'+basurl+'/build/template/update.html', {
-		// position:"center",
 		x:nowWin['width']-375,
 	  y:40,
 	  width: 360,
@@ -52,7 +51,7 @@ window.UpdateDownload = function(){
 	let len = 0;
 	let data = [];
 	request
-		.get('http://192.168.1.73/test/a.tgz')
+		.get(serverUrl+'/test/ide/update.tgz')
 		.on( 'response', function ( data ) {
 			len = parseInt(data.headers['content-length']);
 		})
@@ -70,10 +69,11 @@ window.UpdateDownload = function(){
 
 window.checkVersion = function(){
 	request
-		.get('http://192.168.1.73/ide/version/check')
-		.on('end',function(data){
-			if(ide.verion != data){
-				nowVersion = data;
+		.get(serverUrl+'/ide/version/check',function(err, res){
+			let data = JSON.parse(res.body);
+			console.log(nowVersion,data['data']["varsion"])
+			if(nowVersion != data['data']["varsion"]){
+				nowVersion = data['data']["varsion"];
 				window.UpdateDownload();
 			}
 		})

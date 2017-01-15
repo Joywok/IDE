@@ -68,8 +68,7 @@ module.exports = function(app,store){
 		}
 		removeProject(){
 			fs.writeFile('project.json',JSON.stringify([]),function(){
-				console.log('12312312');
-				nowWin.reload();
+				hashHistory.push("/apps");
 			});
 		}
 	}
