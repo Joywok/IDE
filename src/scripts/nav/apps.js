@@ -31,7 +31,55 @@ module.exports = function(){
   });
 
   function createProject(){
-     hashHistory.push("");
+      $(".apps").html('\
+        <div class="header">\
+          <div class="back"> < 返回 </div>\
+          <div class="title"> 添加项目 </div>\
+        </div>\
+        <form>\
+        <p><label>项目名称: </label><input type="text" name="pname" /></p>\
+        <p><label>corpID: </label><input type="text" name="corpid" /></p>\
+        <p><label>copeSecret: </label><input type="text" name="copesecret" /></p>\
+        <p><label>appID: </label><input type="text" name="appid" /></p>\
+        <p><label>项目目录: </label><input type="text" name="file" /><button type="button">选择文件</button><input class="file" type="file" nwdirectory id="choseDirectory"/><p>\
+        <p class="btn-group"><div class="cencle">取消</div> <div class="success">创建项目</div><p>\
+        </form>\
+      ')
+      var chooser = $('#choseDirectory');
+      var btn = $('button');
+      btn.bind('click', function(){
+        chooser.click(); 
+      })
+      chooser.unbind('change');
+      chooser.change(function(evt) {
+        let val = $(this).val();
+        console.log(val);
+        $('input[name="file"]').val(val);
+      });
+      chooser.on('cancel',function(){})
+      
+      $(".back").click(function(){
+        window.location.reload()
+      })
+
+      $(".success").click(function(){
+          let project = {};
+          project.id = parseInt(Math.random()*1000000000);
+          project.name = $('input[name="pname"]').val();
+          project.corpID = $('input[name="corpid"]').val();
+          project.copeSecret = $('input[name="copesecret"]').val();
+          project.appID = $('input[name="appid"]').val();
+          project.path = "file://"+$('input[name="file"]').val();
+          projects.push(project);
+          fs.writeFile('project.json',JSON.stringify(projects),function(){
+            window.location.reload()
+          })
+
+      })
+
+      $(".cencle").click(function(){
+        window.location.reload()
+      })
   }
 
   function openProject(id, value){
@@ -46,7 +94,7 @@ module.exports = function(){
       return(
          <div className="item" onClick={openProject.bind(null, this.props.id)}>
             <div><img src="http://loc.joywok.com/openfile/getfile?type=jw_n_avatar&size=large&id=fKDzDqvrBZULanBV"/></div>
-            <div>测试项目1</div>
+            <div>{this.props.name}</div>
           </div>
         )
     }
@@ -70,6 +118,8 @@ module.exports = function(){
             })}
           </div>
           <hr />
+          <div className="new">
+          </div>
   	   </div>
   	  );
   	}

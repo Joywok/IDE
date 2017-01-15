@@ -1,5 +1,6 @@
 .apps{
 	
+    text-align: center;
 
 }
 .apps .avatar{
@@ -58,4 +59,81 @@
 	border: 1px solid #ccc;
     margin: 0 60px;
 
+}
+
+.apps form{
+
+	margin-top: 40px;
+}
+
+.apps p{
+	margin: 0 auto;
+	line-height: 60px;
+}
+.apps label{
+	width:  100px;
+}
+.apps input{
+
+	border: 1px solid #ccc;
+	height: 36px;
+	width:  280px;
+
+}
+.apps button{
+	position: absolute;
+	margin-right: -80px;
+}
+.apps .file{
+
+	display: none;
+
+}
+
+.apps .header{
+	text-align: center;
+	position: relative;
+	margin-top: 40px;
+}
+.apps .header .back{
+	float: left;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+.apps .header .title{
+
+	font-size: 16px;
+
+}
+
+.apps .btn-group{
+	float: right;
+}
+
+.apps .success{
+	border:none;
+	background: #32a62e;
+	color: #fff;
+	font-size: 14px;
+	padding:10px 10px;
+	min-width:70px;
+	display: inline-block;
+	margin-left: 20px;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	cursor: pointer;
+}
+
+.apps .cencle{
+	border:none;
+	background: #fff;
+	color: #8585885;
+	font-size: 14px;
+	padding:10px 10px;
+	min-width:70px;
+	display: inline-block;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	cursor: pointer;
 }
