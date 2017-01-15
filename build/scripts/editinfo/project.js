@@ -22213,7 +22213,10 @@
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					fs.writeFile('project.json', JSON.stringify([]), function () {
+					var projects = _.filter(projects, function (i) {
+						return i['id'] != user["openId"];
+					});
+					fs.writeFile('project.json', JSON.stringify(projects), function () {
 						hashHistory.push("/apps");
 					});
 				}

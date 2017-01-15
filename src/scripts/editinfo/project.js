@@ -67,7 +67,8 @@ module.exports = function(app,store){
 		changeTools(evt,type){
 		}
 		removeProject(){
-			fs.writeFile('project.json',JSON.stringify([]),function(){
+			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
+			fs.writeFile('project.json',JSON.stringify(projects),function(){
 				hashHistory.push("/apps");
 			});
 		}

@@ -32,7 +32,6 @@ module.exports = function(){
     // },0)
     // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
   });
-
   const nowWin = require('nw.gui').Window.get();
   app.model({
     namespace: 'info',

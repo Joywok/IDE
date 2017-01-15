@@ -25984,7 +25984,10 @@ webpackJsonp([10],[
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					fs.writeFile('project.json', JSON.stringify([]), function () {
+					var projects = _.filter(projects, function (i) {
+						return i['id'] != user["openId"];
+					});
+					fs.writeFile('project.json', JSON.stringify(projects), function () {
 						hashHistory.push("/apps");
 					});
 				}
@@ -26385,7 +26388,6 @@ webpackJsonp([10],[
 	    // },0)
 	    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
 	  });
-
 	  var nowWin = __webpack_require__(688).Window.get();
 	  app.model({
 	    namespace: 'info',
