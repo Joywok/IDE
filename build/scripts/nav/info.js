@@ -26356,7 +26356,10 @@ webpackJsonp([10],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	module.exports = function () {
-	  var project = projects[0];
+	  // let project = projects[0];
+	  var project = _.filter(projects, function (i) {
+	    return i['id'] == user['openId'];
+	  })[0];
 	  var url = project['src'].split('file://')[1];
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();

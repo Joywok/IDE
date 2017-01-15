@@ -5,7 +5,8 @@ import { createStore } from 'redux';
 import { Provider ,connect} from 'react-redux';
 import { EventEmitter } from 'events';
 module.exports = function(){
-  let project = projects[0];
+  // let project = projects[0];
+  let project = _.filter(projects,function(i){return i['id'] == user['openId']})[0]
   let url = project['src'].split('file://')[1];
   const app = dva();
   const emitter = new EventEmitter();

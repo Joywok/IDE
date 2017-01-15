@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount(){
     window.checkVersion();
     if(user['id'] && user['name']){
-      if(projects.length!=0){
+      if(user.openId.length!=0){
         if(this.props.location.pathname.indexOf('/info')>-1){
         }else{
           this.props.history.push('/info');
