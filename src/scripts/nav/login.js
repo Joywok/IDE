@@ -65,7 +65,6 @@ function App(state = data,action){
 class Controller extends Component{
   render(){
     const { dispatch } = this.props;
-    console.log(this.props)
     let buttonStyle = {
       height:38,
       padding:0
@@ -139,7 +138,6 @@ class Controller extends Component{
       .send(data)
       .end(function(err,res){
         let data = JSON.parse(res["text"]);
-        console.log(data);
         if(data["errorcode"]){
             dispatch(changeError({nameError:'用户名或密码错误！'}))
         }else{
@@ -161,7 +159,7 @@ class Controller extends Component{
             "role" : data.data.roles
           }
           fs.writeFile('config.json',JSON.stringify(userinfo),function(){
-            hashHistory.push("/info");
+            hashHistory.push("/apps");
           })
         }
       });

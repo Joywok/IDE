@@ -37,10 +37,10 @@ class App extends Component {
           this.props.history.push('/info');
         }
       }else{
-        this.props.history.push('/info');
+        // this.props.history.push('/info');
         // if(this.props.location.pathname == '/apps'){
         // }else{
-        //   this.props.history.push('/apps');  
+          this.props.history.push('/apps');  
         // }  
       }
     }else{
