@@ -68,6 +68,8 @@ module.exports = function(app,store){
 		}
 		removeProject(){
 			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
+			let url = project['src'].split('file://')[1];
+			fsExtra.remove(url, function(err){})
 			fs.writeFile('project.json',JSON.stringify(projects),function(){
 				hashHistory.push("/apps");
 			});

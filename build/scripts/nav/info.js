@@ -25987,6 +25987,8 @@ webpackJsonp([10],[
 					var projects = _.filter(projects, function (i) {
 						return i['id'] != user["openId"];
 					});
+					var url = project['src'].split('file://')[1];
+					fsExtra.remove(url, function (err) {});
 					fs.writeFile('project.json', JSON.stringify(projects), function () {
 						hashHistory.push("/apps");
 					});
