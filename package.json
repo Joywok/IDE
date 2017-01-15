@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "name": "nw-demo",
   "main": "build/template/index.html",
+  "serverurl":"http://192.168.1.73",
   "window": {
     "title": "Joywok IDE",
     "toolbar": false,

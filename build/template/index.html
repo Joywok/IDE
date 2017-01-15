@@ -2,9 +2,10 @@
 	const fs = require('fs');
   const path = require('path');
   const bodyParser = require('body-parser');
-  const ide = require(basurl+'/package.json');
-	const user = require(basurl+'/config.json');
-	const projects = require(basurl+'/project.json');
+  let ide = require(basurl+'/package.json');
+  let serverUrl = ide['serverurl'];
+	let user = require(basurl+'/config.json');
+	let projects = require(basurl+'/project.json');
   console.log(ide,user,projects,basurl);
 	const __dirname = basurl;
   const request = require('request');
@@ -14,7 +15,8 @@
   const targz = require('tar.gz');
   const express = require('express');
   const platform = (process.platform == 'darwin'?'mac':'win')
-  // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script><!-- <script type="text/javascript">
+  // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script><!-- 
+<script type="text/javascript">
   $(function(){
     alert(projects.length);
     if(projects.length==0){
@@ -54,4 +56,5 @@
       document.getElementById('body').appendChild(script)
     }
   })
-</script> --></html>
+</script>
+ --></html>

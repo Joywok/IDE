@@ -5,7 +5,8 @@ import { createStore } from 'redux';
 import { Provider ,connect} from 'react-redux';
 import { EventEmitter } from 'events';
 module.exports = function(){
-  let project = projects[0];
+  // let project = projects[0];
+  let project = _.filter(projects,function(i){return i['id'] == user['openId']})[0]
   let url = project['src'].split('file://')[1];
   const app = dva();
   const emitter = new EventEmitter();
@@ -31,7 +32,6 @@ module.exports = function(){
     // },0)
     // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
   });
-
   const nowWin = require('nw.gui').Window.get();
   app.model({
     namespace: 'info',

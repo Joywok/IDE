@@ -22213,9 +22213,13 @@
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					fs.writeFile('project.json', JSON.stringify([]), function () {
-						console.log('12312312');
-						nowWin.reload();
+					var projects = _.filter(projects, function (i) {
+						return i['id'] != user["openId"];
+					});
+					var url = project['src'].split('file://')[1];
+					fsExtra.remove(url, function (err) {});
+					fs.writeFile('project.json', JSON.stringify(projects), function () {
+						hashHistory.push("/apps");
 					});
 				}
 			}]);

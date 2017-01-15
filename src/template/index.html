@@ -22,9 +22,10 @@
 	const fs = require('fs');
   const path = require('path');
   const bodyParser = require('body-parser');
-  const ide = require(basurl+'/package.json');
-	const user = require(basurl+'/config.json');
-	const projects = require(basurl+'/project.json');
+  let ide = require(basurl+'/package.json');
+  let serverUrl = ide['serverurl'];
+	let user = require(basurl+'/config.json');
+	let projects = require(basurl+'/project.json');
   console.log(ide,user,projects,basurl);
 	const __dirname = basurl;
   const request = require('request');

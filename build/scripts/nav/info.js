@@ -25984,9 +25984,13 @@ webpackJsonp([10],[
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					fs.writeFile('project.json', JSON.stringify([]), function () {
-						console.log('12312312');
-						nowWin.reload();
+					var projects = _.filter(projects, function (i) {
+						return i['id'] != user["openId"];
+					});
+					var url = project['src'].split('file://')[1];
+					fsExtra.remove(url, function (err) {});
+					fs.writeFile('project.json', JSON.stringify(projects), function () {
+						hashHistory.push("/apps");
 					});
 				}
 			}]);
@@ -26322,7 +26326,8 @@ webpackJsonp([10],[
 /* 682 */,
 /* 683 */,
 /* 684 */,
-/* 685 */
+/* 685 */,
+/* 686 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26345,7 +26350,7 @@ webpackJsonp([10],[
 
 	var _reactRedux = __webpack_require__(156);
 
-	var _events = __webpack_require__(686);
+	var _events = __webpack_require__(687);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26356,7 +26361,10 @@ webpackJsonp([10],[
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	module.exports = function () {
-	  var project = projects[0];
+	  // let project = projects[0];
+	  var project = _.filter(projects, function (i) {
+	    return i['id'] == user['openId'];
+	  })[0];
 	  var url = project['src'].split('file://')[1];
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();
@@ -26382,8 +26390,7 @@ webpackJsonp([10],[
 	    // },0)
 	    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
 	  });
-
-	  var nowWin = __webpack_require__(687).Window.get();
+	  var nowWin = __webpack_require__(688).Window.get();
 	  app.model({
 	    namespace: 'info',
 	    state: {
@@ -26483,12 +26490,12 @@ webpackJsonp([10],[
 	    }
 	  }
 	  var store = (0, _redux.createStore)(App);
-	  var menu = __webpack_require__(688)(emitter);
+	  var menu = __webpack_require__(689)(emitter);
 	  var Phone = __webpack_require__(2)(app, store);
 	  var Edit = __webpack_require__(359)(app, store);
 	  var Debug = __webpack_require__(358)(app, store);
 	  var Project = __webpack_require__(360)(app, store);
-	  var windows = __webpack_require__(689)(app, store, emitter);
+	  var windows = __webpack_require__(690)(app, store, emitter);
 
 	  var CountApp = function (_Component) {
 	    _inherits(CountApp, _Component);
@@ -26587,7 +26594,7 @@ webpackJsonp([10],[
 	      value: function componentDidMount() {
 	        var dispatch = this.props.dispatch;
 
-	        var fs = __webpack_require__(690);
+	        var fs = __webpack_require__(691);
 	        setTimeout(function () {
 	          return;
 	          $('.xxxxx').html('');
@@ -26672,25 +26679,25 @@ webpackJsonp([10],[
 	}();
 
 /***/ },
-/* 686 */
+/* 687 */
 /***/ function(module, exports) {
 
 	module.exports = require("events");
 
 /***/ },
-/* 687 */
+/* 688 */
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
-/* 688 */
+/* 689 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(687);
+		var gui = __webpack_require__(688);
 		var nowWin = gui.Window.get();
 		var tray = new gui.Tray({ icon: platform == "mac" ? 'build/images/ico-s.png' : 'build/images/ico-b.png', alticon: true }); //window下面可以
 		tray.tooltip = '点击打开';
@@ -26750,13 +26757,13 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 689 */
+/* 690 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(687).Window.get();
-	var Screen = __webpack_require__(687).Screen.Init();
+	var nowWin = __webpack_require__(688).Window.get();
+	var Screen = __webpack_require__(688).Screen.Init();
 	window.phoneInset;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];
@@ -26858,7 +26865,7 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 690 */
+/* 691 */
 /***/ function(module, exports) {
 
 	module.exports = require("fs");

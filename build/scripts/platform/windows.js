@@ -45,25 +45,25 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(689);
+	module.exports = __webpack_require__(690);
 
 
 /***/ },
 
-/***/ 687:
+/***/ 688:
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
 
-/***/ 689:
+/***/ 690:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(687).Window.get();
-	var Screen = __webpack_require__(687).Screen.Init();
+	var nowWin = __webpack_require__(688).Window.get();
+	var Screen = __webpack_require__(688).Screen.Init();
 	window.phoneInset;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];

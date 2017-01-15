@@ -91,12 +91,12 @@ class Controller extends Component{
                             {this.props.nameShow?<div className="login-info-name">{this.props["name"]}</div>:''}
                             <div className="login-user">
                               <div className="login-user-input">
-                                {!this.props.nameShow?<div className="login-user-input-c">{this.props.email}</div>:<TextField type="text" className="email" id="exampleInputEmail1" hintText="邮箱/手机号" fullWidth={true} defaultValue={this.props.email} onChange={(e)=>this.changeValue(e,'email')} errorText={this.props.nameError} onKeyUp={(e)=>this.Keyup(e,'email')}/>}
+                                {!this.props.nameShow?<div className="login-user-input-c">{this.props.email}</div>:<TextField autoComplete="off" type="text" className="email" id="exampleInputEmail1" hintText="邮箱/手机号" fullWidth={true} defaultValue={this.props.email} onChange={(e)=>this.changeValue(e,'email')} errorText={this.props.nameError} onKeyUp={(e)=>this.Keyup(e,'email')}/>}
                               </div>
                             </div>
                             <div className="login-passwd">
                               <div className="login-passwd-input">
-                                <TextField type="password" className={"passwd "+this.props.passwdHasError} id="exampleInputEmail1" hintText="密码"  fullWidth={true} defaultValue={this.props.passwd} onChange={(e)=>this.changeValue(e,'passwd')} errorText={this.props.passwdError} onKeyUp={(e)=>this.Keyup(e,'passwd')}/>
+                                <TextField autoComplete="off" type="password" className={"passwd "+this.props.passwdHasError} id="exampleInputEmail1" hintText="密码"  fullWidth={true} defaultValue={this.props.passwd} onChange={(e)=>this.changeValue(e,'passwd')} errorText={this.props.passwdError} onKeyUp={(e)=>this.Keyup(e,'passwd')}/>
                               </div>
                             </div>
                             <RaisedButton type="button" className="btn btn-info active login-save-btn" label={this.props.loginVal} onClick={(e)=>this.submit(e)} disabled={this.props.isdis} style={buttonStyle} backgroundColor="#444" labelColor="#fff"/>
@@ -134,12 +134,12 @@ class Controller extends Component{
     dispatch(changeBtn({isdis:true,loginVal:'登录中…'}))
     var data = {"email":this.props.email,"password":this.props.passwd};
     request
-      .post('http://127.0.0.1/ide/account/login')
+      .post(serverUrl+'/ide/account/login')
       .send(data)
       .end(function(err,res){
         let data = JSON.parse(res["text"]);
         if(data["errorcode"]){
-            dispatch(changeError({nameError:'用户名或密码错误！'}))
+          dispatch(changeError({nameError:'用户名或密码错误！'}))
         }else{
           for(var i in data.data.user_info.contact){
             if(data.data.user_info.contact[i].type == "mobile"){
@@ -158,8 +158,9 @@ class Controller extends Component{
             },
             "role" : data.data.roles
           }
-          fs.writeFile('config.json',JSON.stringify(userinfo),function(){
+          fs.writeFile('config.json',JSON.stringify(userinfo),function(error){
             user = userinfo;
+            console.log('走了么')
             hashHistory.push("/apps");
           })
         }

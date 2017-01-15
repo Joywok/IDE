@@ -45,25 +45,25 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(688);
+	module.exports = __webpack_require__(689);
 
 
 /***/ },
 
-/***/ 687:
+/***/ 688:
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
 
-/***/ 688:
+/***/ 689:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(687);
+		var gui = __webpack_require__(688);
 		var nowWin = gui.Window.get();
 		var tray = new gui.Tray({ icon: platform == "mac" ? 'build/images/ico-s.png' : 'build/images/ico-b.png', alticon: true }); //window下面可以
 		tray.tooltip = '点击打开';
