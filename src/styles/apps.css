@@ -1,0 +1,61 @@
+.apps{
+	
+
+}
+.apps .avatar{
+
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.apps .avatar img{
+
+	margin-top: 60px;
+	width: 100px;
+	height: 100px;
+	border-radius: 60px;
+
+}
+
+.apps .name{
+	
+	text-align: center;
+	margin-bottom: 40px;
+
+}
+
+
+.apps .list{
+	
+	text-align: center;
+	height: 200px;
+	margin-bottom: 40px;
+
+}
+
+.apps .list .item{
+	
+	margin: 0 20px;
+	height: 150px;
+	margin-top: 60px;
+	width: 100px;
+	display:inline-block;
+
+	
+
+}
+
+.apps .list .item img{
+	
+	width: 100px;
+	height: 100px;
+}
+
+
+
+.apps hr{
+	
+	border: 1px solid #ccc;
+    margin: 0 60px;
+
+}
