@@ -6010,7 +6010,7 @@
 	    value: function componentDidMount() {
 	      window.checkVersion();
 	      if (user['id'] && user['name']) {
-	        if (user.openId.length != 0) {
+	        if (user.openId && user.openId.length != 0) {
 	          if (this.props.location.pathname.indexOf('/info') > -1) {} else {
 	            this.props.history.push('/info');
 	          }
@@ -6035,12 +6035,12 @@
 	      });
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(9, function (require) {
+	      __webpack_require__.e/* nsure */(9/* empty */, function (require) {
 	        cb(null, __webpack_require__(683));
 	      });
 	    }
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(10/* empty */, function (require) {
+	      __webpack_require__.e/* nsure */(10, function (require) {
 	        cb(null, __webpack_require__(686));
 	      });
 	    }

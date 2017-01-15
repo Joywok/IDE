@@ -22090,7 +22090,7 @@
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										this.props.project.src
+										this.props.project.src.split('file://')[1]
 									)
 								)
 							),

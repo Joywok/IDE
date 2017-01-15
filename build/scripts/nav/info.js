@@ -25861,7 +25861,7 @@ webpackJsonp([10],[
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										this.props.project.src
+										this.props.project.src.split('file://')[1]
 									)
 								)
 							),
@@ -26365,6 +26365,7 @@ webpackJsonp([10],[
 	  var project = _.filter(projects, function (i) {
 	    return i['id'] == user['openId'];
 	  })[0];
+	  console.log(projects, user, project, '123123');
 	  var url = project['src'].split('file://')[1];
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();

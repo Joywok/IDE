@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "nw-demo",
   "main": "build/template/index.html",
   "serverurl":"http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",

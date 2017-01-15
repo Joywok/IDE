@@ -26022,11 +26022,69 @@ webpackJsonp([9],[
 	  });
 
 	  function createProject() {
-	    hashHistory.push("");
+	    $(".apps").html('\
+	        <div class="header">\
+	          <div class="back"> < 返回 </div>\
+	          <div class="title"> 添加项目 </div>\
+	        </div>\
+	        <form>\
+	        <p><label>项目名称: </label><input type="text" name="pname" /></p>\
+	        <p><label>corpID: </label><input type="text" name="corpid" /></p>\
+	        <p><label>copeSecret: </label><input type="text" name="copesecret" /></p>\
+	        <p><label>appID: </label><input type="text" name="appid" /></p>\
+	        <p><label>项目目录: </label><input type="text" name="file" /><button type="button">选择文件</button><input class="file" type="file" nwdirectory id="choseDirectory"/><p>\
+	        <p class="btn-group"><div class="cencle">取消</div> <div class="success">创建项目</div><p>\
+	        </form>\
+	      ');
+	    var chooser = $('#choseDirectory');
+	    var btn = $('button');
+	    btn.bind('click', function () {
+	      chooser.click();
+	    });
+	    chooser.unbind('change');
+	    chooser.change(function (evt) {
+	      var val = $(this).val();
+	      console.log(val);
+	      $('input[name="file"]').val(val);
+	    });
+	    chooser.on('cancel', function () {});
+
+	    $(".back").click(function () {
+	      window.location.reload();
+	    });
+
+	    $(".success").click(function () {
+	      var project = {};
+	      var value = $('input[name="file"]').val();
+	      project.id = parseInt(Math.random() * 1000000000);
+	      project.name = $('input[name="pname"]').val();
+	      project.corpID = $('input[name="corpid"]').val();
+	      project.copeSecret = $('input[name="copesecret"]').val();
+	      project.appID = $('input[name="appid"]').val();
+	      project.src = "file://" + value;
+	      project.tools = { babel: true, completion: true, compress: true };
+	      fs.exists(value + '/index.html', function (exists) {
+	        projects.push(project);
+	        if (exists) {
+	          fs.writeFile('project.json', JSON.stringify(projects), function () {
+	            openProject(project["id"]);
+	          });
+	        } else {
+	          targz().extract('tmp/init.tgz', value, function (err) {
+	            fs.writeFile('project.json', JSON.stringify(projects), function () {
+	              openProject(project["id"]);
+	            });
+	          });
+	        }
+	      });
+	    });
+	    $(".cencle").click(function () {
+	      window.location.reload();
+	    });
 	  }
 
 	  function openProject(id, value) {
-	    user.oepnId = id;
+	    user.openId = id;
 	    fs.writeFile('config.json', JSON.stringify(user), function () {
 	      hashHistory.push("/info");
 	    });
@@ -26055,7 +26113,7 @@ webpackJsonp([9],[
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            '\u6D4B\u8BD5\u9879\u76EE1'
+	            this.props.name
 	          )
 	        );
 	      }
@@ -26083,7 +26141,7 @@ webpackJsonp([9],[
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'avatar' },
-	            _react2.default.createElement('img', { src: "http://loc.joywok.com" + this.props.userinfo.avatar.avatar_l })
+	            _react2.default.createElement('img', { src: serverUrl + this.props.userinfo.avatar.avatar_l })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -26113,7 +26171,8 @@ webpackJsonp([9],[
 	              return _react2.default.createElement(ChildeView, _extends({}, item, { dispatch: self.props.dispatch }));
 	            })
 	          ),
-	          _react2.default.createElement('hr', null)
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement('div', { className: 'new' })
 	        );
 	      }
 	    }]);
@@ -26205,7 +26264,7 @@ webpackJsonp([9],[
 
 
 	// module
-	exports.push([module.id, ".apps{\n\t\n\n}\n.apps .avatar{\n\n\ttext-align: center;\n\tmargin-bottom: 10px;\n}\n\n.apps .avatar img{\n\n\tmargin-top: 60px;\n\twidth: 100px;\n\theight: 100px;\n\tborder-radius: 60px;\n\n}\n\n.apps .name{\n\t\n\ttext-align: center;\n\tmargin-bottom: 40px;\n\n}\n\n\n.apps .list{\n\t\n\ttext-align: center;\n\theight: 200px;\n\tmargin-bottom: 40px;\n\n}\n\n.apps .list .item{\n\t\n\tmargin: 0 20px;\n\theight: 150px;\n\tmargin-top: 60px;\n\twidth: 100px;\n\tdisplay:inline-block;\n\n\t\n\n}\n\n.apps .list .item img{\n\t\n\twidth: 100px;\n\theight: 100px;\n}\n\n\n\n.apps hr{\n\t\n\tborder: 1px solid #ccc;\n    margin: 0 60px;\n\n}\n", ""]);
+	exports.push([module.id, ".apps{\n\t\n    text-align: center;\n\n}\n.apps .avatar{\n\n\ttext-align: center;\n\tmargin-bottom: 10px;\n}\n\n.apps .avatar img{\n\n\tmargin-top: 60px;\n\twidth: 100px;\n\theight: 100px;\n\tborder-radius: 60px;\n\n}\n\n.apps .name{\n\t\n\ttext-align: center;\n\tmargin-bottom: 40px;\n\n}\n\n\n.apps .list{\n\t\n\ttext-align: center;\n\theight: 200px;\n\tmargin-bottom: 40px;\n\n}\n\n.apps .list .item{\n\t\n\tmargin: 0 20px;\n\theight: 150px;\n\tmargin-top: 60px;\n\twidth: 100px;\n\tdisplay:inline-block;\n\n\t\n\n}\n\n.apps .list .item img{\n\t\n\twidth: 100px;\n\theight: 100px;\n}\n\n\n\n.apps hr{\n\t\n\tborder: 1px solid #ccc;\n    margin: 0 60px;\n\n}\n\n.apps form{\n\n\tmargin-top: 40px;\n}\n\n.apps p{\n\tmargin: 0 auto;\n\tline-height: 60px;\n}\n.apps label{\n\twidth:  100px;\n}\n.apps input{\n\n\tborder: 1px solid #ccc;\n\theight: 36px;\n\twidth:  280px;\n\n}\n.apps button{\n\tposition: absolute;\n\tmargin-right: -80px;\n}\n.apps .file{\n\n\tdisplay: none;\n\n}\n\n.apps .header{\n\ttext-align: center;\n\tposition: relative;\n\tmargin-top: 40px;\n}\n.apps .header .back{\n\tfloat: left;\n\tmargin-left: 20px;\n\tcursor: pointer;\n}\n\n.apps .header .title{\n\n\tfont-size: 16px;\n\n}\n\n.apps .btn-group{\n\tfloat: right;\n}\n\n.apps .success{\n\tborder:none;\n\tbackground: #32a62e;\n\tcolor: #fff;\n\tfont-size: 14px;\n\tpadding:10px 10px;\n\tmin-width:70px;\n\tdisplay: inline-block;\n\tmargin-left: 20px;\n\t-moz-border-radius: 5px; \n\t-webkit-border-radius: 5px; \n\tcursor: pointer;\n}\n\n.apps .cencle{\n\tborder:none;\n\tbackground: #fff;\n\tcolor: #8585885;\n\tfont-size: 14px;\n\tpadding:10px 10px;\n\tmin-width:70px;\n\tdisplay: inline-block;\n\t-moz-border-radius: 5px; \n\t-webkit-border-radius: 5px; \n\tcursor: pointer;\n}\n", ""]);
 
 	// exports
 

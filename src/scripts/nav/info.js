@@ -6,7 +6,8 @@ import { Provider ,connect} from 'react-redux';
 import { EventEmitter } from 'events';
 module.exports = function(){
   // let project = projects[0];
-  let project = _.filter(projects,function(i){return i['id'] == user['openId']})[0]
+  let project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
+  console.log(projects,user,project,'123123');
   let url = project['src'].split('file://')[1];
   const app = dva();
   const emitter = new EventEmitter();

@@ -64,26 +64,36 @@ module.exports = function(){
 
       $(".success").click(function(){
           let project = {};
+          var value = $('input[name="file"]').val()
           project.id = parseInt(Math.random()*1000000000);
           project.name = $('input[name="pname"]').val();
           project.corpID = $('input[name="corpid"]').val();
           project.copeSecret = $('input[name="copesecret"]').val();
           project.appID = $('input[name="appid"]').val();
-          project.path = "file://"+$('input[name="file"]').val();
-          projects.push(project);
-          fs.writeFile('project.json',JSON.stringify(projects),function(){
-            window.location.reload()
-          })
-
+          project.src = "file://"+value;
+          project.tools = {babel:true,completion:true,compress:true};
+          fs.exists(value+'/index.html', function(exists) {
+            projects.push(project);
+            if(exists){
+              fs.writeFile('project.json',JSON.stringify(projects),function(){
+                openProject(project["id"])
+              })
+            }else{
+              targz().extract('tmp/init.tgz', value, function(err){
+                fs.writeFile('project.json',JSON.stringify(projects),function(){
+                  openProject(project["id"])
+                })
+              });
+            }
+          });  
       })
-
       $(".cencle").click(function(){
         window.location.reload()
       })
   }
 
   function openProject(id, value){
-      user.oepnId = id;
+      user.openId = id;
       fs.writeFile('config.json',JSON.stringify(user),function(){
         hashHistory.push("/info");
       })
@@ -105,7 +115,7 @@ module.exports = function(){
       let self = this;
   		return (
   	   <div className="apps">
-          <div className="avatar"><img src={"http://loc.joywok.com" + this.props.userinfo.avatar.avatar_l}/></div>
+          <div className="avatar"><img src={serverUrl + this.props.userinfo.avatar.avatar_l}/></div>
           <div className="name">大神：{this.props.userinfo.name}</div>
           <hr />
           <div className="list">

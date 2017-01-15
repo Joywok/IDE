@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dva Demo</title>
+  <title>Joywok IDE</title>
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../styles/reset.css" />
@@ -22,10 +22,10 @@
 	const fs = require('fs');
   const path = require('path');
   const bodyParser = require('body-parser');
-  let ide = require(basurl+'/package.json');
-  let serverUrl = ide['serverurl'];
-	let user = require(basurl+'/config.json');
-	let projects = require(basurl+'/project.json');
+  window.ide = require(basurl+'/package.json');
+  window.serverUrl = ide['serverurl'];
+	window.user = require(basurl+'/config.json');
+	window.projects = require(basurl+'/project.json');
   console.log(ide,user,projects,basurl);
 	const __dirname = basurl;
   const request = require('request');

@@ -147,20 +147,19 @@ class Controller extends Component{
             }
           }
           var userinfo = {
-            "email" : data.data.user_info.account,
-            "id"  : data.data.id,
-            "name" : data.data.user_info.name,
-            "title" : data.data.user_info.title,
-            "mobile" : mobile,
-            "avatar" : {
-              "avatar_l" : data.data.user_info.avatar_l,
-              "avatar_s" : data.data.user_info.avatar_s
+            email : data.data.user_info.account,
+            id  : data.data.id,
+            name : data.data.user_info.name,
+            title : data.data.user_info.title,
+            mobile : mobile,
+            avatar : {
+              avatar_l : data.data.user_info.avatar_l,
+              avatar_s : data.data.user_info.avatar_s
             },
-            "role" : data.data.roles
+            role : data.data.roles
           }
           fs.writeFile('config.json',JSON.stringify(userinfo),function(error){
-            user = userinfo;
-            console.log('走了么')
+            window.user = userinfo;
             hashHistory.push("/apps");
           })
         }

@@ -17,7 +17,7 @@ module.exports = function(app,store){
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">本地开发目录</div>
 											<button className="info-project-i-btn" type="button" onClick={(e)=>this.openFolder(e)}>打开</button>	
-											<div className="info-project-i-content">{this.props.project.src}</div>
+											<div className="info-project-i-content">{this.props.project.src.split('file://')[1]}</div>
 										</div>
 									</div>
 									<div className="info-project-item">

@@ -31,7 +31,7 @@ window.newNotication = function(){
 			let content = target.find('.content'); 
 			content.html('新版本'+nowVersion+'已经准备好，立刻重启更新？');
 			newWin.window.restart = function(){
-					targz().extract('update.tgz', '.', function(err){
+				targz().extract('update.tgz', '.', function(err){
 					if(err) console.log('Something is wrong ', err.stack);
 					fsExtra.remove('update.tgz', function (err){});
 					console.log('Job done!');

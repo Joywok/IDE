@@ -20823,20 +20823,19 @@ webpackJsonp([8],Array(38).concat([
 	            }
 	          }
 	          var userinfo = {
-	            "email": data.data.user_info.account,
-	            "id": data.data.id,
-	            "name": data.data.user_info.name,
-	            "title": data.data.user_info.title,
-	            "mobile": mobile,
-	            "avatar": {
-	              "avatar_l": data.data.user_info.avatar_l,
-	              "avatar_s": data.data.user_info.avatar_s
+	            email: data.data.user_info.account,
+	            id: data.data.id,
+	            name: data.data.user_info.name,
+	            title: data.data.user_info.title,
+	            mobile: mobile,
+	            avatar: {
+	              avatar_l: data.data.user_info.avatar_l,
+	              avatar_s: data.data.user_info.avatar_s
 	            },
-	            "role": data.data.roles
+	            role: data.data.roles
 	          };
 	          fs.writeFile('config.json', JSON.stringify(userinfo), function (error) {
-	            user = userinfo;
-	            console.log('走了么');
+	            window.user = userinfo;
 	            hashHistory.push("/apps");
 	          });
 	        }
@@ -58086,7 +58085,7 @@ webpackJsonp([8],Array(38).concat([
 /* 678 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;"use strict";
+	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
