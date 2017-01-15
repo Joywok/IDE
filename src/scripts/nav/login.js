@@ -159,6 +159,7 @@ class Controller extends Component{
             "role" : data.data.roles
           }
           fs.writeFile('config.json',JSON.stringify(userinfo),function(){
+            user = userinfo;
             hashHistory.push("/apps");
           })
         }

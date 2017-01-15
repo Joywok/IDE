@@ -6,29 +6,13 @@ import { Provider ,connect} from 'react-redux';
 
 require('../../styles/apps.css');
 
-let config = fs.readFileSync('config.json', 'utf-8');
-config = JSON.parse(config);
-let list = fs.readFileSync('project.json', 'utf-8');
-list = JSON.parse(list);
-list = [
-  {
-    "id": '1',
-    "name" : '1231',
-    "src" : '~/Desktop/demo'
-  },
-  {
-    "id": '2',
-    "name" : '43221',
-    "src" : '~/Desktop/demo'
-  }
-];
 module.exports = function(){
   const app = dva();
   app.model({
     namespace: 'apps',
     state: {
-      list: list,
-      userinfo: config
+      list: projects,
+      userinfo: user
     },
     reducers: {
       add(state) {
@@ -47,12 +31,12 @@ module.exports = function(){
   });
 
   function createProject(){
-     hashHistory.push("/buildapps");
+     hashHistory.push("");
   }
 
   function openProject(id, value){
-      config.oepnId = id;
-      fs.writeFile('config.json',JSON.stringify(config),function(){
+      user.oepnId = id;
+      fs.writeFile('config.json',JSON.stringify(user),function(){
         hashHistory.push("/info");
       })
   }
@@ -65,22 +49,6 @@ module.exports = function(){
             <div>测试项目1</div>
           </div>
         )
-    }
-    clickChild(evt){
-      let dispatch = this.props.dispatch
-      let target = $(evt.currentTarget);
-      let parent = target.parent();
-      if(this.props.type == 'folder'){
-        if(parent.hasClass('show-child')){
-          parent.removeClass('show-child')
-          target.find('.fa').removeClass('fa-folder-open').addClass('fa-folder')
-        }else{
-          parent.addClass('show-child')
-          target.find('.fa').removeClass('fa-folder').addClass('fa-folder-open')
-        }
-      }else{
-        dispatch(addEditor(this.props))
-      }
     }
   }
 
@@ -105,11 +73,6 @@ module.exports = function(){
   	   </div>
   	  );
   	}
-
-    componentDidMount(){
-      const {dispatch} = this.props;
-      dispatch({type: 'apps/list'});
-    }
   }
   function mapStateToProps(state) {
     return state;
@@ -135,12 +98,6 @@ module.exports = function(){
               </Provider>
               )
     }
-  }
-
-  var project = fs.readFileSync('project.json', 'utf-8');
-  project = JSON.parse(project);
-  if(project.length != 0){
-
   }
 
   return Main
