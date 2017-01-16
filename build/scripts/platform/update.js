@@ -94,12 +94,21 @@
 				var content = target.find('.content');
 				content.html('新版本' + nowVersion + '已经准备好，立刻重启更新？');
 				newWin.window.restart = function () {
-					targz().extract('update.tgz', '.', function (err) {
-						if (err) console.log('Something is wrong ', err.stack);
-						fsExtra.remove('update.tgz', function (err) {});
-						console.log('Job done!');
-						newWin.close();
-						window.AppRestart();
+					var unzipper = new DecompressZip('update.zip');
+					unzipper.on('error', function (err) {
+						console.log('Caught an error');
+					});
+					unzipper.on('extract', function (log) {
+						console.log('Finished extracting');
+					});
+					unzipper.on('progress', function (fileIndex, fileCount) {
+						console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+					});
+					unzipper.extract({
+						path: '.',
+						filter: function filter(file) {
+							return file.type !== "SymbolicLink";
+						}
 					});
 				};
 				newWin.window.close = function () {

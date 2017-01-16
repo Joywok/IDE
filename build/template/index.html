@@ -13,7 +13,10 @@
   const chokidar = require('chokidar');
   const gui = require('nw.gui');
   const targz = require('tar.gz');
+  const zlib = require('zlib');
+  const archiver = require('archiver');
   const express = require('express');
+  const DecompressZip = require('decompress-zip');
   const platform = (process.platform == 'darwin'?'mac':'win')
   // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script><!-- 
 <script type="text/javascript">
