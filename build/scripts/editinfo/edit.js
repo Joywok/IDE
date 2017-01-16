@@ -30957,9 +30957,9 @@
 					} else {
 						$('.info-edit').addClass('hide');
 					}
-					// document.getElementById("editor-view").contentWindow.postMessage({
-					//   type:'window'
-					// },'*');
+					document.getElementById("editor-view").contentWindow.postMessage({
+						type: 'window'
+					}, '*');
 					return false;
 				}
 			}, {

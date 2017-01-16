@@ -22298,6 +22298,7 @@
 	      listData = sortFolder(listData);
 	      var dispatch = this.props.dispatch;
 	      dispatch(changeTreeView(listData));
+	      this.props.refresh();
 	    }
 	  }]);
 
@@ -22507,11 +22508,14 @@
 	  _createClass(Controller, [{
 	    key: 'render',
 	    value: function render() {
+	      var self = this;
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'main-w' },
-	        _react2.default.createElement(TreeView, _extends({}, this.props, { refresh: this.refresh })),
-	        _react2.default.createElement(Edit, _extends({}, this.props, { ref: 'edit' }))
+	        _react2.default.createElement(TreeView, _extends({}, this.props, { refresh: self.refresh.bind(this) })),
+	        _react2.default.createElement(Edit, _extends({}, this.props, { ref: function ref(edit) {
+	            self.edit = edit;
+	          } }))
 	      );
 	    }
 	  }, {
@@ -22520,7 +22524,7 @@
 	  }, {
 	    key: 'refresh',
 	    value: function refresh() {
-	      this.refs.edit.refresh();
+	      this.edit.refresh();
 	    }
 	  }]);
 

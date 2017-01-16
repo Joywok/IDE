@@ -6026,16 +6026,22 @@
 	  return App;
 	}(_react.Component);
 
+	var loginController = void 0,
+	    appsController = void 0,
+	    infoController = void 0;
+
 	var routeConfig = [{ path: '/',
 	  component: App,
 	  indexRoute: { component: Dashboard },
+	  onChange: function onChange(previousRoute, nextRoute) {},
 	  childRoutes: [{ path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(8, function (require) {
+
 	        cb(null, __webpack_require__(402));
 	      });
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(9, function (require) {
+	      __webpack_require__.e/* nsure */(9/* empty */, function (require) {
 	        cb(null, __webpack_require__(683));
 	      });
 	    }

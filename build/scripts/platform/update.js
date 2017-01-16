@@ -99,7 +99,7 @@
 						console.log('Caught an error');
 					});
 					unzipper.on('extract', function (log) {
-						fsExtra.remove('update.tgz', function (err) {});
+						fsExtra.remove('update.zip', function (err) {});
 						newWin.close();
 						window.AppRestart();
 					});
@@ -124,7 +124,7 @@
 		var cur = 0;
 		var len = 0;
 		var data = [];
-		request.get(serverUrl + '/test/ide/update.tgz').on('response', function (data) {
+		request.get(serverUrl + '/test/ide/update.zip').on('response', function (data) {
 			len = parseInt(data.headers['content-length']);
 		}).on("data", function (chunk) {
 			data.push(chunk);
@@ -133,7 +133,7 @@
 			console.log("Downloading " + parseInt(100.0 * cur / len) + "% ");
 		}).on('end', function () {
 			window.newNotication();
-		}).pipe(fs.createWriteStream('update.tgz'));
+		}).pipe(fs.createWriteStream('update.zip'));
 	};
 
 	window.checkVersion = function () {

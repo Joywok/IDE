@@ -175,6 +175,15 @@ webpackJsonp([10],[
 					webview.addEventListener('permissionrequest', function (e) {
 						e.request.allow();
 					});
+					// webview.ClearDataTypeSet({
+					// 	appcache:false,
+					// 	cache:false,
+					// 	cookies:false,
+					// 	fileSystems:false,
+					// 	indexedDB:false,
+					// 	localStorage:false,
+					// 	webSQL:false
+					// })
 					webview.addEventListener('contentload', function (e) {
 						$("#phone-inset").removeClass('hide');
 						e.target.contentWindow.postMessage({
@@ -25759,9 +25768,9 @@ webpackJsonp([10],[
 					} else {
 						$('.info-edit').addClass('hide');
 					}
-					// document.getElementById("editor-view").contentWindow.postMessage({
-					//   type:'window'
-					// },'*');
+					document.getElementById("editor-view").contentWindow.postMessage({
+						type: 'window'
+					}, '*');
 					return false;
 				}
 			}, {
@@ -25987,10 +25996,16 @@ webpackJsonp([10],[
 					var projects = _.filter(projects, function (i) {
 						return i['id'] != user["openId"];
 					});
-					var url = project['src'].split('file://')[1];
+					var url = this.props.project['src'].split('file://')[1];
 					fsExtra.remove(url, function (err) {});
 					fs.writeFile('project.json', JSON.stringify(projects), function () {
-						hashHistory.push("/apps");
+						window.projects = projects;
+						var data = user;
+						delete data['openId'];
+						fs.writeFile('config.json', JSON.stringify(data), function () {
+							window.user = data;
+							hashHistory.push("/apps");
+						});
 					});
 				}
 			}]);
@@ -26362,54 +26377,64 @@ webpackJsonp([10],[
 
 	module.exports = function () {
 	  // let project = projects[0];
-	  var project = _.filter(projects, function (i) {
-	    return i['id'] == user['openId'];
-	  })[0];
-	  console.log(projects, user, project, '123123');
-	  var url = project['src'].split('file://')[1];
+	  var init = false;
+	  var project = void 0;
+	  var url = void 0;
+	  var server = void 0;
+	  var appServer = void 0;
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();
-	  var appServer = express();
-	  appServer.use(bodyParser());
-	  appServer.set('view engine', 'html');
-	  appServer.use(express.static(url));
-	  appServer.get('/', function (req, res) {
-	    res.sendfile(url + '/index.html');
-	  });
-	  var server = appServer.listen(10000, '127.0.0.1', function () {
-	    var host = server.address().address;
-	    var port = server.address().port;
-	    console.log('Example app listening at http://%s:%s', host, port);
-	    var date = Date.parse(new Date()) / 1000;
-	    $("#phone-inset").attr({ src: "http://127.0.0.1:10000?time=" + date });
-	    $("#phone-inset").removeClass('hide');
-	    // $("#phone-inset")[0].onload = function(){
-	    //   alert('xxxxxx');
-	    // }
-	    // setTimeout(function(){
-	    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-	    // },0)
-	    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
-	  });
+	  function initServer() {
+	    if (init) {
+	      server.exit();
+	    }
+	    server = browserSync.create();
+	    server.init({
+	      open: false,
+	      online: false,
+	      notify: false,
+	      logConnections: false,
+	      logFileChanges: false,
+	      logSnippet: false,
+	      host: 'http://127.0.0.1',
+	      port: '10000',
+	      server: url
+	    }, function () {
+	      var date = Date.parse(new Date()) / 1000;
+	      $("#phone-inset").attr({ src: "http://127.0.0.1:10000?time=" + date });
+	      $("#phone-inset").removeClass('hide');
+	    });
+	  }
+	  function initController() {
+	    project = _.filter(projects, function (i) {
+	      return i['id'] == user['openId'];
+	    })[0];
+	    url = project['src'].split('file://')[1];
+
+	    initServer();
+	  }
+
+	  initController();
 	  var nowWin = __webpack_require__(688).Window.get();
+	  var initData = {
+	    windowW: nowWin.width,
+	    windowH: nowWin.height,
+	    project: project,
+	    sidebar: 'edit',
+	    showPlatform: false,
+	    showPlatformVal: 'iPhone 4',
+	    phoneW: 320,
+	    phoneH: 480,
+	    filesList: [],
+	    title: 'Joywok',
+	    btns: [],
+	    footer: [],
+	    tabs: [],
+	    tabsBg: ''
+	  };
 	  app.model({
 	    namespace: 'info',
-	    state: {
-	      windowW: nowWin.width,
-	      windowH: nowWin.height,
-	      project: project,
-	      sidebar: 'edit',
-	      showPlatform: false,
-	      showPlatformVal: 'iPhone 4',
-	      phoneW: 320,
-	      phoneH: 480,
-	      filesList: [],
-	      title: 'Joywok',
-	      btns: [],
-	      footer: [],
-	      tabs: [],
-	      tabsBg: ''
-	    },
+	    state: initData,
 	    reducers: {
 	      changeSidebar: function changeSidebar(state, action) {
 	        return _extends({}, state, {
@@ -26470,6 +26495,24 @@ webpackJsonp([10],[
 	      },
 	      resetNormal: function resetNormal(state) {
 	        return _.extend({}, state, { tabs: [], tabsBg: '', btns: [], footer: [], title: 'Joywok' });
+	      },
+	      allreset: function allreset() {
+	        return _.extend({}, {
+	          windowW: nowWin.width,
+	          windowH: nowWin.height,
+	          project: project,
+	          sidebar: 'edit',
+	          showPlatform: false,
+	          showPlatformVal: 'iPhone 4',
+	          phoneW: 320,
+	          phoneH: 480,
+	          filesList: [],
+	          title: 'Joywok',
+	          btns: [],
+	          footer: [],
+	          tabs: [],
+	          tabsBg: ''
+	        });
 	      }
 	    }
 	  });
@@ -26521,7 +26564,7 @@ webpackJsonp([10],[
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'ide-info-user' },
-	              _react2.default.createElement('img', { src: 'http://192.168.1.73/openfile/getfile?type=jw_n_avatar&size=small&id=AZ6lvWUgrMqVj5G5 ' })
+	              _react2.default.createElement('img', { src: serverUrl + user.avatar.avatar_l })
 	            ),
 	            _react2.default.createElement(
 	              'div',
@@ -26573,6 +26616,17 @@ webpackJsonp([10],[
 	                  { className: 'ide-info-nav-val' },
 	                  '\u9879\u76EE'
 	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'ide-info-exit' },
+	              _react2.default.createElement(
+	                'span',
+	                { onClick: function onClick(e) {
+	                    return _this2.exitProject(e);
+	                  } },
+	                '\u9000\u51FA'
 	              )
 	            )
 	          ),
@@ -26643,12 +26697,23 @@ webpackJsonp([10],[
 	          payload: data
 	        });
 	      }
+	    }, {
+	      key: 'exitProject',
+	      value: function exitProject(e) {
+	        var data = user;
+	        delete data['openId'];
+	        fs.writeFile('config.json', JSON.stringify(data), function () {
+	          window.user = data;
+	          hashHistory.push("/apps");
+	        });
+	      }
 	    }]);
 
 	    return CountApp;
 	  }(_react.Component);
 
 	  function mapStateToProps(state) {
+	    console.log('这里会走几次');
 	    return state;
 	  }
 	  var RootApp = (0, _reactRedux.connect)(mapStateToProps)(CountApp);
@@ -26656,10 +26721,22 @@ webpackJsonp([10],[
 	  var Main = function (_Component2) {
 	    _inherits(Main, _Component2);
 
-	    function Main() {
+	    function Main(props) {
 	      _classCallCheck(this, Main);
 
-	      return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+	      var _this3 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+	      if (!init) {
+	        init = true;
+	      } else {
+	        initController();
+	        setTimeout(function () {
+	          store.dispatch({
+	            type: 'info/allreset'
+	          });
+	        });
+	      }
+	      return _this3;
 	    }
 
 	    _createClass(Main, [{
@@ -26766,6 +26843,7 @@ webpackJsonp([10],[
 	var nowWin = __webpack_require__(688).Window.get();
 	var Screen = __webpack_require__(688).Screen.Init();
 	window.phoneInset;
+	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];
 	  if (platform['width'] > 1440) {

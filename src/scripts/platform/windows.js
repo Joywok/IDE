@@ -2,6 +2,7 @@
 const nowWin = require('nw.gui').Window.get();
 const Screen = require('nw.gui').Screen.Init();
 window.phoneInset;
+window.EditorTarget
 module.exports = function(app,store,emitter){
 	let platform = Screen.screens[0]['bounds'];
 	if(platform['width']>1440){

@@ -68,10 +68,16 @@ module.exports = function(app,store){
 		}
 		removeProject(){
 			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
-			let url = project['src'].split('file://')[1];
+			let url = this.props.project['src'].split('file://')[1];
 			fsExtra.remove(url, function(err){})
 			fs.writeFile('project.json',JSON.stringify(projects),function(){
-				hashHistory.push("/apps");
+				window.projects = projects;
+				let data = user;
+				delete data['openId'];
+				fs.writeFile('config.json',JSON.stringify(data),function(){
+					window.user = data;
+					hashHistory.push("/apps");
+				})
 			});
 		}
 	}

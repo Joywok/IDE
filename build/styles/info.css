@@ -64,6 +64,16 @@ body {
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i:hover {
   color: #494949;
 }
+.ide-info .ide-info-sidebar .ide-info-exit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100px;
+  text-align: center;
+}
+.ide-info .ide-info-sidebar .ide-info-exit span {
+  cursor: pointer;
+}
 .ide-info .ide-info-childview {
   position: absolute;
   top: 0;

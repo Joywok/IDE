@@ -36,7 +36,7 @@ window.newNotication = function(){
 				  console.log('Caught an error');
 				});
 				unzipper.on('extract', function (log) {
-				  fsExtra.remove('update.tgz', function (err){});
+				  fsExtra.remove('update.zip', function (err){});
 					newWin.close();
 					window.AppRestart();
 				});
@@ -62,7 +62,7 @@ window.UpdateDownload = function(){
 	let len = 0;
 	let data = [];
 	request
-		.get(serverUrl+'/test/ide/update.tgz')
+		.get(serverUrl+'/test/ide/update.zip')
 		.on( 'response', function ( data ) {
 			len = parseInt(data.headers['content-length']);
 		})
@@ -75,7 +75,7 @@ window.UpdateDownload = function(){
 		.on('end',function(){
 			window.newNotication();
 		})
-		.pipe(fs.createWriteStream('update.tgz'))
+		.pipe(fs.createWriteStream('update.zip'))
 }
 
 window.checkVersion = function(){

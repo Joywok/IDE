@@ -22216,10 +22216,16 @@
 					var projects = _.filter(projects, function (i) {
 						return i['id'] != user["openId"];
 					});
-					var url = project['src'].split('file://')[1];
+					var url = this.props.project['src'].split('file://')[1];
 					fsExtra.remove(url, function (err) {});
 					fs.writeFile('project.json', JSON.stringify(projects), function () {
-						hashHistory.push("/apps");
+						window.projects = projects;
+						var data = user;
+						delete data['openId'];
+						fs.writeFile('config.json', JSON.stringify(data), function () {
+							window.user = data;
+							hashHistory.push("/apps");
+						});
 					});
 				}
 			}]);

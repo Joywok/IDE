@@ -45,6 +45,13 @@ body{
   			color: #494949;
   		}
   	}
+  	.ide-info-exit{
+  		position: absolute;left: 0;right:0;bottom: 100px;
+  		text-align: center;
+  		span{
+  			cursor: pointer;
+  		}
+  	}
   }
   .ide-info-childview{
   	position: absolute;top:0;right: 0;left: 60px;bottom: 0;

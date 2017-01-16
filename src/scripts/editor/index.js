@@ -122,6 +122,7 @@ window.addEventListener('message', function(e){
     })
     store.dispatch(changeEditWindow())
   }else{
+    
   }
 });
 
@@ -197,6 +198,7 @@ class TreeView extends Component{
     listData = sortFolder(listData);
     let dispatch = this.props.dispatch;
     dispatch(changeTreeView(listData))
+    this.props.refresh();
   }
 }
 class EditContainer extends Component{
@@ -332,17 +334,18 @@ class Edit extends Component{
 }
 class Controller extends Component {
   render() {
+    var self = this;
     return (
         <div className="main-w">
-          <TreeView {...this.props} refresh={this.refresh}></TreeView>
-          <Edit {...this.props} ref="edit"></Edit>
+          <TreeView {...this.props} refresh={self.refresh.bind(this)}></TreeView>
+          <Edit {...this.props} ref={(edit) => { self.edit = edit}}></Edit>
         </div>
     )
   }
   componentDidMount(){
   }
   refresh(){
-    this.refs.edit.refresh()
+    this.edit.refresh()
   }
 }
 function select(state) {

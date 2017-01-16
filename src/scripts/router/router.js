@@ -33,13 +33,21 @@ class App extends Component {
     }
   }
 }
+
+let loginController,
+    appsController,
+    infoController;
+
 const routeConfig = [
   { path: '/',
     component: App,
     indexRoute: { component:Dashboard},
+    onChange:function(previousRoute, nextRoute){
+    },
     childRoutes:[
       {path:'login',name:'login',getComponent(nextState, cb) {
         require.ensure([], require => {
+          
           cb(null, require('./../nav/login'));
         },'login');
       }},

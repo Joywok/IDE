@@ -90,6 +90,15 @@ module.exports = function(app){
       webview.addEventListener('permissionrequest',function(e){
       	e.request.allow();
       })
+      // webview.ClearDataTypeSet({
+      // 	appcache:false,
+      // 	cache:false,
+      // 	cookies:false,
+      // 	fileSystems:false,
+      // 	indexedDB:false,
+      // 	localStorage:false,
+      // 	webSQL:false
+      // })
 			webview.addEventListener('contentload', function(e) {
 				$("#phone-inset").removeClass('hide')
 				e.target.contentWindow.postMessage({

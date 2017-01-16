@@ -25969,9 +25969,9 @@ webpackJsonp([9],[
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _dva = __webpack_require__(3);
 
@@ -25999,6 +25999,8 @@ webpackJsonp([9],[
 
 	module.exports = function () {
 	  var app = (0, _dva2.default)();
+	  var init = false;
+	  console.log('xxxxxxxxxxxxx', projects);
 	  app.model({
 	    namespace: 'apps',
 	    state: {
@@ -26006,20 +26008,39 @@ webpackJsonp([9],[
 	      userinfo: user
 	    },
 	    reducers: {
-	      add: function add(state) {
-	        var newCurrent = state.list + 1;
-	        return _extends({}, state, {
-	          list: newCurrent
-	        });
+	      add: function add(state, action) {
+	        var data = state['list'];
+	        data.push(action['data']);
+	        window.projects = data;
+	        return _.extend({}, state, { list: data });
 	      },
-	      list: function list(state) {
-	        var list = state.list;
-	        return _extends({}, state, {
-	          list: list
+	      allreset: function allreset() {
+	        return _.extend({}, {
+	          list: projects,
+	          userinfo: user
 	        });
 	      }
 	    }
 	  });
+	  function App() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : app._models[0]["state"];
+	    var action = arguments[1];
+
+	    if (app._models['0'].reducers) {
+	      var hasFunc = _.filter(app._models['0'].reducers, function (i, key) {
+	        return key == action['type'];
+	      });
+	      if (hasFunc.length != 0) {
+	        return hasFunc[0](state, action);
+	      } else {
+	        return state;
+	      }
+	    } else {
+	      return state;
+	    }
+	  }
+	  var store = (0, _redux.createStore)(App);
+	  function resetModel() {}
 
 	  function createProject() {
 	    $(".apps").html('\
@@ -26050,10 +26071,11 @@ webpackJsonp([9],[
 	    chooser.on('cancel', function () {});
 
 	    $(".back").click(function () {
+	      alert('back');
 	      window.location.reload();
 	    });
 
-	    $(".success").click(function () {
+	    $(".success").click(function (evt) {
 	      var project = {};
 	      var value = $('input[name="file"]').val();
 	      project.id = parseInt(Math.random() * 1000000000);
@@ -26064,41 +26086,48 @@ webpackJsonp([9],[
 	      project.src = "file://" + value;
 	      project.tools = { babel: true, completion: true, compress: true };
 	      fs.exists(value + '/index.html', function (exists) {
-	        projects.push(project);
-	        if (exists) {
-	          fs.writeFile('project.json', JSON.stringify(projects), function () {
-	            openProject(project["id"]);
-	          });
-	        } else {
-
-	          var unzipper = new DecompressZip('tmp/init.zip');
-	          unzipper.on('error', function (err) {
-	            console.log('Caught an error');
-	          });
-	          unzipper.on('extract', function (log) {
+	        // window.projects.push(project);
+	        store.dispatch({
+	          type: 'apps/add',
+	          data: project
+	        });
+	        setTimeout(function () {
+	          if (exists) {
 	            fs.writeFile('project.json', JSON.stringify(projects), function () {
 	              openProject(project["id"]);
 	            });
-	          });
-	          unzipper.on('progress', function (fileIndex, fileCount) {
-	            console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
-	          });
-	          unzipper.extract({
-	            path: value,
-	            filter: function filter(file) {
-	              return file.type !== "SymbolicLink";
-	            }
-	          });
-	        }
+	          } else {
+	            var unzipper = new DecompressZip('tmp/init.zip');
+	            unzipper.on('error', function (err) {
+	              console.log('Caught an error');
+	            });
+	            unzipper.on('extract', function (log) {
+	              fs.writeFile('project.json', JSON.stringify(projects), function () {
+	                openProject(project["id"]);
+	              });
+	            });
+	            unzipper.on('progress', function (fileIndex, fileCount) {
+	              console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+	            });
+	            unzipper.extract({
+	              path: value,
+	              filter: function filter(file) {
+	                return file.type !== "SymbolicLink";
+	              }
+	            });
+	          }
+	        });
 	      });
+	      evt.stopPropagation();
 	    });
 	    $(".cencle").click(function () {
+	      alert('cencle');
 	      window.location.reload();
 	    });
 	  }
 
 	  function openProject(id, value) {
-	    user.openId = id;
+	    window.user.openId = id;
 	    fs.writeFile('config.json', JSON.stringify(user), function () {
 	      hashHistory.push("/info");
 	    });
@@ -26122,7 +26151,7 @@ webpackJsonp([9],[
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement('img', { src: 'http://loc.joywok.com/openfile/getfile?type=jw_n_avatar&size=large&id=fKDzDqvrBZULanBV' })
+	            _react2.default.createElement('img', { src: serverUrl + user.avatar.avatar_l })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -26148,6 +26177,7 @@ webpackJsonp([9],[
 	    _createClass(Apps, [{
 	      key: 'render',
 	      value: function render() {
+	        console.log('123123123123123');
 	        var self = this;
 	        return _react2.default.createElement(
 	          'div',
@@ -26173,7 +26203,7 @@ webpackJsonp([9],[
 	              _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('img', { src: "http://loc.joywok.com" + this.props.userinfo.avatar.avatar_l })
+	                _react2.default.createElement('img', { src: serverUrl + this.props.userinfo.avatar.avatar_l })
 	              ),
 	              _react2.default.createElement(
 	                'div',
@@ -26197,33 +26227,27 @@ webpackJsonp([9],[
 	  function mapStateToProps(state) {
 	    return state;
 	  }
-	  function App() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : app._models[0]["state"];
-	    var action = arguments[1];
 
-	    if (app._models['0'].reducers) {
-	      var hasFunc = _.filter(app._models['0'].reducers, function (i, key) {
-	        return key == action['type'];
-	      });
-	      if (hasFunc.length != 0) {
-	        return hasFunc[0](state);
-	      } else {
-	        return state;
-	      }
-	    } else {
-	      return state;
-	    }
-	  }
-	  var store = (0, _redux.createStore)(App);
 	  var RootApp = (0, _reactRedux.connect)(mapStateToProps)(Apps);
 
 	  var Main = function (_Component3) {
 	    _inherits(Main, _Component3);
 
-	    function Main() {
+	    function Main(props) {
 	      _classCallCheck(this, Main);
 
-	      return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+	      var _this3 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+	      if (!init) {
+	        init = true;
+	      } else {
+	        setTimeout(function () {
+	          store.dispatch({
+	            type: 'apps/allreset'
+	          });
+	        });
+	      }
+	      return _this3;
 	    }
 
 	    _createClass(Main, [{

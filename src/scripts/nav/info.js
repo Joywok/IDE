@@ -6,52 +6,62 @@ import { Provider ,connect} from 'react-redux';
 import { EventEmitter } from 'events';
 module.exports = function(){
   // let project = projects[0];
-  let project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
-  console.log(projects,user,project,'123123');
-  let url = project['src'].split('file://')[1];
+  let init = false;
+  let project;
+  let url ;
+  let server;
+  let appServer
   const app = dva();
   const emitter = new EventEmitter();
-  const appServer = express();
-  appServer.use(bodyParser())
-  appServer.set('view engine', 'html');
-  appServer.use(express.static(url));
-  appServer.get('/', function (req, res) {
-    res.sendfile(url+'/index.html')
-  });
-  var server = appServer.listen(10000,'127.0.0.1',function () {
-    var host = server.address().address;
-    var port = server.address().port;
-    console.log('Example app listening at http://%s:%s', host, port);
-    let date = Date.parse(new Date())/1000;
-    $("#phone-inset").attr({src:"http://127.0.0.1:10000?time="+date});
-    $("#phone-inset").removeClass('hide');
-    // $("#phone-inset")[0].onload = function(){
-    //   alert('xxxxxx');
-    // }
-    // setTimeout(function(){
-    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-    // },0)
-    // $('#aaa').attr({src:"http://127.0.0.1:10000?time="+Math.random()});
-  });
+  function initServer(){
+    if(init){
+      server.exit();
+    }
+    server = browserSync.create();
+    server.init({
+      open: false,
+      online:false,
+      notify:false,
+      logConnections:false,
+      logFileChanges:false,
+      logSnippet:false,
+      host:'http://127.0.0.1',
+      port:'10000',
+      server:url
+    },function(){
+      let date = Date.parse(new Date())/1000;
+      $("#phone-inset").attr({src:"http://127.0.0.1:10000?time="+date});
+      $("#phone-inset").removeClass('hide');
+    });
+  }
+  function initController(){
+    project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
+    url = project['src'].split('file://')[1];
+
+    initServer();  
+  }
+
+  initController();
   const nowWin = require('nw.gui').Window.get();
+  let initData = {
+    windowW:nowWin.width,
+    windowH:nowWin.height,
+    project:project,
+    sidebar:'edit',
+    showPlatform:false,
+    showPlatformVal:'iPhone 4',
+    phoneW:320,
+    phoneH:480,
+    filesList:[],
+    title:'Joywok',
+    btns:[],
+    footer:[],
+    tabs:[],
+    tabsBg:''
+  }
   app.model({
     namespace: 'info',
-    state: {
-      windowW:nowWin.width,
-      windowH:nowWin.height,
-      project:project,
-      sidebar:'edit',
-      showPlatform:false,
-      showPlatformVal:'iPhone 4',
-      phoneW:320,
-      phoneH:480,
-      filesList:[],
-      title:'Joywok',
-      btns:[],
-      footer:[],
-      tabs:[],
-      tabsBg:''
-    },
+    state: initData,
     reducers: {
       changeSidebar(state,action){
         return { ...state,
@@ -111,6 +121,24 @@ module.exports = function(){
       },
       resetNormal:function(state){
         return _.extend({},state,{tabs:[],tabsBg:'',btns:[],footer:[],title:'Joywok'});
+      },
+      allreset:function(){
+        return _.extend({},{
+          windowW:nowWin.width,
+          windowH:nowWin.height,
+          project:project,
+          sidebar:'edit',
+          showPlatform:false,
+          showPlatformVal:'iPhone 4',
+          phoneW:320,
+          phoneH:480,
+          filesList:[],
+          title:'Joywok',
+          btns:[],
+          footer:[],
+          tabs:[],
+          tabsBg:''
+        })
       }
     }
   });
@@ -139,7 +167,7 @@ module.exports = function(){
   	    <div className="info ide-info">
           <div className="ide-info-sidebar">
             <div className="ide-info-user">
-              <img src="http://192.168.1.73/openfile/getfile?type=jw_n_avatar&size=small&id=AZ6lvWUgrMqVj5G5 "/>
+              <img src={serverUrl+user.avatar.avatar_l} />
             </div>
             <div className="ide-info-nav">
               <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='edit'?'active':'')} onClick={(e)=>this.changeSidebar(e,'edit')}>
@@ -155,6 +183,7 @@ module.exports = function(){
                 <div className="ide-info-nav-val">项目</div>
               </div>
             </div>
+            <div className="ide-info-exit"><span onClick={(e)=>this.exitProject(e)}>退出</span></div>
           </div>
           <div className="ide-info-childview">
             <div className={"ide-info-spcail "+(this.props.sidebar=='project'?'hide':'')}>
@@ -215,12 +244,34 @@ module.exports = function(){
         payload:data
       })
     }
+    exitProject(e){
+      let data = user;
+      delete data['openId'];
+      fs.writeFile('config.json',JSON.stringify(data),function(){
+        window.user = data;
+        hashHistory.push("/apps");  
+      })
+    }
   }
   function mapStateToProps(state) {
+    console.log('这里会走几次');
     return state;
   }
   const RootApp = connect(mapStateToProps)(CountApp);
   class Main extends Component{
+    constructor(props){
+      super(props);
+      if(!init){
+        init = true
+      }else{
+        initController();
+        setTimeout(function(){
+          store.dispatch({
+            type:'info/allreset'
+          })  
+        })
+      }
+    }
     render(){
       return (<Provider store={store}>
                 <RootApp {...this.props} />

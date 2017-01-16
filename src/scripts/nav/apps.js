@@ -8,6 +8,8 @@ require('../../styles/apps.css');
 
 module.exports = function(){
   const app = dva();
+  let init = false;
+  console.log('xxxxxxxxxxxxx',projects);
   app.model({
     namespace: 'apps',
     state: {
@@ -15,20 +17,35 @@ module.exports = function(){
       userinfo: user
     },
     reducers: {
-      add(state) {
-        const newCurrent = state.list + 1;
-        return { ...state,
-          list: newCurrent,
-        };
+      add:function(state,action) {
+        let data = state['list'];
+        data.push(action['data']);
+        window.projects = data;
+        return _.extend({},state,{list:data})
       },
-      list(state) {
-        const list = state.list;
-        return { ...state,
-          list: list,
-        };
+      allreset:function(){
+        return _.extend({},{
+          list: projects,
+          userinfo: user
+        })
       }
     }
   });
+  function App(state = app._models[0]["state"],action){
+    if(app._models['0'].reducers){
+      let hasFunc = _.filter(app._models['0'].reducers,function(i,key){return key==action['type']})
+      if(hasFunc.length!=0){
+        return (hasFunc[0](state,action))
+      }else{
+        return state  
+      }
+    }else{
+      return state
+    }
+  }
+  let store = createStore(App);
+  function resetModel(){
+  }
 
   function createProject(){
       $(".apps").html('\
@@ -59,10 +76,11 @@ module.exports = function(){
       chooser.on('cancel',function(){})
       
       $(".back").click(function(){
+        alert('back')
         window.location.reload()
       })
 
-      $(".success").click(function(){
+      $(".success").click(function(evt){
           let project = {};
           var value = $('input[name="file"]').val()
           project.id = parseInt(Math.random()*1000000000);
@@ -73,41 +91,48 @@ module.exports = function(){
           project.src = "file://"+value;
           project.tools = {babel:true,completion:true,compress:true};
           fs.exists(value+'/index.html', function(exists) {
-            projects.push(project);
-            if(exists){
-              fs.writeFile('project.json',JSON.stringify(projects),function(){
-                openProject(project["id"])
-              })
-            }else{
-
-              var unzipper = new DecompressZip('tmp/init.zip')
-              unzipper.on('error', function (err) {
-                console.log('Caught an error');
-              });
-              unzipper.on('extract', function (log) {
+            // window.projects.push(project);
+            store.dispatch({
+              type:'apps/add',
+              data:project
+            })
+            setTimeout(function(){
+              if(exists){
                 fs.writeFile('project.json',JSON.stringify(projects),function(){
                   openProject(project["id"])
                 })
-              });
-              unzipper.on('progress', function (fileIndex, fileCount) {
-                console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
-              });
-              unzipper.extract({
-                path: value,
-                filter: function (file) {
-                    return file.type !== "SymbolicLink";
-                }
-              });
-            }
-          });  
+              }else{
+                var unzipper = new DecompressZip('tmp/init.zip')
+                unzipper.on('error', function (err) {
+                  console.log('Caught an error');
+                });
+                unzipper.on('extract', function (log) {
+                  fs.writeFile('project.json',JSON.stringify(projects),function(){
+                    openProject(project["id"])
+                  })
+                });
+                unzipper.on('progress', function (fileIndex, fileCount) {
+                  console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+                });
+                unzipper.extract({
+                  path: value,
+                  filter: function (file) {
+                      return file.type !== "SymbolicLink";
+                  }
+                });
+              }
+            })
+          });
+          evt.stopPropagation();
       })
       $(".cencle").click(function(){
+        alert('cencle')
         window.location.reload()
       })
   }
 
   function openProject(id, value){
-      user.openId = id;
+      window.user.openId = id;
       fs.writeFile('config.json',JSON.stringify(user),function(){
         hashHistory.push("/info");
       })
@@ -117,15 +142,15 @@ module.exports = function(){
     render(){
       return(
          <div className="item" onClick={openProject.bind(null, this.props.id)}>
-            <div><img src="http://loc.joywok.com/openfile/getfile?type=jw_n_avatar&size=large&id=fKDzDqvrBZULanBV"/></div>
+            <div><img src={serverUrl+user.avatar.avatar_l} /></div>
             <div>{this.props.name}</div>
           </div>
         )
     }
   }
-
   class Apps extends Component{
   	render(){
+      console.log('123123123123123');
       let self = this;
   		return (
   	   <div className="apps">
@@ -134,7 +159,7 @@ module.exports = function(){
           <hr />
           <div className="list">
             <div className="item" onClick={createProject}>
-              <div><img src={"http://loc.joywok.com" + this.props.userinfo.avatar.avatar_l}/></div>
+              <div><img src={serverUrl + this.props.userinfo.avatar.avatar_l}/></div>
               <div>添加项目</div>
             </div>
             {this.props.list.map(function(item) {
@@ -151,21 +176,21 @@ module.exports = function(){
   function mapStateToProps(state) {
     return state;
   }
-  function App(state = app._models[0]["state"],action){
-    if(app._models['0'].reducers){
-      let hasFunc = _.filter(app._models['0'].reducers,function(i,key){return key==action['type']})
-      if(hasFunc.length!=0){
-        return (hasFunc[0](state))
-      }else{
-        return state
-      }
-    }else{
-      return state
-    }
-  }
-  let store = createStore(App);
+  
   const RootApp = connect(mapStateToProps)(Apps);
   class Main extends Component{
+    constructor(props){
+      super(props);
+      if(!init){
+        init = true
+      }else{
+        setTimeout(function(){
+          store.dispatch({
+            type:'apps/allreset'
+          })  
+        })
+      }
+    }
     render(){
       return (<Provider store={store}>
                 <RootApp />

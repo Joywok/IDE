@@ -65,6 +65,7 @@
 	var nowWin = __webpack_require__(688).Window.get();
 	var Screen = __webpack_require__(688).Screen.Init();
 	window.phoneInset;
+	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];
 	  if (platform['width'] > 1440) {
