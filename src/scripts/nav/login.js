@@ -138,7 +138,7 @@ class Controller extends Component{
       .send(data)
       .end(function(err,res){
         let data = JSON.parse(res["text"]);
-        if(data["errorcode"]){
+        if(data["data"]["errcode"]){
           dispatch(changeError({nameError:'用户名或密码错误！'}))
         }else{
           for(var i in data.data.user_info.contact){

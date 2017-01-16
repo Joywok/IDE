@@ -26070,10 +26070,24 @@ webpackJsonp([9],[
 	            openProject(project["id"]);
 	          });
 	        } else {
-	          targz().extract('tmp/init.tgz', value, function (err) {
+
+	          var unzipper = new DecompressZip('tmp/init.zip');
+	          unzipper.on('error', function (err) {
+	            console.log('Caught an error');
+	          });
+	          unzipper.on('extract', function (log) {
 	            fs.writeFile('project.json', JSON.stringify(projects), function () {
 	              openProject(project["id"]);
 	            });
+	          });
+	          unzipper.on('progress', function (fileIndex, fileCount) {
+	            console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+	          });
+	          unzipper.extract({
+	            path: value,
+	            filter: function filter(file) {
+	              return file.type !== "SymbolicLink";
+	            }
 	          });
 	        }
 	      });
