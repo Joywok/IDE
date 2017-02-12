@@ -41,8 +41,7 @@ window.newNotication = function(){
 					window.AppRestart();
 				});
 				unzipper.on('progress', function (fileIndex, fileCount) {
-					target.find('.update-code-btn span').html('正在解压第'+(fileIndex + 1)+'文件,共'+fileCount+'个文件')
-				  console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+					// target.find('.update-code-btn span').html('更新进度:'+parseInt((fileIndex+1)/fileCount*100)+'%')
 				});
 				unzipper.extract({
 			    path: '.',
@@ -71,7 +70,7 @@ window.UpdateDownload = function(){
 			data.push(chunk);
 			body += chunk;
 			cur += chunk.length;
-			console.log("Downloading " + parseInt(100.0 * cur / len) + "% ")
+			console.log("Downloading " + parseInt(100.0 * cur / len) + "% ");
 		})
 		.on('end',function(){
 			window.newNotication();
@@ -83,9 +82,9 @@ window.checkVersion = function(){
 		.get(serverUrl+'/ide/version/check',function(err, res){
 			let data = JSON.parse(res.body);
 			console.log(nowVersion,data['data']["varsion"])
-			if(nowVersion != data['data']["varsion"]){
+			// if(nowVersion != data['data']["varsion"]){
 				nowVersion = data['data']["varsion"];
 				window.UpdateDownload();
-			}
+			// }
 		})
 }

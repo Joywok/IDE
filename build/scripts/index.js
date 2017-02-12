@@ -31038,7 +31038,7 @@
 	  // indexRoute: { component:Dashboard},
 	  onChange: function onChange(previousRoute, nextRoute) {},
 	  childRoutes: [{ path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(8/* empty */, function (require) {
+	      __webpack_require__.e/* nsure */(8, function (require) {
 	        cb(null, __webpack_require__(402));
 	      });
 	    }

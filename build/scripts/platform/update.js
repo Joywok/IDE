@@ -104,8 +104,7 @@
 						window.AppRestart();
 					});
 					unzipper.on('progress', function (fileIndex, fileCount) {
-						target.find('.update-code-btn span').html('正在解压第' + (fileIndex + 1) + '文件,共' + fileCount + '个文件');
-						console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+						// target.find('.update-code-btn span').html('更新进度:'+parseInt((fileIndex+1)/fileCount*100)+'%')
 					});
 					unzipper.extract({
 						path: '.',
@@ -140,10 +139,10 @@
 		request.get(serverUrl + '/ide/version/check', function (err, res) {
 			var data = JSON.parse(res.body);
 			console.log(nowVersion, data['data']["varsion"]);
-			if (nowVersion != data['data']["varsion"]) {
-				nowVersion = data['data']["varsion"];
-				window.UpdateDownload();
-			}
+			// if(nowVersion != data['data']["varsion"]){
+			nowVersion = data['data']["varsion"];
+			window.UpdateDownload();
+			// }
 		});
 	};
 
