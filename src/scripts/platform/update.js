@@ -41,7 +41,7 @@ window.newNotication = function(){
 					window.AppRestart();
 				});
 				unzipper.on('progress', function (fileIndex, fileCount) {
-					// target.find('.update-code-btn span').html('更新进度:'+parseInt((fileIndex+1)/fileCount*100)+'%')
+					target.find('.update-code-btn span').html('更新进度:'+parseInt((fileIndex+1)/fileCount*100)+'%')
 				});
 				unzipper.extract({
 			    path: '.',
