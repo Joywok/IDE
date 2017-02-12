@@ -5,8 +5,13 @@ window.phoneInset;
 window.EditorTarget
 module.exports = function(app,store,emitter){
 	let platform = Screen.screens[0]['bounds'];
-	if(platform['width']>1440){
+	if(platform['width']>=1440){
 		nowWin.resizeTo(1440,900);
+    if(platform['width'] == 1440){
+      nowWin.moveTo(0,0)
+    }else{
+      nowWin.moveTo((platform['width']-1440)/2,(platform['height']-900)/2)
+    }
 	}else{
 		nowWin.maximize();
 	}

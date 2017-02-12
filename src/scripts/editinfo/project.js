@@ -9,7 +9,6 @@ module.exports = function(app,store){
 			return (<div className={"info-project "+(this.props.sidebar=='project'?'':'hide')}>
 								<div className="info-project-w">
 									<div className="info-project-icon">
-										<i className="fa fa-code"></i>
 									</div>
 									<div className="info-project-name">{this.props.project['name']}</div>
 									<div className="info-project-appid">AppID:{this.props.project['id']}</div>

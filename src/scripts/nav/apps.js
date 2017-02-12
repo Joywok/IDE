@@ -9,12 +9,18 @@ require('../../styles/apps.css');
 module.exports = function(){
   const app = dva();
   let init = false;
-  console.log('xxxxxxxxxxxxx',projects);
   app.model({
     namespace: 'apps',
     state: {
+      showList:true,
       list: projects,
-      userinfo: user
+      userinfo: user,
+      pname:'',
+      corpid:'',
+      copesecret:'',
+      appid:'',
+      dirpath:'',
+      babel:true,completion:true,compress:true
     },
     reducers: {
       add:function(state,action) {
@@ -28,6 +34,24 @@ module.exports = function(){
           list: projects,
           userinfo: user
         })
+      },
+      changeShowList:function(state,action){
+        return _.extend({},state,{showList:action['payload']})
+      },
+      backList:function(state,action){
+        return _.extend({},state,{
+          showList:true,
+          pname:'',
+          corpid:'',
+          copesecret:'',
+          appid:'',
+          dirpath:''
+        })
+      },
+      changeInputVal:function(state,action){
+        let data = _.extend({},state);
+        data[action['target']] = action['payload']
+        return data;
       }
     }
   });
@@ -47,90 +71,6 @@ module.exports = function(){
   function resetModel(){
   }
 
-  function createProject(){
-      $(".apps").html('\
-        <div class="header">\
-          <div class="back"> < 返回 </div>\
-          <div class="title"> 添加项目 </div>\
-        </div>\
-        <form>\
-        <p><label>项目名称: </label><input type="text" name="pname" /></p>\
-        <p><label>corpID: </label><input type="text" name="corpid" /></p>\
-        <p><label>copeSecret: </label><input type="text" name="copesecret" /></p>\
-        <p><label>appID: </label><input type="text" name="appid" /></p>\
-        <p><label>项目目录: </label><input type="text" name="file" /><button type="button">选择文件</button><input class="file" type="file" nwdirectory id="choseDirectory"/><p>\
-        <p class="btn-group"><div class="cencle">取消</div> <div class="success">创建项目</div><p>\
-        </form>\
-      ')
-      var chooser = $('#choseDirectory');
-      var btn = $('button');
-      btn.bind('click', function(){
-        chooser.click(); 
-      })
-      chooser.unbind('change');
-      chooser.change(function(evt) {
-        let val = $(this).val();
-        console.log(val);
-        $('input[name="file"]').val(val);
-      });
-      chooser.on('cancel',function(){})
-      
-      $(".back").click(function(){
-        alert('back')
-        window.location.reload()
-      })
-
-      $(".success").click(function(evt){
-          let project = {};
-          var value = $('input[name="file"]').val()
-          project.id = parseInt(Math.random()*1000000000);
-          project.name = $('input[name="pname"]').val();
-          project.corpID = $('input[name="corpid"]').val();
-          project.copeSecret = $('input[name="copesecret"]').val();
-          project.appID = $('input[name="appid"]').val();
-          project.src = "file://"+value;
-          project.tools = {babel:true,completion:true,compress:true};
-          fs.exists(value+'/index.html', function(exists) {
-            // window.projects.push(project);
-            store.dispatch({
-              type:'apps/add',
-              data:project
-            })
-            setTimeout(function(){
-              if(exists){
-                fs.writeFile('project.json',JSON.stringify(projects),function(){
-                  openProject(project["id"])
-                })
-              }else{
-                var unzipper = new DecompressZip('tmp/init.zip')
-                unzipper.on('error', function (err) {
-                  console.log('Caught an error');
-                });
-                unzipper.on('extract', function (log) {
-                  fs.writeFile('project.json',JSON.stringify(projects),function(){
-                    openProject(project["id"])
-                  })
-                });
-                unzipper.on('progress', function (fileIndex, fileCount) {
-                  console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
-                });
-                unzipper.extract({
-                  path: value,
-                  filter: function (file) {
-                      return file.type !== "SymbolicLink";
-                  }
-                });
-              }
-            })
-          });
-          evt.stopPropagation();
-      })
-      $(".cencle").click(function(){
-        alert('cencle')
-        window.location.reload()
-      })
-  }
-
   function openProject(id, value){
       window.user.openId = id;
       fs.writeFile('config.json',JSON.stringify(user),function(){
@@ -141,37 +81,211 @@ module.exports = function(){
   class ChildeView extends Component{
     render(){
       return(
-         <div className="item" onClick={openProject.bind(null, this.props.id)}>
-            <div><img src={serverUrl+user.avatar.avatar_l} /></div>
-            <div>{this.props.name}</div>
+        <div className="apps-list-i" onClick={openProject.bind(null, this.props.id)}>
+          <div className="apps-list-i-c">
+            <div className="apps-list-i-pic"><div></div></div>
+            <div className="apps-list-i-val ellipsis">{this.props.name}</div>
           </div>
+        </div>
         )
     }
+    /* <div className="item" onClick={openProject.bind(null, this.props.id)}>
+          <div><img src={serverUrl+user.avatar.avatar_l} /></div>
+          <div>{this.props.name}</div>
+        </div>
+    */
   }
   class Apps extends Component{
   	render(){
-      console.log('123123123123123');
       let self = this;
+      let data = this.props;
   		return (
-  	   <div className="apps">
-          <div className="avatar"><img src={serverUrl + this.props.userinfo.avatar.avatar_l}/></div>
-          <div className="name">大神：{this.props.userinfo.name}</div>
-          <hr />
-          <div className="list">
-            <div className="item" onClick={createProject}>
-              <div><img src={serverUrl + this.props.userinfo.avatar.avatar_l}/></div>
-              <div>添加项目</div>
+        <div className="apps">
+          <div className={"apps-tabs-i list "+(data['showList']?'':'hide')}>
+            <div className="apps-user">
+              <div className="apps-user-c">
+                <div className="apps-info-avatar">
+                  <img src={serverUrl + this.props.userinfo.avatar.avatar_l}/>
+                </div>
+                <div className="apps-info-name">{this.props.userinfo.name}</div>
+              </div>
             </div>
-            {this.props.list.map(function(item) {
-              return <ChildeView {...item} dispatch={self.props.dispatch}></ChildeView>
-            })}
+            <div className="xxxxx hide"></div>
+            <div className="apps-list">
+              <div className="apps-list-i apps-create-btn" onClick={(e)=>this.createApps(e)}>
+                <div className="apps-list-i-c">
+                  <div className="apps-list-i-pic">
+                    <div></div>
+                  </div>
+                  <div className="apps-list-i-val">添加项目</div>
+                </div>
+              </div>
+              <div className="apps-list-i hide">
+                <div className="apps-list-i-c">
+                  <div className="apps-list-i-pic">
+                    <div></div>
+                  </div>
+                  <div className="apps-list-i-val ellipsis">xxxxxxxxxxxxxxxxxx</div>
+                </div>
+              </div>
+              {this.props.list.map(function(item) {
+                return <ChildeView {...item} dispatch={self.props.dispatch}></ChildeView>
+              })}
+            </div>
           </div>
-          <hr />
-          <div className="new">
+          <div className={"apps-tabs-i create-form "+(data['showList']?'hide':'')}>
+            <div className="create-form-back" onClick={(e)=>this.backList(e)}>
+              <div className="create-form-back-pic"></div>
+              <div className="create-form-back-val">返回</div>
+            </div>
+            <div className="create-form-c">
+              <div className="create-form-title">添加项目</div>
+              <div className="create-form-i">
+                <div className="create-form-label">项目名称</div>
+                <div className="create-form-i-c">
+                  <input type="input" className="create-form-input" value={data['pname']} onChange={(e)=>this.changeInputVal(e,"pname")}/>
+                </div>
+              </div>
+              <div className="create-form-i">
+                <div className="create-form-label">corpID</div>
+                <div className="create-form-i-c">
+                  <input type="input" className="create-form-input" value={data['corpid']} onChange={(e)=>this.changeInputVal(e,"corpid")}/>
+                  <div className="apps-tip">
+                    <i className="apps-tip-icon"></i>
+                    <div className="apps-tip-c">
+                      <div className="apps-tip-bg"></div>
+                      <div className="apps-tip-val">corpID</div>
+                      <i className="apps-tip-cirtle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="create-form-i">
+                <div className="create-form-label">copeSecret</div>
+                <div className="create-form-i-c">
+                  <input type="input" className="create-form-input" value={data['copesecret']} onChange={(e)=>this.changeInputVal(e,"copesecret")}/>
+                  <div className="apps-tip">
+                    <i className="apps-tip-icon"></i>
+                    <div className="apps-tip-c">
+                      <div className="apps-tip-bg"></div>
+                      <div className="apps-tip-val">copeSecret</div>
+                      <i className="apps-tip-cirtle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="create-form-i">
+                <div className="create-form-label">AppID</div>
+                <div className="create-form-i-c">
+                  <input type="input" className="create-form-input" value={data['appid']} onChange={(e)=>this.changeInputVal(e,"appid")}/>
+                  <div className="apps-tip-specail">无 AppID</div>
+                </div>
+              </div>
+              <div className="create-form-i">
+                <div className="create-form-label">项目目录</div>
+                <div className="create-form-i-c">
+                  <input type="text" className="create-form-input" value={data['dirpath']} disabled="disabled"/>
+                  <div className="chose-directory">
+                    <button className="apps-form-open-dir" type="button">打开</button>
+                    <input type="file" className="chose-directory-input" nwdirectory onClick={(e)=>this.choseDirectory(e)} onChange={(e)=>this.changeInputVal(e,'dirpath')}/>
+                  </div>
+                </div>
+              </div>
+              <div className="create-form-buttons">
+                <button type="button" className="create-form-button cancel-btn" onClick={(e)=>this.backList(e)}>取消</button>
+                <button type="button" className="create-form-button create-btn" onClick={(e)=>this.submit(e)}>保存</button>
+              </div>
+            </div>
           </div>
-  	   </div>
+        </div>
   	  );
   	}
+    componentDidMount(){
+      $('.chose-directory-input').attr({nwdirectory:''})
+    }
+    choseDirectory(){
+      $('#choseDirectory').click()
+    }
+    createApps(){
+      let dispatch = this.props.dispatch;
+      dispatch({
+        type:'apps/changeShowList',
+        payload:false
+      })
+    }
+    backList(){
+      let dispatch = this.props.dispatch;
+      dispatch({
+        type:'apps/backList',
+        payload:false
+      })
+    }
+    changeInputVal(e,type){
+      let dispatch = this.props.dispatch;
+      const node = event.target;
+      const text = node.value.trim();
+      dispatch({
+        type:'apps/changeInputVal',
+        target:type,
+        payload:text
+      })
+    }
+    submit(){
+      let project = {};
+      let data = this.props;
+      project.id = parseInt(Math.random()*1000000000);
+      project.name = data["pname"];
+      project.corpID = data['corpid']
+      project.copeSecret = data['copesecret']
+      project.appID = data['appid']
+      project.src = "file://"+data["dirpath"];
+      project.tools = {babel:true,completion:true,compress:true};
+      fs.exists(data["dirpath"]+'/index.html', function(exists) {
+        // window.projects.push(project);
+        store.dispatch({
+          type:'apps/add',
+          data:project
+        })
+        setTimeout(function(){
+          if(exists){
+            fs.writeFile('project.json',JSON.stringify(projects),function(){
+              store.dispatch({
+                type:'apps/backList',
+                payload:false
+              })
+              setTimeout(function(){
+                openProject(project["id"])  
+              },50)
+            })
+          }else{
+            var unzipper = new DecompressZip('tmp/init.zip')
+            unzipper.on('error', function (err) {
+              console.log('Caught an error');
+            });
+            unzipper.on('extract', function (log) {
+              fs.writeFile('project.json',JSON.stringify(projects),function(){
+                store.dispatch({
+                  type:'apps/backList',
+                  payload:false
+                })
+                setTimeout(function(){
+                  openProject(project["id"])  
+                },50)
+              })
+            });
+            unzipper.on('progress', function (fileIndex, fileCount) {
+              console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+            });
+            unzipper.extract({
+              path: value,
+              filter: function (file) {
+                  return file.type !== "SymbolicLink";
+              }
+            });
+          }
+        })
+      });
+    }
   }
   function mapStateToProps(state) {
     return state;

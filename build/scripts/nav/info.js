@@ -25768,9 +25768,11 @@ webpackJsonp([10],[
 					} else {
 						$('.info-edit').addClass('hide');
 					}
-					document.getElementById("editor-view").contentWindow.postMessage({
-						type: 'window'
-					}, '*');
+					if (document.getElementById("editor-view")) {
+						document.getElementById("editor-view").contentWindow.postMessage({
+							type: 'window'
+						}, '*');
+					}
 					return false;
 				}
 			}, {
@@ -25833,11 +25835,7 @@ webpackJsonp([10],[
 						_react2.default.createElement(
 							'div',
 							{ className: 'info-project-w' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'info-project-icon' },
-								_react2.default.createElement('i', { className: 'fa fa-code' })
-							),
+							_react2.default.createElement('div', { className: 'info-project-icon' }),
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-name' },
@@ -26384,24 +26382,78 @@ webpackJsonp([10],[
 	  var appServer = void 0;
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();
+	  var mime = {
+	    "css": "text/css",
+	    "gif": "image/gif",
+	    "html": "text/html",
+	    "ico": "image/x-icon",
+	    "jpeg": "image/jpeg",
+	    "jpg": "image/jpeg",
+	    "js": "text/javascript",
+	    "json": "application/json",
+	    "pdf": "application/pdf",
+	    "png": "image/png",
+	    "svg": "image/svg+xml",
+	    "swf": "application/x-shockwave-flash",
+	    "tiff": "image/tiff",
+	    "txt": "text/plain",
+	    "wav": "audio/x-wav",
+	    "wma": "audio/x-ms-wma",
+	    "wmv": "video/x-ms-wmv",
+	    "xml": "text/xml"
+	  };
 	  function initServer() {
 	    if (init) {
-	      server.exit();
+	      server.close();
+	      // server.exit();
 	    }
-	    server = browserSync.create();
-	    server.init({
-	      open: false,
-	      online: false,
-	      notify: false,
-	      logConnections: false,
-	      logFileChanges: false,
-	      logSnippet: false,
-	      host: 'http://127.0.0.1',
-	      port: '10000',
-	      server: url
-	    }, function () {
+	    server = http.createServer(function (req, res) {
+	      console.log(req.method + ' ' + req.url);
+	      var parsedUrl = httpUrl.parse(req.url);
+	      var pathname = '' + parsedUrl.pathname;
+	      console.log(parsedUrl, '123123', pathname);
+	      var mimeType = {
+	        '.ico': 'image/x-icon',
+	        '.html': 'text/html',
+	        '.js': 'text/javascript',
+	        '.json': 'application/json',
+	        '.css': 'text/css',
+	        '.png': 'image/png',
+	        '.jpg': 'image/jpeg',
+	        '.wav': 'audio/wav',
+	        '.mp3': 'audio/mpeg',
+	        '.svg': 'image/svg+xml',
+	        '.pdf': 'application/pdf',
+	        '.doc': 'application/msword',
+	        '.eot': 'appliaction/vnd.ms-fontobject',
+	        '.ttf': 'aplication/font-sfnt'
+	      };
+	      pathname = url + pathname;
+	      fs.exists(pathname, function (exist) {
+	        if (!exist) {
+	          res.statusCode = 404;
+	          res.end('File ' + pathname + ' not found!');
+	          return;
+	        }
+	        if (fs.statSync(pathname).isDirectory()) {
+	          pathname += 'index.html';
+	        }
+	        fs.readFile(pathname, function (err, data) {
+	          if (err) {
+	            res.statusCode = 500;
+	            res.end('Error getting the file: ' + err + '.');
+	          } else {
+	            var ext = path.parse(pathname).ext;
+	            res.setHeader('Content-type', mimeType[ext] || 'text/plain');
+	            res.end(data);
+	          }
+	        });
+	      });
+	    });
+	    server.listen('10000');
+	    setTimeout(function () {
 	      var date = Date.parse(new Date()) / 1000;
-	      $("#phone-inset").attr({ src: "http://127.0.0.1:10000?time=" + date });
+	      $("#phone-inset").attr({ src: "http://127.0.0.1:10000" });
 	      $("#phone-inset").removeClass('hide');
 	    });
 	  }
@@ -26410,7 +26462,6 @@ webpackJsonp([10],[
 	      return i['id'] == user['openId'];
 	    })[0];
 	    url = project['src'].split('file://')[1];
-
 	    initServer();
 	  }
 
@@ -26620,12 +26671,13 @@ webpackJsonp([10],[
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'ide-info-exit' },
+	              { className: 'ide-info-exit', onClick: function onClick(e) {
+	                  return _this2.exitProject(e);
+	                } },
+	              _react2.default.createElement('div', { className: 'ide-info-exit-ico' }),
 	              _react2.default.createElement(
 	                'span',
-	                { onClick: function onClick(e) {
-	                    return _this2.exitProject(e);
-	                  } },
+	                null,
 	                '\u9000\u51FA'
 	              )
 	            )
@@ -26846,8 +26898,13 @@ webpackJsonp([10],[
 	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
 	  var platform = Screen.screens[0]['bounds'];
-	  if (platform['width'] > 1440) {
+	  if (platform['width'] >= 1440) {
 	    nowWin.resizeTo(1440, 900);
+	    if (platform['width'] == 1440) {
+	      nowWin.moveTo(0, 0);
+	    } else {
+	      nowWin.moveTo((platform['width'] - 1440) / 2, (platform['height'] - 900) / 2);
+	    }
 	  } else {
 	    nowWin.maximize();
 	  }

@@ -6015,10 +6015,14 @@
 	            this.props.history.push('/info');
 	          }
 	        } else {
-	          this.props.history.push('/apps');
+	          if (this.props.location.pathname.indexOf('/apps') > -1) {} else {
+	            this.props.history.push('/apps');
+	          }
 	        }
 	      } else {
-	        this.props.history.push('/login');
+	        if (this.props.location.pathname.indexOf('/login') > -1) {} else {
+	          this.props.history.push('/login');
+	        }
 	      }
 	    }
 	  }]);
@@ -6032,16 +6036,15 @@
 
 	var routeConfig = [{ path: '/',
 	  component: App,
-	  indexRoute: { component: Dashboard },
+	  // indexRoute: { component:Dashboard},
 	  onChange: function onChange(previousRoute, nextRoute) {},
 	  childRoutes: [{ path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
 	      __webpack_require__.e/* nsure */(8, function (require) {
-
 	        cb(null, __webpack_require__(402));
 	      });
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(9/* empty */, function (require) {
+	      __webpack_require__.e/* nsure */(9, function (require) {
 	        cb(null, __webpack_require__(683));
 	      });
 	    }

@@ -26000,12 +26000,18 @@ webpackJsonp([9],[
 	module.exports = function () {
 	  var app = (0, _dva2.default)();
 	  var init = false;
-	  console.log('xxxxxxxxxxxxx', projects);
 	  app.model({
 	    namespace: 'apps',
 	    state: {
+	      showList: true,
 	      list: projects,
-	      userinfo: user
+	      userinfo: user,
+	      pname: '',
+	      corpid: '',
+	      copesecret: '',
+	      appid: '',
+	      dirpath: '',
+	      babel: true, completion: true, compress: true
 	    },
 	    reducers: {
 	      add: function add(state, action) {
@@ -26019,6 +26025,24 @@ webpackJsonp([9],[
 	          list: projects,
 	          userinfo: user
 	        });
+	      },
+	      changeShowList: function changeShowList(state, action) {
+	        return _.extend({}, state, { showList: action['payload'] });
+	      },
+	      backList: function backList(state, action) {
+	        return _.extend({}, state, {
+	          showList: true,
+	          pname: '',
+	          corpid: '',
+	          copesecret: '',
+	          appid: '',
+	          dirpath: ''
+	        });
+	      },
+	      changeInputVal: function changeInputVal(state, action) {
+	        var data = _.extend({}, state);
+	        data[action['target']] = action['payload'];
+	        return data;
 	      }
 	    }
 	  });
@@ -26042,90 +26066,6 @@ webpackJsonp([9],[
 	  var store = (0, _redux.createStore)(App);
 	  function resetModel() {}
 
-	  function createProject() {
-	    $(".apps").html('\
-	        <div class="header">\
-	          <div class="back"> < 返回 </div>\
-	          <div class="title"> 添加项目 </div>\
-	        </div>\
-	        <form>\
-	        <p><label>项目名称: </label><input type="text" name="pname" /></p>\
-	        <p><label>corpID: </label><input type="text" name="corpid" /></p>\
-	        <p><label>copeSecret: </label><input type="text" name="copesecret" /></p>\
-	        <p><label>appID: </label><input type="text" name="appid" /></p>\
-	        <p><label>项目目录: </label><input type="text" name="file" /><button type="button">选择文件</button><input class="file" type="file" nwdirectory id="choseDirectory"/><p>\
-	        <p class="btn-group"><div class="cencle">取消</div> <div class="success">创建项目</div><p>\
-	        </form>\
-	      ');
-	    var chooser = $('#choseDirectory');
-	    var btn = $('button');
-	    btn.bind('click', function () {
-	      chooser.click();
-	    });
-	    chooser.unbind('change');
-	    chooser.change(function (evt) {
-	      var val = $(this).val();
-	      console.log(val);
-	      $('input[name="file"]').val(val);
-	    });
-	    chooser.on('cancel', function () {});
-
-	    $(".back").click(function () {
-	      alert('back');
-	      window.location.reload();
-	    });
-
-	    $(".success").click(function (evt) {
-	      var project = {};
-	      var value = $('input[name="file"]').val();
-	      project.id = parseInt(Math.random() * 1000000000);
-	      project.name = $('input[name="pname"]').val();
-	      project.corpID = $('input[name="corpid"]').val();
-	      project.copeSecret = $('input[name="copesecret"]').val();
-	      project.appID = $('input[name="appid"]').val();
-	      project.src = "file://" + value;
-	      project.tools = { babel: true, completion: true, compress: true };
-	      fs.exists(value + '/index.html', function (exists) {
-	        // window.projects.push(project);
-	        store.dispatch({
-	          type: 'apps/add',
-	          data: project
-	        });
-	        setTimeout(function () {
-	          if (exists) {
-	            fs.writeFile('project.json', JSON.stringify(projects), function () {
-	              openProject(project["id"]);
-	            });
-	          } else {
-	            var unzipper = new DecompressZip('tmp/init.zip');
-	            unzipper.on('error', function (err) {
-	              console.log('Caught an error');
-	            });
-	            unzipper.on('extract', function (log) {
-	              fs.writeFile('project.json', JSON.stringify(projects), function () {
-	                openProject(project["id"]);
-	              });
-	            });
-	            unzipper.on('progress', function (fileIndex, fileCount) {
-	              console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
-	            });
-	            unzipper.extract({
-	              path: value,
-	              filter: function filter(file) {
-	                return file.type !== "SymbolicLink";
-	              }
-	            });
-	          }
-	        });
-	      });
-	      evt.stopPropagation();
-	    });
-	    $(".cencle").click(function () {
-	      alert('cencle');
-	      window.location.reload();
-	    });
-	  }
-
 	  function openProject(id, value) {
 	    window.user.openId = id;
 	    fs.writeFile('config.json', JSON.stringify(user), function () {
@@ -26147,19 +26087,29 @@ webpackJsonp([9],[
 	      value: function render() {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'item', onClick: openProject.bind(null, this.props.id) },
+	          { className: 'apps-list-i', onClick: openProject.bind(null, this.props.id) },
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            _react2.default.createElement('img', { src: serverUrl + user.avatar.avatar_l })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            this.props.name
+	            { className: 'apps-list-i-c' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'apps-list-i-pic' },
+	              _react2.default.createElement('div', null)
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'apps-list-i-val ellipsis' },
+	              this.props.name
+	            )
 	          )
 	        );
 	      }
+	      /* <div className="item" onClick={openProject.bind(null, this.props.id)}>
+	            <div><img src={serverUrl+user.avatar.avatar_l} /></div>
+	            <div>{this.props.name}</div>
+	          </div>
+	      */
+
 	    }]);
 
 	    return ChildeView;
@@ -26177,47 +26127,352 @@ webpackJsonp([9],[
 	    _createClass(Apps, [{
 	      key: 'render',
 	      value: function render() {
-	        console.log('123123123123123');
+	        var _this3 = this;
+
 	        var self = this;
+	        var data = this.props;
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'apps' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'avatar' },
-	            _react2.default.createElement('img', { src: serverUrl + this.props.userinfo.avatar.avatar_l })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'name' },
-	            '\u5927\u795E\uFF1A',
-	            this.props.userinfo.name
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'list' },
+	            { className: "apps-tabs-i list " + (data['showList'] ? '' : 'hide') },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'item', onClick: createProject },
+	              { className: 'apps-user' },
 	              _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement('img', { src: serverUrl + this.props.userinfo.avatar.avatar_l })
+	                { className: 'apps-user-c' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'apps-info-avatar' },
+	                  _react2.default.createElement('img', { src: serverUrl + this.props.userinfo.avatar.avatar_l })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'apps-info-name' },
+	                  this.props.userinfo.name
+	                )
+	              )
+	            ),
+	            _react2.default.createElement('div', { className: 'xxxxx hide' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'apps-list' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'apps-list-i apps-create-btn', onClick: function onClick(e) {
+	                    return _this3.createApps(e);
+	                  } },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'apps-list-i-c' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-list-i-pic' },
+	                    _react2.default.createElement('div', null)
+	                  ),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-list-i-val' },
+	                    '\u6DFB\u52A0\u9879\u76EE'
+	                  )
+	                )
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                null,
-	                '\u6DFB\u52A0\u9879\u76EE'
+	                { className: 'apps-list-i hide' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'apps-list-i-c' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-list-i-pic' },
+	                    _react2.default.createElement('div', null)
+	                  ),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-list-i-val ellipsis' },
+	                    'xxxxxxxxxxxxxxxxxx'
+	                  )
+	                )
+	              ),
+	              this.props.list.map(function (item) {
+	                return _react2.default.createElement(ChildeView, _extends({}, item, { dispatch: self.props.dispatch }));
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: "apps-tabs-i create-form " + (data['showList'] ? 'hide' : '') },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'create-form-back', onClick: function onClick(e) {
+	                  return _this3.backList(e);
+	                } },
+	              _react2.default.createElement('div', { className: 'create-form-back-pic' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-back-val' },
+	                '\u8FD4\u56DE'
 	              )
 	            ),
-	            this.props.list.map(function (item) {
-	              return _react2.default.createElement(ChildeView, _extends({}, item, { dispatch: self.props.dispatch }));
-	            })
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement('div', { className: 'new' })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'create-form-c' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-title' },
+	                '\u6DFB\u52A0\u9879\u76EE'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-i' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  '\u9879\u76EE\u540D\u79F0'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['pname'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "pname");
+	                    } })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-i' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  'corpID'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['corpid'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "corpid");
+	                    } }),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-tip' },
+	                    _react2.default.createElement('i', { className: 'apps-tip-icon' }),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'apps-tip-c' },
+	                      _react2.default.createElement('div', { className: 'apps-tip-bg' }),
+	                      _react2.default.createElement(
+	                        'div',
+	                        { className: 'apps-tip-val' },
+	                        'corpID'
+	                      ),
+	                      _react2.default.createElement('i', { className: 'apps-tip-cirtle' })
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-i' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  'copeSecret'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['copesecret'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "copesecret");
+	                    } }),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-tip' },
+	                    _react2.default.createElement('i', { className: 'apps-tip-icon' }),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'apps-tip-c' },
+	                      _react2.default.createElement('div', { className: 'apps-tip-bg' }),
+	                      _react2.default.createElement(
+	                        'div',
+	                        { className: 'apps-tip-val' },
+	                        'copeSecret'
+	                      ),
+	                      _react2.default.createElement('i', { className: 'apps-tip-cirtle' })
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-i' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  'AppID'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['appid'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "appid");
+	                    } }),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'apps-tip-specail' },
+	                    '\u65E0 AppID'
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-i' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  '\u9879\u76EE\u76EE\u5F55'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'text', className: 'create-form-input', value: data['dirpath'], disabled: 'disabled' }),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'chose-directory' },
+	                    _react2.default.createElement(
+	                      'button',
+	                      { className: 'apps-form-open-dir', type: 'button' },
+	                      '\u6253\u5F00'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'file', className: 'chose-directory-input', nwdirectory: true, onClick: function onClick(e) {
+	                        return _this3.choseDirectory(e);
+	                      }, onChange: function onChange(e) {
+	                        return _this3.changeInputVal(e, 'dirpath');
+	                      } })
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'create-form-buttons' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'button', className: 'create-form-button cancel-btn', onClick: function onClick(e) {
+	                      return _this3.backList(e);
+	                    } },
+	                  '\u53D6\u6D88'
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'button', className: 'create-form-button create-btn', onClick: function onClick(e) {
+	                      return _this3.submit(e);
+	                    } },
+	                  '\u4FDD\u5B58'
+	                )
+	              )
+	            )
+	          )
 	        );
+	      }
+	    }, {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        $('.chose-directory-input').attr({ nwdirectory: '' });
+	      }
+	    }, {
+	      key: 'choseDirectory',
+	      value: function choseDirectory() {
+	        $('#choseDirectory').click();
+	      }
+	    }, {
+	      key: 'createApps',
+	      value: function createApps() {
+	        var dispatch = this.props.dispatch;
+	        dispatch({
+	          type: 'apps/changeShowList',
+	          payload: false
+	        });
+	      }
+	    }, {
+	      key: 'backList',
+	      value: function backList() {
+	        var dispatch = this.props.dispatch;
+	        dispatch({
+	          type: 'apps/backList',
+	          payload: false
+	        });
+	      }
+	    }, {
+	      key: 'changeInputVal',
+	      value: function changeInputVal(e, type) {
+	        var dispatch = this.props.dispatch;
+	        var node = event.target;
+	        var text = node.value.trim();
+	        dispatch({
+	          type: 'apps/changeInputVal',
+	          target: type,
+	          payload: text
+	        });
+	      }
+	    }, {
+	      key: 'submit',
+	      value: function submit() {
+	        var project = {};
+	        var data = this.props;
+	        project.id = parseInt(Math.random() * 1000000000);
+	        project.name = data["pname"];
+	        project.corpID = data['corpid'];
+	        project.copeSecret = data['copesecret'];
+	        project.appID = data['appid'];
+	        project.src = "file://" + data["dirpath"];
+	        project.tools = { babel: true, completion: true, compress: true };
+	        fs.exists(data["dirpath"] + '/index.html', function (exists) {
+	          // window.projects.push(project);
+	          store.dispatch({
+	            type: 'apps/add',
+	            data: project
+	          });
+	          setTimeout(function () {
+	            if (exists) {
+	              fs.writeFile('project.json', JSON.stringify(projects), function () {
+	                store.dispatch({
+	                  type: 'apps/backList',
+	                  payload: false
+	                });
+	                setTimeout(function () {
+	                  openProject(project["id"]);
+	                }, 50);
+	              });
+	            } else {
+	              var unzipper = new DecompressZip('tmp/init.zip');
+	              unzipper.on('error', function (err) {
+	                console.log('Caught an error');
+	              });
+	              unzipper.on('extract', function (log) {
+	                fs.writeFile('project.json', JSON.stringify(projects), function () {
+	                  store.dispatch({
+	                    type: 'apps/backList',
+	                    payload: false
+	                  });
+	                  setTimeout(function () {
+	                    openProject(project["id"]);
+	                  }, 50);
+	                });
+	              });
+	              unzipper.on('progress', function (fileIndex, fileCount) {
+	                console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+	              });
+	              unzipper.extract({
+	                path: value,
+	                filter: function filter(file) {
+	                  return file.type !== "SymbolicLink";
+	                }
+	              });
+	            }
+	          });
+	        });
 	      }
 	    }]);
 
@@ -26236,7 +26491,7 @@ webpackJsonp([9],[
 	    function Main(props) {
 	      _classCallCheck(this, Main);
 
-	      var _this3 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+	      var _this4 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
 	      if (!init) {
 	        init = true;
@@ -26247,7 +26502,7 @@ webpackJsonp([9],[
 	          });
 	        });
 	      }
-	      return _this3;
+	      return _this4;
 	    }
 
 	    _createClass(Main, [{
@@ -26302,7 +26557,7 @@ webpackJsonp([9],[
 
 
 	// module
-	exports.push([module.id, ".apps{\n\t\n    text-align: center;\n\n}\n.apps .avatar{\n\n\ttext-align: center;\n\tmargin-bottom: 10px;\n}\n\n.apps .avatar img{\n\n\tmargin-top: 60px;\n\twidth: 100px;\n\theight: 100px;\n\tborder-radius: 60px;\n\n}\n\n.apps .name{\n\t\n\ttext-align: center;\n\tmargin-bottom: 40px;\n\n}\n\n\n.apps .list{\n\t\n\ttext-align: center;\n\theight: 200px;\n\tmargin-bottom: 40px;\n\n}\n\n.apps .list .item{\n\t\n\tmargin: 0 20px;\n\theight: 150px;\n\tmargin-top: 60px;\n\twidth: 100px;\n\tdisplay:inline-block;\n\n\t\n\n}\n\n.apps .list .item img{\n\t\n\twidth: 100px;\n\theight: 100px;\n}\n\n\n\n.apps hr{\n\t\n\tborder: 1px solid #ccc;\n    margin: 0 60px;\n\n}\n\n.apps form{\n\n\tmargin-top: 40px;\n}\n\n.apps p{\n\tmargin: 0 auto;\n\tline-height: 60px;\n}\n.apps label{\n\twidth:  100px;\n}\n.apps input{\n\n\tborder: 1px solid #ccc;\n\theight: 36px;\n\twidth:  280px;\n\n}\n.apps button{\n\tposition: absolute;\n\tmargin-right: -80px;\n}\n.apps .file{\n\n\tdisplay: none;\n\n}\n\n.apps .header{\n\ttext-align: center;\n\tposition: relative;\n\tmargin-top: 40px;\n}\n.apps .header .back{\n\tfloat: left;\n\tmargin-left: 20px;\n\tcursor: pointer;\n}\n\n.apps .header .title{\n\n\tfont-size: 16px;\n\n}\n\n.apps .btn-group{\n\tfloat: right;\n}\n\n.apps .success{\n\tborder:none;\n\tbackground: #32a62e;\n\tcolor: #fff;\n\tfont-size: 14px;\n\tpadding:10px 10px;\n\tmin-width:70px;\n\tdisplay: inline-block;\n\tmargin-left: 20px;\n\t-moz-border-radius: 5px; \n\t-webkit-border-radius: 5px; \n\tcursor: pointer;\n}\n\n.apps .cencle{\n\tborder:none;\n\tbackground: #fff;\n\tcolor: #8585885;\n\tfont-size: 14px;\n\tpadding:10px 10px;\n\tmin-width:70px;\n\tdisplay: inline-block;\n\t-moz-border-radius: 5px; \n\t-webkit-border-radius: 5px; \n\tcursor: pointer;\n}\n", ""]);
+	exports.push([module.id, ".apps{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n\tbackground: #ffffff\n}\n.apps-tabs-i{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\t\n}\n.apps .apps-user{\n\tposition: relative;\n\twidth: 100%;height: 40%;background: #323940;-webkit-app-region: drag;\n}\n.apps .apps-user .apps-user-c{\n\tposition: absolute;top:50%;left: 0;right: 0;\n\tmargin-top: -58px;\n}\n.apps-user .apps-info-avatar{\n\tmargin:0 auto;\n\twidth: 76px;height: 76px;border-radius: 76px;overflow: hidden;\n}\n.apps-user .apps-info-avatar img{max-width: 100%;}\n.apps-user .apps-info-name{\n\tmargin-top: 20px;\n\tfont-size: 16px;color: #ffffff;\n\ttext-align: center;\n}\n.apps .apps-list{\n\tposition: relative;\n\twidth: 100%;height: 60%;background: #f7f7f7;-webkit-app-region: drag;\n\ttext-align: center;\n\tpadding:40px 0 0 0;\n}\n.apps-list-i{\n\tdisplay: inline-block;\n\tvertical-align: top;\n\tmargin:20px 15px 0 ;\n\tcursor: pointer;\n}\n.apps-list-i .apps-list-i-c{width: 80px;}\n.apps-list-i .apps-list-i-c .apps-list-i-pic{\n\twidth: 80px;height: 80px;display: table-cell;\n\tvertical-align: middle;text-align: center;\n\tbackground: #6f7378;\n}\n.apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;\n\tbackground-size: cover;\n}\n.apps-list-i .apps-list-i-c .apps-list-i-val{\n\tmargin-top: 20px;text-align: center;font-size: 14px;color: #666666;\n}\n.apps-create-btn{\n\tcursor: pointer;\n}\n.apps-create-btn .apps-list-i-pic{\n\tborder:2px dashed #dddddd;\n\tbackground: none!important;\n}\n.apps-create-btn .apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;\n\tbackground-size: cover;\n}\n.xxxxx{\n\twidth: 140px;\n  height: 31px;\n  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;\n  background-size: cover;\n}\n.apps-create-btn:hover .apps-list-i-pic{\n\tbackground: #f0f0f0!important;\n}\n.apps-create-btn:hover .apps-list-i-val{\n\tcolor: #444;\n}\n\n\n\n.create-form{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n}\n.create-form-back{\n\tmargin:25px 30px;height: 21px;line-height: 21px;\n\tcursor: pointer;\n}\n.create-form-back .create-form-back-pic{\n\tfloat: left;\n\tmargin:3px 0 0 0;\n\twidth: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;\n\tbackground-size: cover;\n}\n.create-form-back .create-form-back-val{\n\tfloat: left;\n\tmargin-left: 10px;\n}\n\n.create-form .create-form-c{\n\tposition: absolute;top:50%;margin-top: -228px;\n\tleft: 50%;margin-left: -260px;\n\twidth: 520px;\n}\n.create-form-c .create-form-title{\n\ttext-align: center;\n\tcolor: #333333;\n\tfont-size: 20px;\n\tmargin-bottom: 40px;\n}\n.create-form-c .create-form-i{\n\tposition: relative;\n\tmargin-top: 30px;\n}\n.create-form-c .create-form-i:first-child{\n}\n.create-form-i .create-form-label{\n\tdisplay: inline-block;\n\twidth: 90px;\n\ttext-align: right;\n\tcolor: #333333;\n\tfont-size: 14px;\n\tline-height: 36px;\n}\n.create-form-i .create-form-i-c{\n\tdisplay: inline-block;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-input{\n\tpadding:0 10px;\n\twidth: 320px;\n\theight: 36px;line-height: 36px;border:1px solid #dddddd;\n\tborder-radius: 3px;\n}\n.apps-tip-specail{\n\tdisplay: inline-block;\n\tmargin-left: 15px;line-height: 36px;\n\tcolor: #4174d9;\n\tfont-size: 13px;\n}\n\n.chose-directory{\n\tdisplay: inline-block;\n\tposition: relative;\n\twidth: 70px;\n\theight: 36px;\n\tborder-radius: 3px;\n\tborder:1px solid #ddd;\n\tvertical-align: top;\n\tmargin-left: 15px;\n\ttext-align: center;\n\toverflow: hidden;\n}\n.chose-directory .apps-form-open-dir{\n\ttext-align: center;\n\tline-height: 36px;\n\tpadding: 0;\n\tcursor:pointer;\n}\n.chose-directory .chose-directory-input{\n\tposition: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;\n}\n\n.apps-form-open-dir:hover{\n\tborder-color: #4174d9;\n\tcolor: #4174d9;\n}\n.create-form-c .create-form-buttons{\n\ttext-align: center;\n\tmargin-top: 50px;\n}\n.create-form-buttons .create-form-button{\n\twidth: 120px;height: 36px;\n\tdisplay: inline-block;margin-left: 60px;\n\ttext-align: center;\n\tborder-radius: 3px;\n}\n.create-form-buttons .create-form-button:first-child{\n\tmargin-left: 0;\n}\n.create-form-button.cancel-btn{\n\tbackground: #e7e7e7;\n\tcolor: #999999;\n}\n.create-form-button.create-btn{\n\tbackground: #8d9094;\n\tcolor: #ffffff;\n}\n.create-form-button.create-btn[disabled]{\n\topacity: 0.5\n}\n\n\n.apps-tip{\n\tposition: relative;\n\tdisplay: inline-block;\n\tmargin:10px 0 0 15px;\n\tz-index: 2222222;\n\tvertical-align: top;\n}\n.apps-tip .apps-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.apps-tip .apps-tip-c{\n\tdisplay: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.apps-tip-c .apps-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 10px;\n}\n.apps-tip-c .apps-tip-val{\n\tposition: relative;z-index: 2;padding: 15px 15px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.apps-tip-c .apps-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.apps-tip:hover .apps-tip-c{\n\tdisplay: block;\n}\n\n", ""]);
 
 	// exports
 

@@ -1,139 +1,219 @@
 .apps{
-	
-    text-align: center;
-
+	position: absolute;top:0;right: 0;bottom: 0;left: 0;
+	background: #ffffff
 }
-.apps .avatar{
-
-	text-align: center;
-	margin-bottom: 10px;
+.apps-tabs-i{
+	position: absolute;top:0;right: 0;bottom: 0;left: 0;	
 }
-
-.apps .avatar img{
-
-	margin-top: 60px;
-	width: 100px;
-	height: 100px;
-	border-radius: 60px;
-
-}
-
-.apps .name{
-	
-	text-align: center;
-	margin-bottom: 40px;
-
-}
-
-
-.apps .list{
-	
-	text-align: center;
-	height: 200px;
-	margin-bottom: 40px;
-
-}
-
-.apps .list .item{
-	
-	margin: 0 20px;
-	height: 150px;
-	margin-top: 60px;
-	width: 100px;
-	display:inline-block;
-
-	
-
-}
-
-.apps .list .item img{
-	
-	width: 100px;
-	height: 100px;
-}
-
-
-
-.apps hr{
-	
-	border: 1px solid #ccc;
-    margin: 0 60px;
-
-}
-
-.apps form{
-
-	margin-top: 40px;
-}
-
-.apps p{
-	margin: 0 auto;
-	line-height: 60px;
-}
-.apps label{
-	width:  100px;
-}
-.apps input{
-
-	border: 1px solid #ccc;
-	height: 36px;
-	width:  280px;
-
-}
-.apps button{
-	position: absolute;
-	margin-right: -80px;
-}
-.apps .file{
-
-	display: none;
-
-}
-
-.apps .header{
-	text-align: center;
+.apps .apps-user{
 	position: relative;
-	margin-top: 40px;
+	width: 100%;height: 40%;background: #323940;-webkit-app-region: drag;
 }
-.apps .header .back{
+.apps .apps-user .apps-user-c{
+	position: absolute;top:50%;left: 0;right: 0;
+	margin-top: -58px;
+}
+.apps-user .apps-info-avatar{
+	margin:0 auto;
+	width: 76px;height: 76px;border-radius: 76px;overflow: hidden;
+}
+.apps-user .apps-info-avatar img{max-width: 100%;}
+.apps-user .apps-info-name{
+	margin-top: 20px;
+	font-size: 16px;color: #ffffff;
+	text-align: center;
+}
+.apps .apps-list{
+	position: relative;
+	width: 100%;height: 60%;background: #f7f7f7;-webkit-app-region: drag;
+	text-align: center;
+	padding:40px 0 0 0;
+}
+.apps-list-i{
+	display: inline-block;
+	vertical-align: top;
+	margin:20px 15px 0 ;
+	cursor: pointer;
+}
+.apps-list-i .apps-list-i-c{width: 80px;}
+.apps-list-i .apps-list-i-c .apps-list-i-pic{
+	width: 80px;height: 80px;display: table-cell;
+	vertical-align: middle;text-align: center;
+	background: #6f7378;
+}
+.apps-list-i-pic div{
+	margin:0 auto;
+	display: block;
+	width: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;
+	background-size: cover;
+}
+.apps-list-i .apps-list-i-c .apps-list-i-val{
+	margin-top: 20px;text-align: center;font-size: 14px;color: #666666;
+}
+.apps-create-btn{
+	cursor: pointer;
+}
+.apps-create-btn .apps-list-i-pic{
+	border:2px dashed #dddddd;
+	background: none!important;
+}
+.apps-create-btn .apps-list-i-pic div{
+	margin:0 auto;
+	display: block;
+	width: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;
+	background-size: cover;
+}
+.xxxxx{
+	width: 140px;
+  height: 31px;
+  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;
+  background-size: cover;
+}
+.apps-create-btn:hover .apps-list-i-pic{
+	background: #f0f0f0!important;
+}
+.apps-create-btn:hover .apps-list-i-val{
+	color: #444;
+}
+
+
+
+.create-form{
+	position: absolute;top:0;right: 0;bottom: 0;left: 0;
+}
+.create-form-back{
+	margin:25px 30px;height: 21px;line-height: 21px;
+	cursor: pointer;
+}
+.create-form-back .create-form-back-pic{
 	float: left;
-	margin-left: 20px;
-	cursor: pointer;
+	margin:3px 0 0 0;
+	width: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;
+	background-size: cover;
+}
+.create-form-back .create-form-back-val{
+	float: left;
+	margin-left: 10px;
 }
 
-.apps .header .title{
-
-	font-size: 16px;
-
+.create-form .create-form-c{
+	position: absolute;top:50%;margin-top: -228px;
+	left: 50%;margin-left: -260px;
+	width: 520px;
 }
-
-.apps .btn-group{
-	float: right;
+.create-form-c .create-form-title{
+	text-align: center;
+	color: #333333;
+	font-size: 20px;
+	margin-bottom: 40px;
 }
-
-.apps .success{
-	border:none;
-	background: #32a62e;
-	color: #fff;
+.create-form-c .create-form-i{
+	position: relative;
+	margin-top: 30px;
+}
+.create-form-c .create-form-i:first-child{
+}
+.create-form-i .create-form-label{
+	display: inline-block;
+	width: 90px;
+	text-align: right;
+	color: #333333;
 	font-size: 14px;
-	padding:10px 10px;
-	min-width:70px;
+	line-height: 36px;
+}
+.create-form-i .create-form-i-c{
 	display: inline-block;
 	margin-left: 20px;
-	-moz-border-radius: 5px; 
-	-webkit-border-radius: 5px; 
-	cursor: pointer;
+}
+.create-form-i-c .create-form-input{
+	padding:0 10px;
+	width: 320px;
+	height: 36px;line-height: 36px;border:1px solid #dddddd;
+	border-radius: 3px;
+}
+.apps-tip-specail{
+	display: inline-block;
+	margin-left: 15px;line-height: 36px;
+	color: #4174d9;
+	font-size: 13px;
 }
 
-.apps .cencle{
-	border:none;
-	background: #fff;
-	color: #8585885;
-	font-size: 14px;
-	padding:10px 10px;
-	min-width:70px;
+.chose-directory{
 	display: inline-block;
-	-moz-border-radius: 5px; 
-	-webkit-border-radius: 5px; 
-	cursor: pointer;
+	position: relative;
+	width: 70px;
+	height: 36px;
+	border-radius: 3px;
+	border:1px solid #ddd;
+	vertical-align: top;
+	margin-left: 15px;
+	text-align: center;
+	overflow: hidden;
 }
+.chose-directory .apps-form-open-dir{
+	text-align: center;
+	line-height: 36px;
+	padding: 0;
+	cursor:pointer;
+}
+.chose-directory .chose-directory-input{
+	position: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;
+}
+
+.apps-form-open-dir:hover{
+	border-color: #4174d9;
+	color: #4174d9;
+}
+.create-form-c .create-form-buttons{
+	text-align: center;
+	margin-top: 50px;
+}
+.create-form-buttons .create-form-button{
+	width: 120px;height: 36px;
+	display: inline-block;margin-left: 60px;
+	text-align: center;
+	border-radius: 3px;
+}
+.create-form-buttons .create-form-button:first-child{
+	margin-left: 0;
+}
+.create-form-button.cancel-btn{
+	background: #e7e7e7;
+	color: #999999;
+}
+.create-form-button.create-btn{
+	background: #8d9094;
+	color: #ffffff;
+}
+.create-form-button.create-btn[disabled]{
+	opacity: 0.5
+}
+
+
+.apps-tip{
+	position: relative;
+	display: inline-block;
+	margin:10px 0 0 15px;
+	z-index: 2222222;
+	vertical-align: top;
+}
+.apps-tip .apps-tip-icon{
+	display: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;
+}
+.apps-tip .apps-tip-c{
+	display: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;
+	min-width: 250px;
+}
+.apps-tip-c .apps-tip-bg{
+	position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 10px;
+}
+.apps-tip-c .apps-tip-val{
+	position: relative;z-index: 2;padding: 15px 15px;color: #fff;line-height: 20px;font-size: 13px;
+}
+.apps-tip-c .apps-tip-cirtle{
+	position: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;
+}
+.apps-tip:hover .apps-tip-c{
+	display: block;
+}
+

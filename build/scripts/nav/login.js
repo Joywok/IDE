@@ -20587,6 +20587,8 @@ webpackJsonp([8],Array(38).concat([
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -20596,288 +20598,350 @@ webpackJsonp([8],Array(38).concat([
 	var request = __webpack_require__(678);
 
 
-	// 引入css
-	__webpack_require__(679);
+	module.exports = function () {
+	  // 引入css
+	  __webpack_require__(679);
 
-	var localstore = new Store('Joywok:saas:login');
-	var cache = localstore.find({ id: 'login' });
-	var data = {
-	  name: cache && cache['id'] ? cache['name'] : '',
-	  nameShow: cache && cache['id'] ? false : true,
-	  nameClass: cache && cache['id'] ? 'show' : '',
-	  email: cache && cache['id'] ? cache["email"] : '',
-	  passwd: '',
-	  nameError: '',
-	  passwdError: '',
-	  isdis: true,
-	  loginVal: '登录'
-	};
-	function _changeValue(key, value) {
-	  return _.extend({}, { type: 'changeValue' }, { key: key, value: value });
-	}
-	function changeError(data) {
-	  return _.extend({}, { type: 'changeError' }, { data: data });
-	}
-	function changeBtn(data) {
-	  return _.extend({}, { type: 'changeBtn' }, { data: data });
-	}
-	function App() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : data;
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case 'changeValue':
-	      var datas = _.extend({}, state);
-	      datas[action['key']] = action['value'];
-	      if (action['key'] == 'email') {
-	        datas['nameError'] = '';
-	        datas['nameHasError'] = '';
-	      } else {
-	        datas['passwdError'] = '';
-	        datas['passwdHasError'] = '';
-	      }
-	      datas['isdis'] = true;
-	      if (datas['passwd'].length != 0) {
-	        datas['isdis'] = false;
-	      }
-	      return datas;
-	      break;
-	    case 'changeError':
-	      var aaa = _.extend({}, state, action['data']);
-	      return aaa;
-	      break;
-	    case "changeBtn":
-	      return _.extend({}, state, action['data']);
-	      break;
-	    default:
-	      return state;
+	  var localstore = new Store('Joywok:saas:login');
+	  var cache = localstore.find({ id: 'login' });
+	  var data = {
+	    name: cache && cache['id'] ? cache['name'] : '',
+	    nameShow: cache && cache['id'] ? false : true,
+	    nameClass: cache && cache['id'] ? 'show' : '',
+	    email: cache && cache['id'] ? cache["email"] : '',
+	    passwd: '',
+	    nameError: '',
+	    passwdError: '',
+	    isdis: true,
+	    loginVal: '登录',
+	    signVal: '注册'
+	  };
+	  function _changeValue(key, value) {
+	    return _.extend({}, { type: 'changeValue' }, { key: key, value: value });
 	  }
-	}
+	  function changeError(data) {
+	    return _.extend({}, { type: 'changeError' }, { data: data });
+	  }
+	  function changeBtn(data) {
+	    return _.extend({}, { type: 'changeBtn' }, { data: data });
+	  }
+	  function App() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : data;
+	    var action = arguments[1];
 
-	var Controller = function (_Component) {
-	  _inherits(Controller, _Component);
-
-	  function Controller() {
-	    _classCallCheck(this, Controller);
-
-	    return _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).apply(this, arguments));
+	    switch (action.type) {
+	      case 'changeValue':
+	        var datas = _.extend({}, state);
+	        datas[action['key']] = action['value'];
+	        if (action['key'] == 'email') {
+	          datas['nameError'] = '';
+	          datas['nameHasError'] = '';
+	        } else {
+	          datas['passwdError'] = '';
+	          datas['passwdHasError'] = '';
+	        }
+	        datas['isdis'] = true;
+	        if (datas['passwd'].length != 0) {
+	          datas['isdis'] = false;
+	        }
+	        return datas;
+	        break;
+	      case 'changeError':
+	        var aaa = _.extend({}, state, action['data']);
+	        return aaa;
+	        break;
+	      case "changeBtn":
+	        return _.extend({}, state, action['data']);
+	        break;
+	      default:
+	        return state;
+	    }
 	  }
 
-	  _createClass(Controller, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+	  var Controller = function (_Component) {
+	    _inherits(Controller, _Component);
 
-	      var dispatch = this.props.dispatch;
+	    function Controller() {
+	      _classCallCheck(this, Controller);
 
-	      var buttonStyle = {
-	        height: 38,
-	        padding: 0
-	      };
-	      return _react2.default.createElement(
-	        _MuiThemeProvider2.default,
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'blog' },
+	      return _possibleConstructorReturn(this, (Controller.__proto__ || Object.getPrototypeOf(Controller)).apply(this, arguments));
+	    }
+
+	    _createClass(Controller, [{
+	      key: 'render',
+	      value: function render() {
+	        var _this2 = this,
+	            _React$createElement;
+
+	        var dispatch = this.props.dispatch;
+
+	        var buttonStyle = {
+	          height: 38,
+	          padding: 0,
+	          border: 'none'
+	        };
+	        return _react2.default.createElement(
+	          _MuiThemeProvider2.default,
+	          null,
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'blog-w' },
+	            { className: 'blog' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'containers blog-c', id: 'containers' },
+	              { className: 'blog-w' },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'login-bg' },
-	                _react2.default.createElement('div', { className: 'login-bg-t' }),
-	                _react2.default.createElement('div', { className: 'login-bg-b' })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'login' },
+	                { className: 'containers blog-c', id: 'containers' },
 	                _react2.default.createElement(
 	                  'div',
-	                  { className: 'login-w' },
+	                  { className: 'login-bg' },
+	                  _react2.default.createElement('div', { className: 'login-bg-t' }),
+	                  _react2.default.createElement('div', { className: 'login-bg-b' })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'login' },
 	                  _react2.default.createElement(
 	                    'div',
-	                    { className: 'login-t' },
-	                    _react2.default.createElement('img', { src: '../images/logo.png' }),
-	                    _react2.default.createElement(
-	                      'span',
-	                      null,
-	                      '\u7BA1\u7406\u540E\u53F0'
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'login-c' },
+	                    { className: 'login-w' },
 	                    _react2.default.createElement(
 	                      'div',
-	                      { className: 'login-logo' },
-	                      _react2.default.createElement('img', { src: '../images/l.jpg' })
+	                      { className: 'login-t' },
+	                      _react2.default.createElement('img', { src: '../images/1.png' })
 	                    ),
 	                    _react2.default.createElement(
 	                      'div',
-	                      { className: 'login-info' },
-	                      this.props.nameShow ? _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-info-name' },
-	                        this.props["name"]
-	                      ) : '',
+	                      { className: 'login-c' },
 	                      _react2.default.createElement(
 	                        'div',
-	                        { className: 'login-user' },
+	                        { className: 'login-logo hide' },
+	                        _react2.default.createElement('img', { src: '../images/login-normal-pic.png' })
+	                      ),
+	                      _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-title' },
+	                        'LOGIN'
+	                      ),
+	                      _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-info', autoComplete: 'off' },
+	                        this.props.nameShow ? _react2.default.createElement(
+	                          'div',
+	                          { className: 'login-info-name' },
+	                          this.props["name"]
+	                        ) : '',
 	                        _react2.default.createElement(
 	                          'div',
-	                          { className: 'login-user-input' },
-	                          !this.props.nameShow ? _react2.default.createElement(
+	                          { className: 'login-user' },
+	                          _react2.default.createElement(
 	                            'div',
-	                            { className: 'login-user-input-c' },
-	                            this.props.email
-	                          ) : _react2.default.createElement(_materialUi.TextField, { autoComplete: 'off', type: 'text', className: 'email', id: 'exampleInputEmail1', hintText: '\u90AE\u7BB1/\u624B\u673A\u53F7', fullWidth: true, defaultValue: this.props.email, onChange: function onChange(e) {
-	                              return _this2.changeValue(e, 'email');
-	                            }, errorText: this.props.nameError, onKeyUp: function onKeyUp(e) {
-	                              return _this2.Keyup(e, 'email');
-	                            } })
-	                        )
-	                      ),
-	                      _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-passwd' },
+	                            { className: 'login-user-input' },
+	                            !this.props.nameShow ? _react2.default.createElement(
+	                              'div',
+	                              { className: 'login-user-input-c' },
+	                              this.props.email
+	                            ) : _react2.default.createElement(_materialUi.TextField, { autoComplete: 'off', type: 'text', className: 'email', id: 'exampleInputEmail1', hintText: '\u90AE\u7BB1/\u624B\u673A\u53F7', fullWidth: true, onChange: function onChange(e) {
+	                                return _this2.changeValue(e, 'email');
+	                              }, errorText: this.props.nameError, onKeyUp: function onKeyUp(e) {
+	                                return _this2.Keyup(e, 'email');
+	                              } }),
+	                            _react2.default.createElement('input', (_React$createElement = { id: 'exampleInputEmail1', type: 'text', className: 'email hide' }, _defineProperty(_React$createElement, 'type', 'text'), _defineProperty(_React$createElement, 'autoComplete', 'off'), _React$createElement)),
+	                            _react2.default.createElement(
+	                              'div',
+	                              { className: 'login-tip' },
+	                              _react2.default.createElement('i', { className: 'login-tip-icon' }),
+	                              _react2.default.createElement(
+	                                'div',
+	                                { className: 'login-tip-c' },
+	                                _react2.default.createElement('div', { className: 'login-tip-bg' }),
+	                                _react2.default.createElement(
+	                                  'div',
+	                                  { className: 'login-tip-val' },
+	                                  '\u767B\u5F55\u5E10\u53F7\u662F Joywok \u4F01\u4E1A\u672C\u8EAB\u7684\u7528\u6237'
+	                                ),
+	                                _react2.default.createElement('i', { className: 'login-tip-cirtle' })
+	                              )
+	                            )
+	                          )
+	                        ),
 	                        _react2.default.createElement(
 	                          'div',
-	                          { className: 'login-passwd-input' },
-	                          _react2.default.createElement(_materialUi.TextField, { autoComplete: 'off', type: 'password', className: "passwd " + this.props.passwdHasError, id: 'exampleInputEmail1', hintText: '\u5BC6\u7801', fullWidth: true, defaultValue: this.props.passwd, onChange: function onChange(e) {
-	                              return _this2.changeValue(e, 'passwd');
-	                            }, errorText: this.props.passwdError, onKeyUp: function onKeyUp(e) {
-	                              return _this2.Keyup(e, 'passwd');
-	                            } })
-	                        )
-	                      ),
-	                      _react2.default.createElement(_materialUi.RaisedButton, { type: 'button', className: 'btn btn-info active login-save-btn', label: this.props.loginVal, onClick: function onClick(e) {
-	                          return _this2.submit(e);
-	                        }, disabled: this.props.isdis, style: buttonStyle, backgroundColor: '#444', labelColor: '#fff' }),
-	                      _react2.default.createElement(
-	                        'a',
-	                        { href: '' },
+	                          { className: 'login-passwd' },
+	                          _react2.default.createElement(
+	                            'div',
+	                            { className: 'login-passwd-input' },
+	                            _react2.default.createElement(_materialUi.TextField, { autoComplete: 'off', type: 'password', className: "passwd " + this.props.passwdHasError, id: 'exampleInputEmail1', hintText: '\u5BC6\u7801', fullWidth: true, onChange: function onChange(e) {
+	                                return _this2.changeValue(e, 'passwd');
+	                              }, errorText: this.props.passwdError, onKeyUp: function onKeyUp(e) {
+	                                return _this2.Keyup(e, 'passwd');
+	                              } })
+	                          )
+	                        ),
+	                        _react2.default.createElement(
+	                          'a',
+	                          { href: 'javascript:;' },
+	                          _react2.default.createElement(
+	                            'div',
+	                            { className: 'login-forget', 'ng-class': 'data[\'nameClass\']', onClick: function onClick(e) {
+	                                return _this2.forgetPwd(e);
+	                              } },
+	                            '\u5FD8\u8BB0\u5BC6\u7801?'
+	                          )
+	                        ),
 	                        _react2.default.createElement(
 	                          'div',
-	                          { className: 'login-forget', 'ng-class': 'data[\'nameClass\']' },
-	                          '\u5FD8\u8BB0\u5BC6\u7801?'
+	                          { className: 'submit-btns' },
+	                          _react2.default.createElement(
+	                            'div',
+	                            { className: 'submit-btns-i sign' },
+	                            _react2.default.createElement(
+	                              'button',
+	                              { className: 'btn btn-info login-sign-btn', type: 'button', onClick: function onClick(e) {
+	                                  return _this2.sign(e);
+	                                } },
+	                              this.props.signVal
+	                            )
+	                          ),
+	                          _react2.default.createElement(
+	                            'div',
+	                            { className: 'submit-btns-i submit' },
+	                            _react2.default.createElement(
+	                              'button',
+	                              { className: 'btn btn-info login-save-btn', type: 'button', onClick: function onClick(e) {
+	                                  return _this2.submit(e);
+	                                }, disabled: this.props.isdis },
+	                              this.props.signVal
+	                            )
+	                          )
 	                        )
 	                      )
 	                    )
 	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'footer' },
+	                  '2011-2017 \u9053\u52E4\u8F6F\u4EF6 \u7248\u6743\u6240\u6709'
 	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'footer' },
-	                '\xA9 2011-2014 \u9053\u52E4\u8F6F\u4EF6 \u7248\u6743\u6240\u6709'
 	              )
 	            )
 	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      $('.email input').focus();
-	    }
-	  }, {
-	    key: 'changeValue',
-	    value: function changeValue(event, key) {
-	      var dispatch = this.props.dispatch;
+	        );
+	      }
+	    }, {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        var dispatch = this.props.dispatch;
 
-	      var node = event.target;
-	      var text = node.value.trim();
-	      dispatch(_changeValue(key, text));
-	    }
-	  }, {
-	    key: 'Keyup',
-	    value: function Keyup(evt, key) {
-	      if (evt.keyCode == 13) {
-	        if (key == 'email') {
-	          $('.passwd input').focus();
-	        } else {
-	          this.submit();
+	        $('.email input').focus();
+	      }
+	    }, {
+	      key: 'changeValue',
+	      value: function changeValue(event, key) {
+	        var dispatch = this.props.dispatch;
+
+	        var node = event.target;
+	        var text = node.value.trim();
+	        dispatch(_changeValue(key, text));
+	      }
+	    }, {
+	      key: 'Keyup',
+	      value: function Keyup(evt, key) {
+	        if (evt.keyCode == 13) {
+	          if (key == 'email') {
+	            $('.passwd input').focus();
+	          } else {
+	            this.submit();
+	          }
 	        }
 	      }
-	    }
-	  }, {
-	    key: 'submit',
-	    value: function submit() {
-	      var dispatch = this.props.dispatch;
+	    }, {
+	      key: 'forgetPwd',
+	      value: function forgetPwd() {
+	        var shell = gui.Shell;
+	        shell.openExternal(serverUrl + '/forget');
+	      }
+	    }, {
+	      key: 'sign',
+	      value: function sign() {
+	        var shell = gui.Shell;
+	        shell.openExternal(serverUrl);
+	      }
+	    }, {
+	      key: 'submit',
+	      value: function submit() {
+	        var dispatch = this.props.dispatch;
 
-	      dispatch(changeBtn({ isdis: true, loginVal: '登录中…' }));
-	      var data = { "email": this.props.email, "password": this.props.passwd };
-	      request.post(serverUrl + '/ide/account/login').send(data).end(function (err, res) {
-	        var data = JSON.parse(res["text"]);
-	        if (data["data"]["errcode"]) {
-	          dispatch(changeError({ nameError: '用户名或密码错误！' }));
-	        } else {
-	          for (var i in data.data.user_info.contact) {
-	            if (data.data.user_info.contact[i].type == "mobile") {
-	              var mobile = data.data.user_info.contact[i].val;
+	        dispatch(changeBtn({ isdis: true, loginVal: '登录中…' }));
+	        var data = { "email": this.props.email, "password": this.props.passwd };
+	        request.post(serverUrl + '/ide/account/login').send(data).end(function (err, res) {
+	          var data = JSON.parse(res["text"]);
+	          if (data["data"]["errcode"]) {
+	            dispatch(changeError({ nameError: '用户名或密码错误！' }));
+	          } else {
+	            for (var i in data.data.user_info.contact) {
+	              if (data.data.user_info.contact[i].type == "mobile") {
+	                var mobile = data.data.user_info.contact[i].val;
+	              }
 	            }
+	            var userinfo = {
+	              email: data.data.user_info.account,
+	              id: data.data.id,
+	              name: data.data.user_info.name,
+	              title: data.data.user_info.title,
+	              mobile: mobile,
+	              avatar: {
+	                avatar_l: data.data.user_info.avatar_l,
+	                avatar_s: data.data.user_info.avatar_s
+	              },
+	              role: data.data.roles
+	            };
+	            fs.writeFile('config.json', JSON.stringify(userinfo), function (error) {
+	              window.user = userinfo;
+	              setTimeout(function () {
+	                hashHistory.push("/apps");
+	              });
+	            });
 	          }
-	          var userinfo = {
-	            email: data.data.user_info.account,
-	            id: data.data.id,
-	            name: data.data.user_info.name,
-	            title: data.data.user_info.title,
-	            mobile: mobile,
-	            avatar: {
-	              avatar_l: data.data.user_info.avatar_l,
-	              avatar_s: data.data.user_info.avatar_s
-	            },
-	            role: data.data.roles
-	          };
-	          fs.writeFile('config.json', JSON.stringify(userinfo), function (error) {
-	            window.user = userinfo;
-	            hashHistory.push("/apps");
-	          });
-	        }
-	      });
-	    }
-	  }]);
+	        });
+	      }
+	    }]);
 
-	  return Controller;
-	}(_react.Component);
+	    return Controller;
+	  }(_react.Component);
 
-	function select(state) {
-	  return state;
-	}
-	var RootApp = (0, _reactRedux.connect)(select)(Controller);
-	var store = (0, _redux.createStore)(App);
-
-	(0, _reactTapEventPlugin2.default)();
-
-	var Main = function (_Component2) {
-	  _inherits(Main, _Component2);
-
-	  function Main() {
-	    _classCallCheck(this, Main);
-
-	    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+	  function select(state) {
+	    return state;
 	  }
+	  var RootApp = (0, _reactRedux.connect)(select)(Controller);
+	  var store = (0, _redux.createStore)(App);
+	  (0, _reactTapEventPlugin2.default)();
 
-	  _createClass(Main, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactRedux.Provider,
-	        { store: store },
-	        _react2.default.createElement(RootApp, null)
-	      );
+	  var Main = function (_Component2) {
+	    _inherits(Main, _Component2);
+
+	    function Main() {
+	      _classCallCheck(this, Main);
+
+	      return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
 	    }
-	  }]);
+
+	    _createClass(Main, [{
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(
+	          _reactRedux.Provider,
+	          { store: store },
+	          _react2.default.createElement(RootApp, null)
+	        );
+	      }
+	    }]);
+
+	    return Main;
+	  }(_react.Component);
 
 	  return Main;
-	}(_react.Component);
-
-	module.exports = Main;
+	}();
 
 /***/ },
 /* 403 */
@@ -58161,7 +58225,7 @@ webpackJsonp([8],Array(38).concat([
 /* 678 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;var require;"use strict";
+	var require;var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -60078,7 +60142,7 @@ webpackJsonp([8],Array(38).concat([
 
 
 	// module
-	exports.push([module.id, "*{margin:0;padding: 0;}\nhtml{height: 100%}\na{text-decoration: none}\na:hover,a:focus{text-decoration: none;color: #4174d9}\ninput{width: 100%;height: 100%;padding:0 10px;border:1px solid #e3e3e3;border-top-color:#ccc;border-radius: 0px;-webkit-appearance: none;box-shadow:none;font-size: 14px;height:38px;line-height: 19px;outline: none!important;background: none!important;}\ninput:focus{box-shadow: 0 1px 2px rgba(0,0,0,0.1)inset;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.1)inset;border:1px solid #444444;outline: none;}\ninput.haserror{border:1px solid #bf0404;}\n.form-control{height: 100%;border-radius: 0px!important;font-size: 14px;}\nbutton{outline: none;}\nbutton:disabled{opacity: 0.7}\ninput:-webkit-autofill,\ninput:-webkit-autofill:hover,\ninput:-webkit-autofill:focus,\ninput:-webkit-autofill:active {\n    -webkit-box-shadow: 0 0 0px 1000px white inset!important;\n}\ninput[focus]:-webkit-autofill {\n    -webkit-box-shadow: 0 0 0px 1000px white inset!important;\n}\nbody{position: relative;height: 100%;font-family: '\\5FAE\\8F6F\\96C5\\9ED1', Arial, sans-serif;}\n.hide{display: none;}\n.blog{position: absolute;top:0;right: 0;bottom: 0;left: 0;}\n.blog .blog-w{}\n.blog .blog-w .blog-c{position: absolute;top:0;left: 0;right: 0;bottom: 0;overflow: hidden;}\n.blog-c .login-bg{position:absolute;top:0;left:0;right:0;bottom:0;}\n.login-bg .login-bg-t{width: 100%;height: 33.333333%;background: #e64a42;-webkit-app-region: drag;}\n.login-bg .login-bg-b{width: 100%;height: 66.6666666%;background: #f7f7f7;-webkit-app-region: drag;}\n.login{position:absolute;top:10%;left:50%;margin-left:-250px;z-index:2;width: 500px;-webkit-app-region:no-drag;}\n.login .login-w{}\n.login .login-w .login-t{margin:0 0 20px;height: 38px;text-align: center;}\n.login .login-w .login-t img{display: inline-block;}\n.login .login-w .login-t span{display: inline-block;vertical-align: bottom;margin-bottom: 5px;font-size: 14px;color: #ddd;}\n.login .login-w .login-c{overflow: hidden;width: 500px;background: #fff;}\n\n.login-logo{margin:20px auto;width: 100px;height: 100px;border-radius: 100px;overflow: hidden;}\n.login-logo img{max-width: 100%;max-height: 100%}\n\n.login-c .login-info-name{}\n\n.login-c .login-info{width: 320px;margin:0 auto;}\n\n.login-c .login-user{margin:0 auto 22px;width:100%px;font-size: 18px;color: #999}\n.login-user .login-user-input{}\n.login-user .login-user-input .email{color: #444}\n.login-user .login-user-input .login-user-input-c{}\n.login-user .login-user-error{margin: 5px 0 -8px;width: 100%;height: 20px;line-height: 20px;text-align: center;color: #bf0404;text-align: left;font-size: 13px;}\n.login-c .login-passwd{margin:0 auto;width: 100%;font-size: 18px;color: #999}\n.login-c .login-passwd{}\n.login-passwd .login-passwd-input{}\n.login-passwd .login-passwd-input .passwd{color: #444}\n.login-passwd .login-passwd-error{margin:5px 0 -8px;width: 100%;height: 20px;line-height: 20px;color: #bf0404;text-align: left;font-size: 13px;}\n\n.login-info .login-save-btn{display: block;margin: 32px auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;}\n\n.login-info .login-forget{text-align: center;margin:30px 0;color:#b0b0b0;}\n\n.footer{position: absolute;bottom:30px;left:0;right:0;text-align: center;color: #b0b0b0}\n\n.login-loading{position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 2}\n.login-loading .login-loading-bg{position: absolute;top:0;right: 0;left: 0;bottom: 0;background: #fff;opacity: 0.8}\ninput{\n\tbox-shadow: none!important\n}\ninput:focus{\n\tbox-shadow: none!important\n}", ""]);
+	exports.push([module.id, "*{margin:0;padding: 0;}\nhtml{height: 100%}\na{text-decoration: none}\na:hover,a:focus{text-decoration: none;color: #4174d9}\ninput{width: 100%;height: 100%;padding:0 10px;border:1px solid #e3e3e3;border-top-color:#ccc;border-radius: 0px;-webkit-appearance: none;box-shadow:none;font-size: 14px;height:38px;line-height: 19px;outline: none!important;background: none!important;}\ninput:focus{box-shadow: 0 1px 2px rgba(0,0,0,0.1)inset;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.1)inset;border:1px solid #444444;outline: none;}\ninput.haserror{border:1px solid #bf0404;}\n.form-control{height: 100%;border-radius: 0px!important;font-size: 14px;}\nbutton{outline: none;}\nbutton:disabled{opacity: 0.7}\ninput:-webkit-autofill,\ninput:-webkit-autofill:hover,\ninput:-webkit-autofill:focus,\ninput:-webkit-autofill:active {\n    -webkit-box-shadow: 0 0 0px 1000px white inset!important;\n}\ninput[focus]:-webkit-autofill {\n    -webkit-box-shadow: 0 0 0px 1000px white inset!important;\n}\nbody{position: relative;height: 100%;font-family: '\\5FAE\\8F6F\\96C5\\9ED1', Arial, sans-serif;}\n.hide{display: none;}\n.blog{position: absolute;top:0;right: 0;bottom: 0;left: 0;}\n.blog .blog-w{}\n.blog .blog-w .blog-c{position: absolute;top:0;left: 0;right: 0;bottom: 0;overflow: hidden;}\n.blog-c .login-bg{position:absolute;top:0;left:0;right:0;bottom:0;}\n.login-bg .login-bg-t{width: 100%;height: 40%;background: #323940;-webkit-app-region: drag;}\n.login-bg .login-bg-b{width: 100%;height: 60%;background: #f7f7f7;-webkit-app-region: drag;}\n.login{position:absolute;top:10%;left:50%;margin-left:-30%;z-index:2;width: 60%;-webkit-app-region:no-drag;}\n.login .login-w{}\n.login .login-w .login-t{margin:5% 0 40px;text-align: center;}\n.login .login-w .login-t img{\n\tdisplay: inline-block;\n\twidth: 310px;height: 47px;\n\tbackground: url(/build/images/1.png) no-repeat;\n\tbackground-size: cover;\n}\n// .login .login-w .login-t span{display: inline-block;vertical-align: bottom;margin-bottom: 5px;font-size: 14px;color: #ddd;}\n.login .login-w .login-c{width:100%;background: #fff;border-radius: 5px;}\n\n.login-logo{margin:20px auto;width: 100px;height: 100px;border-radius: 100px;overflow: hidden;}\n.login-logo img{max-width: 100%;max-height: 100%}\n\n.login-c .login-info-name{}\n\n.login-c .login-title{\n\tcolor: #1b222a;\n\tfont-size: 20px;\n\tpadding:50px 50px 0;\n}\n.login-c .login-info{margin:0 auto;}\n.login-c .login-user{margin:20px auto 0;padding:0 50px;width:100%;font-size: 18px;color: #999}\n.login-user .login-user-input{position: relative;}\n.login-user .login-user-input .email{color: #444}\n.login-user .login-user-input .login-user-input-c{}\n.login-user .login-user-error{margin: 5px 0 -8px;width: 100%;height: 20px;line-height: 20px;text-align: center;color: #bf0404;text-align: left;font-size: 13px;padding:0 50px;}\n.login-c .login-passwd{margin:20px auto 0;padding:0 50px;width: 100%;font-size: 18px;color: #999}\n.login-c .login-passwd{}\n.login-passwd .login-passwd-input{}\n.login-passwd .login-passwd-input .passwd{color: #444}\n.login-passwd .login-passwd-error{padding:0 50px;margin:5px 0 -8px;width: 100%;height: 20px;line-height: 20px;color: #bf0404;text-align: left;font-size: 13px;}\n\n.login-info .login-sign-btn{\n\tdisplay: inline-block;margin: 0 auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;\n}\n.login-info .login-save-btn{\n\tdisplay: inline-block;margin: 0 auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;\n}\n\n.login-info .login-forget{text-align: left;margin:20px 0;color:#b0b0b0;padding:0 50px;}\n\n.footer{position: absolute;bottom:30px;left:0;right:0;text-align: center;color: #b0b0b0}\n\n.login-loading{position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 2}\n.login-loading .login-loading-bg{position: absolute;top:0;right: 0;left: 0;bottom: 0;background: #fff;opacity: 0.8}\n\n.login-tip{\n\tposition: absolute;top:10px;right:10px;z-index: 2222222;\n}\n.login-tip .login-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.login-tip .login-tip-c{\n\tdisplay: none;position: absolute;right: -50px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.login-tip-c .login-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 10px;\n}\n.login-tip-c .login-tip-val{\n\tposition: relative;z-index: 2;padding: 15px 15px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.login-tip-c .login-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.login-tip:hover .login-tip-c{\n\tdisplay: block;\n}\n\n.submit-btns{\n\tmargin-top: 50px;\n\tborder-radius: 0 0 5px 5px;overflow: hidden;\n}\n.submit-btns-i{\n\tdisplay: inline-block;width: 50%;\n}\n.submit-btns-i button{\n\ttext-align: center;\n\tpadding:0;\n\twidth: 100%;\n\toutline: none!important;\n}\n.submit-btns-i button:hover{\n\t\n\tbackground: none!important;\n}\n.submit-btns-i.sign {\n\tbackground: #ebebeb;\n}\n.submit-btns-i.sign:hover{\n\tbackground: #dddddd;\n}\n.submit-btns-i.sign button{\n\tbackground: #ebebeb;\n\tcolor: #999999;\n\theight: 50px;\n\ttext-align: left;\n\tpadding-left: 40px;\n}\n.submit-btns-i.sign:hover button{\n\tcolor: #444;\n\tbackground: #dddddd;\n}\n.submit-btns-i.submit{\n\tbackground: #444;\n}\n.submit-btns-i.submit button{\n\ttext-align: right;\n\tbackground: #444;\n\tcolor: #fff;\n\theight: 50px;\n\tpadding-right: 50px;\n}\n.submit-btns-i.submit button[disabled]{\n\tbackground: #767a7f\n}\n.submit-btns-i.submit:hover{\n\tbackground: #444;\n}\n.submit-btns-i.submit:hover button{\n\tbackground: #444;\n}\n.submit-btns-i.submit:focus{\n\tbackground: #444;\t\n}\n.submit-btns-i.submit:focus button{\n\tbackground: #444;\t\t\n}\n\ninput{\n\tbox-shadow: none!important\n}\ninput:focus{\n\tbox-shadow: none!important\n}", ""]);
 
 	// exports
 

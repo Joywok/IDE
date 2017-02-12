@@ -22053,11 +22053,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'info-project-w' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'info-project-icon' },
-								_react2.default.createElement('i', { className: 'fa fa-code' })
-							),
+							_react2.default.createElement('div', { className: 'info-project-icon' }),
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-name' },

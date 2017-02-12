@@ -26,10 +26,16 @@ class App extends Component {
           this.props.history.push('/info');
         }
       }else{
-        this.props.history.push('/apps');  
+        if(this.props.location.pathname.indexOf('/apps')>-1){
+        }else{
+          this.props.history.push('/apps');
+        }
       }
     }else{
-      this.props.history.push('/login');  
+      if(this.props.location.pathname.indexOf('/login')>-1){
+      }else{
+        this.props.history.push('/login');
+      }
     }
   }
 }
@@ -41,13 +47,12 @@ let loginController,
 const routeConfig = [
   { path: '/',
     component: App,
-    indexRoute: { component:Dashboard},
+    // indexRoute: { component:Dashboard},
     onChange:function(previousRoute, nextRoute){
     },
     childRoutes:[
       {path:'login',name:'login',getComponent(nextState, cb) {
         require.ensure([], require => {
-          
           cb(null, require('./../nav/login'));
         },'login');
       }},

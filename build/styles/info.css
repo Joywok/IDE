@@ -24,19 +24,19 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 60px;
+  width: 56px;
   background: #fff;
 }
 .ide-info .ide-info-sidebar .ide-info-user {
-  width: 60px;
-  height: 60px;
-  border-bottom: 1px solid #dbdbdb;
+  width: 56px;
+  height: 50px;
+  border-bottom: 1px solid #ddd;
 }
 .ide-info .ide-info-sidebar .ide-info-user img {
-  margin: 10px;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+  margin: 10px 0 0 13px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i {
   display: block;
@@ -53,7 +53,7 @@ body {
   font-size: 14px;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active {
-  background: #48c23d;
+  background: #1b222a;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .ide-info-nav-icon {
   color: #fff;
@@ -68,31 +68,39 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 100px;
+  bottom: 40px;
   text-align: center;
+  cursor: pointer;
+}
+.ide-info .ide-info-sidebar .ide-info-exit .ide-info-exit-ico {
+  margin: 0 auto 10px;
+  width: 14px;
+  height: 14px;
+  background: url(/build/images/close.png) no-repeat;
+  background-size: cover;
 }
 .ide-info .ide-info-sidebar .ide-info-exit span {
-  cursor: pointer;
+  font-size: 14px;
 }
 .ide-info .ide-info-childview {
   position: absolute;
   top: 0;
   right: 0;
-  left: 60px;
+  left: 56px;
   bottom: 0;
 }
 .ide-info .ide-info-childview .info-edit {
   position: absolute;
   top: 0;
   right: 0;
-  left: 430px;
+  left: 426px;
   bottom: 0;
 }
 .ide-info .ide-info-childview .info-debug {
   position: absolute;
   top: 0;
   right: 0;
-  left: 430px;
+  left: 426px;
   bottom: 0;
 }
 .ide-info .ide-info-childview .info-project {
@@ -108,12 +116,15 @@ body {
 
 .info-project .info-project-w {
   width: 600px;
-  margin: 30px auto 30px;
+  margin: 75px auto 30px;
   text-align: center;
 }
 .info-project .info-project-w .info-project-icon {
-  font-size: 60px;
-  color: #59c33a;
+  margin: 0 auto;
+  width: 75px;
+  height: 75px;
+  background: url(/build/images/app-pic.png) no-repeat;
+  background-size: cover;
 }
 .info-project .info-project-w .info-project-name {
   margin-top: 20px;

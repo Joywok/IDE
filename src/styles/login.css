@@ -23,41 +23,139 @@ body{position: relative;height: 100%;font-family: '微软雅黑', Arial, sans-se
 .blog .blog-w{}
 .blog .blog-w .blog-c{position: absolute;top:0;left: 0;right: 0;bottom: 0;overflow: hidden;}
 .blog-c .login-bg{position:absolute;top:0;left:0;right:0;bottom:0;}
-.login-bg .login-bg-t{width: 100%;height: 33.333333%;background: #e64a42;-webkit-app-region: drag;}
-.login-bg .login-bg-b{width: 100%;height: 66.6666666%;background: #f7f7f7;-webkit-app-region: drag;}
-.login{position:absolute;top:10%;left:50%;margin-left:-250px;z-index:2;width: 500px;-webkit-app-region:no-drag;}
+.login-bg .login-bg-t{width: 100%;height: 40%;background: #323940;-webkit-app-region: drag;}
+.login-bg .login-bg-b{width: 100%;height: 60%;background: #f7f7f7;-webkit-app-region: drag;}
+.login{position:absolute;top:10%;left:50%;margin-left:-30%;z-index:2;width: 60%;-webkit-app-region:no-drag;}
 .login .login-w{}
-.login .login-w .login-t{margin:0 0 20px;height: 38px;text-align: center;}
-.login .login-w .login-t img{display: inline-block;}
-.login .login-w .login-t span{display: inline-block;vertical-align: bottom;margin-bottom: 5px;font-size: 14px;color: #ddd;}
-.login .login-w .login-c{overflow: hidden;width: 500px;background: #fff;}
+.login .login-w .login-t{margin:5% 0 40px;text-align: center;}
+.login .login-w .login-t img{
+	display: inline-block;
+	width: 310px;height: 47px;
+	background: url(/build/images/1.png) no-repeat;
+	background-size: cover;
+}
+// .login .login-w .login-t span{display: inline-block;vertical-align: bottom;margin-bottom: 5px;font-size: 14px;color: #ddd;}
+.login .login-w .login-c{width:100%;background: #fff;border-radius: 5px;}
 
 .login-logo{margin:20px auto;width: 100px;height: 100px;border-radius: 100px;overflow: hidden;}
 .login-logo img{max-width: 100%;max-height: 100%}
 
 .login-c .login-info-name{}
 
-.login-c .login-info{width: 320px;margin:0 auto;}
-
-.login-c .login-user{margin:0 auto 22px;width:100%px;font-size: 18px;color: #999}
-.login-user .login-user-input{}
+.login-c .login-title{
+	color: #1b222a;
+	font-size: 20px;
+	padding:50px 50px 0;
+}
+.login-c .login-info{margin:0 auto;}
+.login-c .login-user{margin:20px auto 0;padding:0 50px;width:100%;font-size: 18px;color: #999}
+.login-user .login-user-input{position: relative;}
 .login-user .login-user-input .email{color: #444}
 .login-user .login-user-input .login-user-input-c{}
-.login-user .login-user-error{margin: 5px 0 -8px;width: 100%;height: 20px;line-height: 20px;text-align: center;color: #bf0404;text-align: left;font-size: 13px;}
-.login-c .login-passwd{margin:0 auto;width: 100%;font-size: 18px;color: #999}
+.login-user .login-user-error{margin: 5px 0 -8px;width: 100%;height: 20px;line-height: 20px;text-align: center;color: #bf0404;text-align: left;font-size: 13px;padding:0 50px;}
+.login-c .login-passwd{margin:20px auto 0;padding:0 50px;width: 100%;font-size: 18px;color: #999}
 .login-c .login-passwd{}
 .login-passwd .login-passwd-input{}
 .login-passwd .login-passwd-input .passwd{color: #444}
-.login-passwd .login-passwd-error{margin:5px 0 -8px;width: 100%;height: 20px;line-height: 20px;color: #bf0404;text-align: left;font-size: 13px;}
+.login-passwd .login-passwd-error{padding:0 50px;margin:5px 0 -8px;width: 100%;height: 20px;line-height: 20px;color: #bf0404;text-align: left;font-size: 13px;}
 
-.login-info .login-save-btn{display: block;margin: 32px auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;}
+.login-info .login-sign-btn{
+	display: inline-block;margin: 0 auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;
+}
+.login-info .login-save-btn{
+	display: inline-block;margin: 0 auto 0;width:100%;font-size: 14px;border-radius: 3px;box-shadow: none;border: none;
+}
 
-.login-info .login-forget{text-align: center;margin:30px 0;color:#b0b0b0;}
+.login-info .login-forget{text-align: left;margin:20px 0;color:#b0b0b0;padding:0 50px;}
 
 .footer{position: absolute;bottom:30px;left:0;right:0;text-align: center;color: #b0b0b0}
 
 .login-loading{position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 2}
 .login-loading .login-loading-bg{position: absolute;top:0;right: 0;left: 0;bottom: 0;background: #fff;opacity: 0.8}
+
+.login-tip{
+	position: absolute;top:10px;right:10px;z-index: 2222222;
+}
+.login-tip .login-tip-icon{
+	display: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;
+}
+.login-tip .login-tip-c{
+	display: none;position: absolute;right: -50px;border-radius: 10px;bottom: 35px;padding:0 10px;
+	min-width: 250px;
+}
+.login-tip-c .login-tip-bg{
+	position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 10px;
+}
+.login-tip-c .login-tip-val{
+	position: relative;z-index: 2;padding: 15px 15px;color: #fff;line-height: 20px;font-size: 13px;
+}
+.login-tip-c .login-tip-cirtle{
+	position: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;
+}
+.login-tip:hover .login-tip-c{
+	display: block;
+}
+
+.submit-btns{
+	margin-top: 50px;
+	border-radius: 0 0 5px 5px;overflow: hidden;
+}
+.submit-btns-i{
+	display: inline-block;width: 50%;
+}
+.submit-btns-i button{
+	text-align: center;
+	padding:0;
+	width: 100%;
+	outline: none!important;
+}
+.submit-btns-i button:hover{
+	
+	background: none!important;
+}
+.submit-btns-i.sign {
+	background: #ebebeb;
+}
+.submit-btns-i.sign:hover{
+	background: #dddddd;
+}
+.submit-btns-i.sign button{
+	background: #ebebeb;
+	color: #999999;
+	height: 50px;
+	text-align: left;
+	padding-left: 40px;
+}
+.submit-btns-i.sign:hover button{
+	color: #444;
+	background: #dddddd;
+}
+.submit-btns-i.submit{
+	background: #444;
+}
+.submit-btns-i.submit button{
+	text-align: right;
+	background: #444;
+	color: #fff;
+	height: 50px;
+	padding-right: 50px;
+}
+.submit-btns-i.submit button[disabled]{
+	background: #767a7f
+}
+.submit-btns-i.submit:hover{
+	background: #444;
+}
+.submit-btns-i.submit:hover button{
+	background: #444;
+}
+.submit-btns-i.submit:focus{
+	background: #444;	
+}
+.submit-btns-i.submit:focus button{
+	background: #444;		
+}
+
 input{
 	box-shadow: none!important
 }

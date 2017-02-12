@@ -49,9 +49,11 @@ module.exports = function(app,store){
       }else{
         $('.info-edit').addClass('hide')
       }
-      document.getElementById("editor-view").contentWindow.postMessage({
-        type:'window'
-      },'*');
+     	if(document.getElementById("editor-view")){
+     		document.getElementById("editor-view").contentWindow.postMessage({
+	        type:'window'
+	      },'*');	
+     	}
 			return false
 		}
 		change(data){
