@@ -38,6 +38,29 @@
   const DecompressZip = require('decompress-zip');
   const platform = (process.platform == 'darwin'?'mac':'win')
   // require('nw.gui').Window.get().showDevTools()
+
+
+
+  var unzipper = new DecompressZip('update.zip')
+  unzipper.on('error', function (err) {
+    console.log('Caught an error');
+  });
+  unzipper.on('extract', function (log) {
+    // fsExtra.remove('update.zip', function (err){});
+    // newWin.close();
+    // window.AppRestart();
+  });
+  unzipper.on('progress', function (fileIndex, fileCount) {
+    // target.find('.update-code-btn span').html('正在解压第'+(fileIndex + 1)+'文件,共'+fileCount+'个文件')
+    // console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+    console.log('正在解压第'+(fileIndex + 1)+'文件,共'+fileCount+'个文件')
+  });
+  unzipper.extract({
+    path: '.',
+    filter: function (file) {
+        return file.type !== "SymbolicLink";
+    }
+  });
 </script>
 <script type="text/javascript" src="../scripts/components/main.js"></script>
 <script type="text/javascript" src="../scripts/platform/update.js"></script>

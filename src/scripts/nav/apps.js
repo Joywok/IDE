@@ -12,9 +12,9 @@ module.exports = function(){
   app.model({
     namespace: 'apps',
     state: {
-      showList:true,
       list: projects,
       userinfo: user,
+      showList:true,
       pname:'',
       corpid:'',
       copesecret:'',
@@ -32,7 +32,14 @@ module.exports = function(){
       allreset:function(){
         return _.extend({},{
           list: projects,
-          userinfo: user
+          userinfo: user,
+          showList:true,
+          pname:'',
+          corpid:'',
+          copesecret:'',
+          appid:'',
+          dirpath:'',
+          babel:true,completion:true,compress:true
         })
       },
       changeShowList:function(state,action){

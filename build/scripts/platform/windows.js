@@ -71,6 +71,7 @@
 	  if (platform['width'] >= 1440) {
 	    nowWin.resizeTo(1440, 900);
 	    if (platform['width'] == 1440) {
+	      nowWin.maximize();
 	      nowWin.moveTo(0, 0);
 	    } else {
 	      nowWin.moveTo((platform['width'] - 1440) / 2, (platform['height'] - 900) / 2);

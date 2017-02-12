@@ -26003,9 +26003,9 @@ webpackJsonp([9],[
 	  app.model({
 	    namespace: 'apps',
 	    state: {
-	      showList: true,
 	      list: projects,
 	      userinfo: user,
+	      showList: true,
 	      pname: '',
 	      corpid: '',
 	      copesecret: '',
@@ -26023,7 +26023,14 @@ webpackJsonp([9],[
 	      allreset: function allreset() {
 	        return _.extend({}, {
 	          list: projects,
-	          userinfo: user
+	          userinfo: user,
+	          showList: true,
+	          pname: '',
+	          corpid: '',
+	          copesecret: '',
+	          appid: '',
+	          dirpath: '',
+	          babel: true, completion: true, compress: true
 	        });
 	      },
 	      changeShowList: function changeShowList(state, action) {

@@ -104,6 +104,7 @@
 						window.AppRestart();
 					});
 					unzipper.on('progress', function (fileIndex, fileCount) {
+						target.find('.update-code-btn span').html('正在解压第' + (fileIndex + 1) + '文件,共' + fileCount + '个文件');
 						console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
 					});
 					unzipper.extract({
@@ -135,7 +136,6 @@
 			window.newNotication();
 		}).pipe(fs.createWriteStream('update.zip'));
 	};
-
 	window.checkVersion = function () {
 		request.get(serverUrl + '/ide/version/check', function (err, res) {
 			var data = JSON.parse(res.body);
