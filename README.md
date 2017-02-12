@@ -1,11 +1,16 @@
-# IDE
-####关于安装
-· 下载项目到本地git clone git@github.com:Joywok/IDE.git
+# Joywok IDE
 
-· 下载nwjs源文件https://dl.nwjs.io/v0.19.0/nwjs-sdk-v0.19.0-osx-x64.zip，解压缩，然后拷贝nwjs.app到Git目录中.
+为了帮助开发者简单和高效地开发Joywok-H5程序，我们推出了Joywok开发者工具（Joywok IDE），集成了开发调试、代码编辑及程序发布等功能。为企业第三方应用提供了便利的发开环境。
 
-· npm install 安装依赖文件
+![](build/images/ide/1.png)
 
-· bower install 安装依赖文件
+![](build/images/ide/2.png)
 
-· 双击nwjs.app运行
+![](build/images/ide/3.png)
+
+![](build/images/ide/4.png)
+
+![](build/images/ide/5.png)
+
+![](build/images/ide/6.png)
+

@@ -9,8 +9,8 @@
     "toolbar": false,
     "frame": true,
     "width": 840,
-    "height": 620,
-    "min_height": 620
+    "height": 640,
+    "min_height": 640
   },
   "webkit": {
     "plugin": true,

@@ -25844,8 +25844,7 @@ webpackJsonp([10],[
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								'AppID:',
-								this.props.project['id']
+								this.props.project['appID'] && this.props.project['appid'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',

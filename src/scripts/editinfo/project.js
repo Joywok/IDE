@@ -11,7 +11,7 @@ module.exports = function(app,store){
 									<div className="info-project-icon">
 									</div>
 									<div className="info-project-name">{this.props.project['name']}</div>
-									<div className="info-project-appid">AppID:{this.props.project['id']}</div>
+									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appid'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
 									<div className="info-project-item">
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">本地开发目录</div>

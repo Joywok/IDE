@@ -83,7 +83,7 @@ module.exports = function(){
                       <div className="login">
                         <div className="login-w">
                           <div className="login-t">
-                            <img src="../images/1.png"/>
+                            <img src="../images/login-logo.png"/>
                           </div>
                           <div className="login-c">
                             <div className="login-logo hide">
@@ -111,7 +111,7 @@ module.exports = function(){
                                   <TextField autoComplete="off" type="password" className={"passwd "+this.props.passwdHasError} id="exampleInputEmail1" hintText="密码"  fullWidth={true} onChange={(e)=>this.changeValue(e,'passwd')} errorText={this.props.passwdError} onKeyUp={(e)=>this.Keyup(e,'passwd')} />
                                 </div>
                               </div>
-                              <a href="javascript:;"><div className="login-forget" ng-class="data['nameClass']" onClick={(e)=>this.forgetPwd(e)}>忘记密码?</div></a>
+                              <div className="login-forget" ng-class="data['nameClass']" ><a href="javascript:;" onClick={(e)=>this.forgetPwd(e)}><span>忘记密码?</span></a></div>
                               <div className="submit-btns">
                                 <div className="submit-btns-i sign">
                                   <button className="btn btn-info login-sign-btn" type="button" onClick={(e)=>this.sign(e)}>{this.props.signVal}</button>
@@ -167,7 +167,11 @@ module.exports = function(){
         .end(function(err,res){
           let data = JSON.parse(res["text"]);
           if(data["data"]["errcode"]){
-            dispatch(changeError({nameError:'用户名或密码错误！'}))
+            if(data["data"]["errcode"] == 20301){
+              dispatch(changeError({passwdError:data["data"]["errmemo"]}));
+            }else{
+              dispatch(changeError({nameError:data["data"]["errmemo"]}));
+            }
           }else{
             for(var i in data.data.user_info.contact){
               if(data.data.user_info.contact[i].type == "mobile"){
