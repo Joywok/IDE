@@ -45,7 +45,7 @@ gulp.task('default',["html","styles"],function(){
 gulp.task('platform',function(){
   var nw = new NwBuilder({
       files: './aaaaa/**/*', // use the glob format
-      platforms: ['osx64','win64'],
+      platforms: ['osx64'],
       downloadUrl: 'https://dl.nwjs.io/',
       buildDir:'./platform',
       cacheDir:'./platform',

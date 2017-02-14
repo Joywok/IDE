@@ -32,10 +32,7 @@ class App extends Component {
         }
       }
     }else{
-      if(this.props.location.pathname.indexOf('/login')>-1){
-      }else{
-        this.props.history.push('/login');
-      }
+      this.props.history.push('/login');
     }
   }
 }
@@ -52,19 +49,43 @@ const routeConfig = [
     },
     childRoutes:[
       {path:'login',name:'login',getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./../nav/login'));
-        },'login');
+        if(user["name"] && user['id']){
+          if(user['openId'] && user['openId'].length!=0){
+            app._history.push('/info');
+          }else{
+            app._history.push('/apps');
+          }
+        }else{
+          require.ensure([], require => {
+            cb(null, require('./../nav/login'));
+          },'login');  
+        }
       }},
       {path:'apps',name:'apps',getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./../nav/apps'));
-        },'apps');
+        if(user["name"] && user['id']){
+          if(user['openId'] && user['openId'].length!=0){
+            app._history.push('/info');
+          }else{
+            require.ensure([], require => {
+              cb(null, require('./../nav/apps'));
+            },'apps');
+          }
+        }else{
+          app._history.push('/login');
+        }
       }},
       {path:'info',name:'info',getComponent(nextState, cb) {
-        require.ensure([], require => {
-          cb(null, require('./../nav/info'));
-        },'info');
+        if(user["name"] && user['id']){
+          if(user['openId'] && user['openId'].length!=0){
+            require.ensure([], require => {
+              cb(null, require('./../nav/info'));
+            },'info');
+          }else{
+            app._history.push('/apps');
+          }
+        }else{
+          app._history.push('/login');
+        }
       }}
     ]
   }

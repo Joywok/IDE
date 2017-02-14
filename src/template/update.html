@@ -20,7 +20,7 @@
 			<progress value="0" max="100" class="progress hide"></progress>
 		</div>
 	</div>
-	<div class="update-code-btn btn"><span onClick="window.restart()">更新</span></div>
+	<div class="update-code-btn"><span onClick="window.restart()" class="update-btn">更新</span></div>
 </div>
 </body>
 <style type="text/css">
@@ -42,11 +42,24 @@ body{
 	background: #fff;
 	text-align: left;
 	overflow: hidden;
+	width: 360px;
+  height: 127px;
 }
 .update-code .update-code-close{
-	position: absolute;top:10px;right: 10px;font-size: 12px;color: #000;
+	position: absolute;top:6px;right: 6px;font-size: 12px;color: #000;
 	cursor: pointer;z-index: 2222222;
+	width: 14px;height: 14px;text-align: center;
 	display: block;
+}
+.update-code .update-code-close:hover{
+	background: #444;
+	color: #fff;
+	border-radius: 12px;
+}
+.update-code .update-code-close i{
+	vertical-align: top;
+	margin: 1px;
+	cursor: pointer;
 }
 .update-code .update-code-title{
 	height: 90px;
@@ -81,9 +94,17 @@ body{
 	height: 36px;
 	line-height: 36px;
 }
+.update-code-btn:hover{
+	background: #f4f4f4;
+}
+.update-btn{
+	cursor: pointer;
+}
+.update-btn:hover{
+}
 .update-code .update-code-btn span{
 	float: left;
-	cursor: pointer;
+	
 }
 </style>
 </html>

@@ -4,17 +4,27 @@ const Screen = require('nw.gui').Screen.Init();
 window.phoneInset;
 window.EditorTarget
 module.exports = function(app,store,emitter){
-	let platform = Screen.screens[0]['bounds'];
-	if(platform['width']>=1440){
+	let platformWindow = Screen.screens[0]['bounds'];
+	if(platformWindow['width']>1440){
 		nowWin.resizeTo(1440,900);
-    if(platform['width'] == 1440){
-      nowWin.maximize();
-      nowWin.moveTo(0,0);
-    }else{
-      nowWin.moveTo((platform['width']-1440)/2,(platform['height']-900)/2)
-    }
+    // if(platformWindow['width'] == 1440){
+    //   nowWin.maximize();
+    //   nowWin.moveTo(0,0);
+    // }else{
+    nowWin.moveTo((platformWindow['width']-1440)/2,(platformWindow['height']-900)/2)
+    // }
 	}else{
-		nowWin.maximize();
+    if(platformWindow['width'] == '1440'){
+      if(platform == 'win'){
+        nowWin.maximize();
+      }else{
+        nowWin.maximize();
+        nowWin.moveTo(0,0);  
+      }
+    }else{
+      nowWin.maximize();  
+    }
+		
 	}
 	nowWin.on('resize',function(){
     store.dispatch({
@@ -28,9 +38,9 @@ module.exports = function(app,store,emitter){
   function reloadWindow(){
     let date = Date.parse(new Date())/1000;
     // let src = $('#phone-inset').attr('src').split('?')[0];
-    $('#phone-inset').attr('src','http://127.0.0.1:10000?time='+date);
+    $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
     let consoleContainer = document.getElementById('phone-inset');
-    consoleContainer.src = 'http://127.0.0.1:10000?time='+date;
+    consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
     store.dispatch({
       type:'info/resetNormal',
     })

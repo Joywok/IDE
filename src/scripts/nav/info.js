@@ -38,6 +38,7 @@ module.exports = function(){
       server.close();
       // server.exit();
     }
+    console.log(init,'41');
     server = http.createServer(function (req, res) {
       console.log(`${req.method} ${req.url}`);
       const parsedUrl = httpUrl.parse(req.url);
@@ -81,16 +82,19 @@ module.exports = function(){
         });
       });
     })
-    server.listen('10000');
-    setTimeout(function(){
+    
+    server.listen('0','127.0.0.1',function(){
+      var port = server.address().port;
+      window.nodeServerPort = port;
       let date = Date.parse(new Date())/1000;
-      $("#phone-inset").attr({src:"http://127.0.0.1:10000"});
+      $("#phone-inset").attr({src:"http://127.0.0.1:"+nodeServerPort});
       $("#phone-inset").removeClass('hide');
-    })
+    });
   }
   function initController(){
     project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
     url = project['src'].split('file://')[1];
+    console.log(project,'94行');
     initServer();
   }
 
@@ -303,10 +307,11 @@ module.exports = function(){
     exitProject(e){
       let data = user;
       delete data['openId'];
-      fs.writeFile('config.json',JSON.stringify(data),function(){
+      localstore.update({id:'login',data:data});
+      // fs.writeFile('config.json',JSON.stringify(data),function(){
         window.user = data;
         hashHistory.push("/apps");  
-      })
+      // })
     }
   }
   function mapStateToProps(state) {

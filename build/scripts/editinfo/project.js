@@ -22062,7 +22062,7 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appid'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -22213,15 +22213,17 @@
 					});
 					var url = this.props.project['src'].split('file://')[1];
 					fsExtra.remove(url, function (err) {});
-					fs.writeFile('project.json', JSON.stringify(projects), function () {
-						window.projects = projects;
-						var data = user;
-						delete data['openId'];
-						fs.writeFile('config.json', JSON.stringify(data), function () {
-							window.user = data;
-							hashHistory.push("/apps");
-						});
-					});
+					localstore.update({ id: 'projects', data: projects });
+					// fs.writeFile('project.json',JSON.stringify(projects),function(){
+					window.projects = projects;
+					var data = user;
+					delete data['openId'];
+					localstore.update({ id: 'login', data: data });
+					// fs.writeFile('config.json',JSON.stringify(data),function(){
+					window.user = data;
+					hashHistory.push("/apps");
+					// })
+					// });
 				}
 			}]);
 

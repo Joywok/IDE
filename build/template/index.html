@@ -1,11 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="renderer" content="webkit"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" id="View"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Joywok IDE</title><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../styles/reset.css"><script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script><script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script><link rel="stylesheet" href="../styles/info.css"></head><body id="body"><div class="main" id="main"></div><webview id="aaa" partition="trusted"></webview></body><script type="text/javascript">const basurl = process.cwd()
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="renderer" content="webkit"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" id="View"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Joywok IDE</title><link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css"><link rel="stylesheet" href="../styles/reset.css"><script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script><script type="text/javascript" src="../../bower_components/underscore/underscore.js"></script><link rel="stylesheet" href="../styles/info.css"></head><body id="body"><div class="main" id="main"></div><webview id="aaa" partition="trusted"></webview></body><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript">const basurl = process.cwd()
 	const fs = require('fs');
   const path = require('path');
   // const bodyParser = require('body-parser');
   window.ide = require(basurl+'/package.json');
   window.serverUrl = ide['serverurl'];
-	window.user = require(basurl+'/config.json');
-	window.projects = require(basurl+'/project.json');
+  window.localstore = new Store('Joywok:IDE');
+  var userCache = localstore.find({id:'login'});
+  let nowDate = Date.parse(new Date())/1000;
+  if(userCache){
+    if(userCache['data']['time'] && nowDate-userCache['data']['time']<30*86400){
+      window.user = userCache["data"];  
+    }else{
+      window.user = {};
+    }
+  }else{
+    window.user = {} 
+  }
+  console.log(window.user,'12312312312312')
+  var projectsCache = localstore.find({id:'projects'});
+  if(projectsCache){
+    window.projects = projectsCache['data']
+  }else{
+    window.projects = []
+  }
+	// window.projects = require(basurl+'/project.json');
   console.log(ide,user,projects,basurl);
 	const __dirname = basurl;
   const request = require('request');
@@ -16,7 +34,7 @@
   const httpUrl = require("url");
   const DecompressZip = require('decompress-zip');
   const platform = (process.platform == 'darwin'?'mac':'win')
-  // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/components/main.js"></script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script><!-- 
+  // require('nw.gui').Window.get().showDevTools()</script><script type="text/javascript" src="../scripts/platform/update.js"></script><script src="../scripts/index.js"></script><!-- 
 <script type="text/javascript">
   $(function(){
     alert(projects.length);

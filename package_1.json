@@ -5,6 +5,7 @@
   "main": "build/template/index.html",
   "serverurl": "http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",
   "window": {
+    "icon":"build/images/ico-s.png",
     "title": "Joywok IDE",
     "toolbar": false,
     "frame": true,

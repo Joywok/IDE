@@ -11,7 +11,7 @@ module.exports = function(app,store){
 									<div className="info-project-icon">
 									</div>
 									<div className="info-project-name">{this.props.project['name']}</div>
-									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appid'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
+									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appID'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
 									<div className="info-project-item">
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">本地开发目录</div>
@@ -69,15 +69,17 @@ module.exports = function(app,store){
 			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
 			let url = this.props.project['src'].split('file://')[1];
 			fsExtra.remove(url, function(err){})
-			fs.writeFile('project.json',JSON.stringify(projects),function(){
+			localstore.update({id:'projects',data:projects});
+			// fs.writeFile('project.json',JSON.stringify(projects),function(){
 				window.projects = projects;
 				let data = user;
 				delete data['openId'];
-				fs.writeFile('config.json',JSON.stringify(data),function(){
+				localstore.update({id:'login',data:data});
+				// fs.writeFile('config.json',JSON.stringify(data),function(){
 					window.user = data;
 					hashHistory.push("/apps");
-				})
-			});
+				// })
+			// });
 		}
 	}
 	return Controller

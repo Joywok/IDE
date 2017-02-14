@@ -20602,13 +20602,13 @@ webpackJsonp([8],Array(38).concat([
 	  // 引入css
 	  __webpack_require__(679);
 
-	  var localstore = new Store('Joywok:saas:login');
-	  var cache = localstore.find({ id: 'login' });
+	  // var localstore = new Store('Joywok:saas:login');
+	  // var cache = localstore.find({id:'login'});
 	  var data = {
-	    name: cache && cache['id'] ? cache['name'] : '',
-	    nameShow: cache && cache['id'] ? false : true,
-	    nameClass: cache && cache['id'] ? 'show' : '',
-	    email: cache && cache['id'] ? cache["email"] : '',
+	    name: '',
+	    nameShow: true,
+	    nameClass: '',
+	    email: '',
 	    passwd: '',
 	    nameError: '',
 	    passwdError: '',
@@ -20814,7 +20814,7 @@ webpackJsonp([8],Array(38).concat([
 	                              { className: 'btn btn-info login-save-btn', type: 'button', onClick: function onClick(e) {
 	                                  return _this2.submit(e);
 	                                }, disabled: this.props.isdis },
-	                              this.props.signVal
+	                              this.props.loginVal
 	                            )
 	                          )
 	                        )
@@ -20902,8 +20902,15 @@ webpackJsonp([8],Array(38).concat([
 	                avatar_l: data.data.user_info.avatar_l,
 	                avatar_s: data.data.user_info.avatar_s
 	              },
-	              role: data.data.roles
+	              role: data.data.roles,
+	              time: Date.parse(new Date()) / 1000
 	            };
+	            window.user = userinfo;
+	            localstore.update({ id: 'login', data: userinfo });
+	            setTimeout(function () {
+	              hashHistory.push("/apps");
+	            });
+	            return;
 	            fs.writeFile('config.json', JSON.stringify(userinfo), function (error) {
 	              window.user = userinfo;
 	              setTimeout(function () {

@@ -25844,7 +25844,7 @@ webpackJsonp([10],[
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appid'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -25995,15 +25995,17 @@ webpackJsonp([10],[
 					});
 					var url = this.props.project['src'].split('file://')[1];
 					fsExtra.remove(url, function (err) {});
-					fs.writeFile('project.json', JSON.stringify(projects), function () {
-						window.projects = projects;
-						var data = user;
-						delete data['openId'];
-						fs.writeFile('config.json', JSON.stringify(data), function () {
-							window.user = data;
-							hashHistory.push("/apps");
-						});
-					});
+					localstore.update({ id: 'projects', data: projects });
+					// fs.writeFile('project.json',JSON.stringify(projects),function(){
+					window.projects = projects;
+					var data = user;
+					delete data['openId'];
+					localstore.update({ id: 'login', data: data });
+					// fs.writeFile('config.json',JSON.stringify(data),function(){
+					window.user = data;
+					hashHistory.push("/apps");
+					// })
+					// });
 				}
 			}]);
 
@@ -26406,6 +26408,7 @@ webpackJsonp([10],[
 	      server.close();
 	      // server.exit();
 	    }
+	    console.log(init, '41');
 	    server = http.createServer(function (req, res) {
 	      console.log(req.method + ' ' + req.url);
 	      var parsedUrl = httpUrl.parse(req.url);
@@ -26449,10 +26452,12 @@ webpackJsonp([10],[
 	        });
 	      });
 	    });
-	    server.listen('10000');
-	    setTimeout(function () {
+
+	    server.listen('0', '127.0.0.1', function () {
+	      var port = server.address().port;
+	      window.nodeServerPort = port;
 	      var date = Date.parse(new Date()) / 1000;
-	      $("#phone-inset").attr({ src: "http://127.0.0.1:10000" });
+	      $("#phone-inset").attr({ src: "http://127.0.0.1:" + nodeServerPort });
 	      $("#phone-inset").removeClass('hide');
 	    });
 	  }
@@ -26461,6 +26466,7 @@ webpackJsonp([10],[
 	      return i['id'] == user['openId'];
 	    })[0];
 	    url = project['src'].split('file://')[1];
+	    console.log(project, '94行');
 	    initServer();
 	  }
 
@@ -26753,10 +26759,11 @@ webpackJsonp([10],[
 	      value: function exitProject(e) {
 	        var data = user;
 	        delete data['openId'];
-	        fs.writeFile('config.json', JSON.stringify(data), function () {
-	          window.user = data;
-	          hashHistory.push("/apps");
-	        });
+	        localstore.update({ id: 'login', data: data });
+	        // fs.writeFile('config.json',JSON.stringify(data),function(){
+	        window.user = data;
+	        hashHistory.push("/apps");
+	        // })
 	      }
 	    }]);
 
@@ -26896,17 +26903,26 @@ webpackJsonp([10],[
 	window.phoneInset;
 	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
-	  var platform = Screen.screens[0]['bounds'];
-	  if (platform['width'] >= 1440) {
+	  var platformWindow = Screen.screens[0]['bounds'];
+	  if (platformWindow['width'] > 1440) {
 	    nowWin.resizeTo(1440, 900);
-	    if (platform['width'] == 1440) {
-	      nowWin.maximize();
-	      nowWin.moveTo(0, 0);
-	    } else {
-	      nowWin.moveTo((platform['width'] - 1440) / 2, (platform['height'] - 900) / 2);
-	    }
+	    // if(platformWindow['width'] == 1440){
+	    //   nowWin.maximize();
+	    //   nowWin.moveTo(0,0);
+	    // }else{
+	    nowWin.moveTo((platformWindow['width'] - 1440) / 2, (platformWindow['height'] - 900) / 2);
+	    // }
 	  } else {
-	    nowWin.maximize();
+	    if (platformWindow['width'] == '1440') {
+	      if (platform == 'win') {
+	        nowWin.maximize();
+	      } else {
+	        nowWin.maximize();
+	        nowWin.moveTo(0, 0);
+	      }
+	    } else {
+	      nowWin.maximize();
+	    }
 	  }
 	  nowWin.on('resize', function () {
 	    store.dispatch({
@@ -26920,9 +26936,9 @@ webpackJsonp([10],[
 	  function reloadWindow() {
 	    var date = Date.parse(new Date()) / 1000;
 	    // let src = $('#phone-inset').attr('src').split('?')[0];
-	    $('#phone-inset').attr('src', 'http://127.0.0.1:10000?time=' + date);
+	    $('#phone-inset').attr('src', 'http://127.0.0.1:' + nodeServerPort + '?time=' + date);
 	    var consoleContainer = document.getElementById('phone-inset');
-	    consoleContainer.src = 'http://127.0.0.1:10000?time=' + date;
+	    consoleContainer.src = 'http://127.0.0.1:' + nodeServerPort + '?time=' + date;
 	    store.dispatch({
 	      type: 'info/resetNormal'
 	    });

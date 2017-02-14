@@ -12,13 +12,13 @@ module.exports = function(){
   // 引入css
   require('../../styles/login.css');
 
-  var localstore = new Store('Joywok:saas:login');
-  var cache = localstore.find({id:'login'});
+  // var localstore = new Store('Joywok:saas:login');
+  // var cache = localstore.find({id:'login'});
   let data = {
-    name:cache&&cache['id']?cache['name']:'',
-    nameShow:cache&&cache['id']?false:true,
-    nameClass:cache&&cache['id']?'show':'',
-    email:cache&&cache['id']?cache["email"]:'',
+    name:'',
+    nameShow:true,
+    nameClass:'',
+    email:'',
     passwd:'',
     nameError:'',
     passwdError:'',
@@ -117,7 +117,7 @@ module.exports = function(){
                                   <button className="btn btn-info login-sign-btn" type="button" onClick={(e)=>this.sign(e)}>{this.props.signVal}</button>
                                 </div>
                                 <div className="submit-btns-i submit">
-                                  <button className="btn btn-info login-save-btn" type="button" onClick={(e)=>this.submit(e)} disabled={this.props.isdis} >{this.props.signVal}</button>
+                                  <button className="btn btn-info login-save-btn" type="button" onClick={(e)=>this.submit(e)} disabled={this.props.isdis} >{this.props.loginVal}</button>
                                 </div>
                               </div>
                             </div>
@@ -188,8 +188,15 @@ module.exports = function(){
                 avatar_l : data.data.user_info.avatar_l,
                 avatar_s : data.data.user_info.avatar_s
               },
-              role : data.data.roles
+              role : data.data.roles,
+              time:Date.parse(new Date())/1000
             }
+            window.user = userinfo;
+            localstore.update({id:'login',data:userinfo});
+            setTimeout(function(){
+              hashHistory.push("/apps");
+            })
+            return 
             fs.writeFile('config.json',JSON.stringify(userinfo),function(error){
               window.user = userinfo;
               setTimeout(function(){

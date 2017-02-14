@@ -31019,9 +31019,7 @@
 	          }
 	        }
 	      } else {
-	        if (this.props.location.pathname.indexOf('/login') > -1) {} else {
-	          this.props.history.push('/login');
-	        }
+	        this.props.history.push('/login');
 	      }
 	    }
 	  }]);
@@ -31038,19 +31036,43 @@
 	  // indexRoute: { component:Dashboard},
 	  onChange: function onChange(previousRoute, nextRoute) {},
 	  childRoutes: [{ path: 'login', name: 'login', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(8, function (require) {
-	        cb(null, __webpack_require__(402));
-	      });
+	      if (user["name"] && user['id']) {
+	        if (user['openId'] && user['openId'].length != 0) {
+	          app._history.push('/info');
+	        } else {
+	          app._history.push('/apps');
+	        }
+	      } else {
+	        __webpack_require__.e/* nsure */(8, function (require) {
+	          cb(null, __webpack_require__(402));
+	        });
+	      }
 	    }
 	  }, { path: 'apps', name: 'apps', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(9, function (require) {
-	        cb(null, __webpack_require__(683));
-	      });
+	      if (user["name"] && user['id']) {
+	        if (user['openId'] && user['openId'].length != 0) {
+	          app._history.push('/info');
+	        } else {
+	          __webpack_require__.e/* nsure */(9, function (require) {
+	            cb(null, __webpack_require__(683));
+	          });
+	        }
+	      } else {
+	        app._history.push('/login');
+	      }
 	    }
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
-	      __webpack_require__.e/* nsure */(10, function (require) {
-	        cb(null, __webpack_require__(686));
-	      });
+	      if (user["name"] && user['id']) {
+	        if (user['openId'] && user['openId'].length != 0) {
+	          __webpack_require__.e/* nsure */(10/* empty */, function (require) {
+	            cb(null, __webpack_require__(686));
+	          });
+	        } else {
+	          app._history.push('/apps');
+	        }
+	      } else {
+	        app._history.push('/login');
+	      }
 	    }
 	  }]
 	}];

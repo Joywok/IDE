@@ -77,12 +77,16 @@ module.exports = function(){
   let store = createStore(App);
   function resetModel(){
   }
-
   function openProject(id, value){
       window.user.openId = id;
-      fs.writeFile('config.json',JSON.stringify(user),function(){
-        hashHistory.push("/info");
+      let userinfo  = window.user;
+      localstore.update({id:'login',data:userinfo});
+      setTimeout(function(){
+        hashHistory.push("/info");  
       })
+      // fs.writeFile('config.json',JSON.stringify(user),function(){
+      //   hashHistory.push("/info");
+      // })
   }
 
   class ChildeView extends Component{
@@ -255,7 +259,8 @@ module.exports = function(){
         })
         setTimeout(function(){
           if(exists){
-            fs.writeFile('project.json',JSON.stringify(projects),function(){
+            localstore.update({id:'projects',data:projects});
+            // fs.writeFile('project.json',JSON.stringify(projects),function(){
               store.dispatch({
                 type:'apps/backList',
                 payload:false
@@ -263,14 +268,15 @@ module.exports = function(){
               setTimeout(function(){
                 openProject(project["id"])  
               },50)
-            })
+            // })
           }else{
             var unzipper = new DecompressZip('tmp/init.zip')
             unzipper.on('error', function (err) {
               console.log('Caught an error');
             });
             unzipper.on('extract', function (log) {
-              fs.writeFile('project.json',JSON.stringify(projects),function(){
+              localstore.update({id:'projects',data:projects});
+              // fs.writeFile('project.json',JSON.stringify(projects),function(){
                 store.dispatch({
                   type:'apps/backList',
                   payload:false
@@ -278,13 +284,13 @@ module.exports = function(){
                 setTimeout(function(){
                   openProject(project["id"])  
                 },50)
-              })
+              // })
             });
             unzipper.on('progress', function (fileIndex, fileCount) {
               console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
             });
             unzipper.extract({
-              path: value,
+              path: data["dirpath"],
               filter: function (file) {
                   return file.type !== "SymbolicLink";
               }

@@ -85,9 +85,11 @@
 			y: 40,
 			width: 360,
 			height: 126,
-			frame: false
+			frame: false,
+			focus: true
 		}, function (new_win) {
 			newWin = new_win;
+			// newWin.showDevTools()
 			newWin.on('document-end', function () {
 				var target = $(newWin.window.document);
 				var title = target.find('.title');
@@ -104,7 +106,7 @@
 						window.AppRestart();
 					});
 					unzipper.on('progress', function (fileIndex, fileCount) {
-						target.find('.update-code-btn span').html('更新进度:' + parseInt((fileIndex + 1) / fileCount * 100) + '%');
+						target.find('.update-code-btn').html('<span>更新进度:' + parseInt((fileIndex + 1) / fileCount * 100) + '%</span>');
 					});
 					unzipper.extract({
 						path: '.',
@@ -139,10 +141,10 @@
 		request.get(serverUrl + '/ide/version/check', function (err, res) {
 			var data = JSON.parse(res.body);
 			console.log(nowVersion, data['data']["varsion"]);
-			// if(nowVersion != data['data']["varsion"]){
-			nowVersion = data['data']["varsion"];
-			window.UpdateDownload();
-			// }
+			if (nowVersion != data['data']["varsion"]) {
+				nowVersion = data['data']["varsion"];
+				window.UpdateDownload();
+			}
 		});
 	};
 
