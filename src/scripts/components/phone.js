@@ -76,7 +76,11 @@ module.exports = function(app){
 			webview.setAttribute('allownw', 'true');
 			webview.setAttribute('class', 'hide');
 			webview.id = 'phone-inset';
+			webview.contextmenu = function(){
+				return false;
+			}
 			document.getElementById('phone-container').appendChild(webview);
+
 			webview.addEventListener('permissionrequest', function (s) {
         s.request.allow()
       })
@@ -90,6 +94,7 @@ module.exports = function(app){
       webview.addEventListener('permissionrequest',function(e){
       	e.request.allow();
       })
+
       // webview.ClearDataTypeSet({
       // 	appcache:false,
       // 	cache:false,
@@ -101,10 +106,23 @@ module.exports = function(app){
       // })
 			webview.addEventListener('contentload', function(e) {
 				$("#phone-inset").removeClass('hide')
+				// console.log(e.target.contentWindow,'这个是108行');
+				// e.target.contentWindow.oncontextmenu=function(){ return false;} 
+				// .on('contextmenu',function(e){
+				// 	return false;
+				// })	
 				e.target.contentWindow.postMessage({
 					type:'init'
 				},'*');
+				// console.log(e,'contentWindow')
 			});
+			webview.contextMenus.onShow.addListener(function(e){
+				e.preventDefault()
+			})
+
+			// $('#phone-inset').on('contextmenu',function(e){
+			// 	return false;
+			// })	
 			// webview.addEventListener('consolemessage', function(e) {
 			//   console.log('Guest page logged a message: ', e.message);
 			// });

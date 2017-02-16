@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "Joywok-IDE",
   "main": "build/template/index.html",
   "serverurl": "http://10.211.55.3",

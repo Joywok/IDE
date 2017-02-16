@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "Joywok-IDE",
   "main": "build/template/index.html",
   "serverurl": "http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",
@@ -21,7 +21,7 @@
   "permissions": "system",
   "chromium-args": "-ignore-certificate-errors",
   "node-remote": [
-    "http://127.0.0.1:10000",
+    "127.0.0.1",
     "http://192.168.1.73"
   ],
   "inject-js-start": "src/scripts/test.js",

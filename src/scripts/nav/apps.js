@@ -204,7 +204,7 @@ module.exports = function(){
               </div>
               <div className="create-form-buttons">
                 <button type="button" className="create-form-button cancel-btn" onClick={(e)=>this.backList(e)}>取消</button>
-                <button type="button" className="create-form-button create-btn" onClick={(e)=>this.submit(e)}>保存</button>
+                <button type="button" disabled={(data["pname"].length!=0&& data["dirpath"].length!=0?false:true)} className="create-form-button create-btn" onClick={(e)=>this.submit(e)}>保存</button>
               </div>
             </div>
           </div>
@@ -212,6 +212,11 @@ module.exports = function(){
   	  );
   	}
     componentDidMount(){
+      // pname:'',
+          // corpid:'',
+          // copesecret:'',
+          // appid:'',
+          // dirpath:''
       $('.chose-directory-input').attr({nwdirectory:''})
     }
     choseDirectory(){

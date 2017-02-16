@@ -26377,7 +26377,7 @@ webpackJsonp([9],[
 	                ),
 	                _react2.default.createElement(
 	                  'button',
-	                  { type: 'button', className: 'create-form-button create-btn', onClick: function onClick(e) {
+	                  { type: 'button', disabled: data["pname"].length != 0 && data["dirpath"].length != 0 ? false : true, className: 'create-form-button create-btn', onClick: function onClick(e) {
 	                      return _this3.submit(e);
 	                    } },
 	                  '\u4FDD\u5B58'
@@ -26390,6 +26390,11 @@ webpackJsonp([9],[
 	    }, {
 	      key: 'componentDidMount',
 	      value: function componentDidMount() {
+	        // pname:'',
+	        // corpid:'',
+	        // copesecret:'',
+	        // appid:'',
+	        // dirpath:''
 	        $('.chose-directory-input').attr({ nwdirectory: '' });
 	      }
 	    }, {

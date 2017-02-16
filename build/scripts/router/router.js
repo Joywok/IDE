@@ -6054,7 +6054,7 @@
 	        if (user['openId'] && user['openId'].length != 0) {
 	          app._history.push('/info');
 	        } else {
-	          __webpack_require__.e/* nsure */(9, function (require) {
+	          __webpack_require__.e/* nsure */(9/* empty */, function (require) {
 	            cb(null, __webpack_require__(683));
 	          });
 	        }
