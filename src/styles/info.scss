@@ -25,28 +25,64 @@ body{
   			display: block;
   			width: 100%;
   			text-align: center;
-  			padding:22px 0;
+  			height: 80px;
   			cursor: pointer;
+  			overflow: hidden;
   		}
   		.ide-info-nav-icon{
   			font-size: 16px;
+  			.icon-edit{
+  				display: block;
+  				margin: 22px auto 0;
+  				width: 16px;height: 16px;background: url(/build/images/edit-normal.png) no-repeat;
+  				background-size: cover;
+  			}
+  			.icon-code{
+  				display: block;margin: 25px auto 0;
+  				width: 23px;height: 10px;background: url(/build/images/code-normal.png) no-repeat;
+  				background-size: cover;
+  			}
+  			.icon-project{
+  				display: block;margin: 24px auto 0;
+  				width: 16px;height: 13px;background: url(/build/images/project-normal.png) no-repeat;
+  				background-size: cover;
+  			}
   		}
   		.ide-info-nav-val{
-  			margin-top: 5px;
-  			font-size: 14px;
+  			margin-top: 10px;
+  			font-size: 13px;
+  			color: #777777;
   		}
 
   		.ide-info-nav-i.active{
-  			background: #1b222a;
-  			.ide-info-nav-icon{color: #fff;}
+  			background: #1b222a!important;
+  			.icon-edit{
+  				background: url(/build/images/edit-hover.png) no-repeat;
+  				background-size: cover;
+  			}
+  			.icon-code{
+  				background: url(/build/images/code-hover.png) no-repeat;
+  				background-size: cover;
+  			}
+  			.icon-project{
+  				background: url(/build/images/project-hover.png) no-repeat;
+  				background-size: cover;
+  			}
   			.ide-info-nav-val{color: #fff;}
   		}
   		.ide-info-nav-i:hover{
   			color: #494949;
+  			background: #f7f7f7;
   		}
   	}
+  	.ide-sidebar-opear{
+  		position: absolute;left: 0;right:0;bottom: 25px;
+  	}
+  	.ide-sidebar-sep{
+  		width: 70%;height: 1px;background: #dddddd;
+  		margin:0 auto 20px;
+  	}
   	.ide-info-exit{
-  		position: absolute;left: 0;right:0;bottom: 40px;
   		text-align: center;
   		cursor: pointer;
   		.ide-info-exit-ico{
@@ -55,7 +91,17 @@ body{
   			background-size: cover;
   		}
   		span{
-  			font-size: 14px;
+  			color: #777777;
+  			font-size: 13px;
+  		}
+  	}
+  	.ide-info-exit:hover{
+  		.ide-info-exit-ico{
+  			background: url(/build/images/close-hover.png) no-repeat;
+  			background-size: cover;
+  		}
+  		span{
+  			color: #1b222a;
   		}
   	}
   }
@@ -70,7 +116,7 @@ body{
   	.info-project{
   		position: absolute;top:0;right: 0;left: 0;bottom: 0;
   		background: #fff;
-  		border-left: 1px solid #d8d8d8;
+  		border-left: 1px solid #e7e7e7;
   		overflow-y: auto;
   	}
   }
@@ -90,18 +136,18 @@ body{
 		.info-project-name{
 			margin-top: 20px;
 			font-size: 16px;
-			color: #000000
+			color: #333333
 		}
 		.info-project-appid{
-			margin-top: 20px;font-size: 16px;color: #646464;
-			margin-bottom: 30px;
+			margin-top: 0px;font-size: 14px;color: #999999;
+			margin-bottom: 40px;
 		}
 
 		.info-project-item{
 			padding: 20px 0;
 			margin-top: -1px;
-			border-top: 1px solid #f0f0f0;
-			border-bottom: 1px solid #f0f0f0;
+			border-top: 1px solid #e7e7e7;
+			border-bottom: 1px solid #e7e7e7;
 			.info-project-i-c{
 				line-height: 30px;
 			}
@@ -113,15 +159,30 @@ body{
 				height: 30px;
 				line-height: 1;
 				padding:0 10px;
-				border:1px solid #888888;
+				border:1px solid #999;
 				color: #000;
 				min-width: 70px;
-				border-radius: 4px;
+				border-radius: 3px;
 			}
 			.info-project-i-btn:hover{
 				background: #f0f0f0;
+				color: #1b222a;
 			}
 			.info-project-i-content{
+			}
+		}
+		.info-project-item.update-time{
+			.info-project-i-btn:hover{
+				background: #6f7378;
+				color: #fff;
+				border-color: #6f7378;
+			}
+		}
+		.info-project-item.upload-time{
+			.info-project-i-btn:hover{
+				background: #6f7378;
+				color: #fff;
+				border-color: #6f7378;
 			}
 		}
 		.info-project-tools{
@@ -135,11 +196,20 @@ body{
 					margin-top: 2px;
 					width: 16px;height: 16px;
 					input{
-						display: block;
-						margin:0;
-						width: 16px;height: 16px;
-						outline: none;
+						display: none;
+    				margin: 0;
     				-webkit-appearance: checkbox;
+					}
+					input + label{
+						display: block;
+						width: 16px;height: 16px;
+						background: url(/build/images/checkbox.png) no-repeat;
+						background-size: cover;
+						cursor: pointer;
+					}
+					input:checked + label{
+						background: url(/build/images/checkbox-active.png) no-repeat;
+						background-size: cover;
 					}
 				}
 				.info-project-tools-val{
@@ -150,8 +220,8 @@ body{
 		}
 		.info-project-remove{
 			margin: 50px auto 0;
-			width: 120px;height: 40px;border:1px solid #888;
-			color: #000;border-radius: 4px;
+			width: 120px;height: 40px;border:1px solid #999;
+			color: #494949;border-radius: 3px;
 		}
 		.info-project-remove:hover{
 			background: #f0f0f0;
@@ -235,6 +305,10 @@ body{
 		background: #fff;
 		margin-bottom: 30px;
 		overflow:hidden;
+		-webkit-user-select: none;  /* Chrome all / Safari all /opera15+*/  
+    -moz-user-select: none;     /* Firefox all */  
+    -ms-user-select: none;      /* IE 10+ */  
+		user-select: none;  
 	}
 	.info-edit-phone-container .phone-header{
 		position: absolute;top:0;left: 0;right: 0;height: 39px;
@@ -377,4 +451,8 @@ iframe{
 	position: absolute;left:0;right: 0;top:0px;bottom:0px;
 	height: auto;
 	overflow: hidden;
+	-webkit-user-select: none;  /* Chrome all / Safari all /opera15+*/  
+    -moz-user-select: none;     /* Firefox all */  
+    -ms-user-select: none;      /* IE 10+ */  
+		user-select: none;  
 }

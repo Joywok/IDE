@@ -42,33 +42,77 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  padding: 22px 0;
+  height: 80px;
   cursor: pointer;
+  overflow: hidden;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-icon {
   font-size: 16px;
 }
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-icon .icon-edit {
+  display: block;
+  margin: 22px auto 0;
+  width: 16px;
+  height: 16px;
+  background: url(/build/images/edit-normal.png) no-repeat;
+  background-size: cover;
+}
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-icon .icon-code {
+  display: block;
+  margin: 25px auto 0;
+  width: 23px;
+  height: 10px;
+  background: url(/build/images/code-normal.png) no-repeat;
+  background-size: cover;
+}
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-icon .icon-project {
+  display: block;
+  margin: 24px auto 0;
+  width: 16px;
+  height: 13px;
+  background: url(/build/images/project-normal.png) no-repeat;
+  background-size: cover;
+}
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-val {
-  margin-top: 5px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #777777;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active {
-  background: #1b222a;
+  background: #1b222a !important;
 }
-.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .ide-info-nav-icon {
-  color: #fff;
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .icon-edit {
+  background: url(/build/images/edit-hover.png) no-repeat;
+  background-size: cover;
+}
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .icon-code {
+  background: url(/build/images/code-hover.png) no-repeat;
+  background-size: cover;
+}
+.ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .icon-project {
+  background: url(/build/images/project-hover.png) no-repeat;
+  background-size: cover;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i.active .ide-info-nav-val {
   color: #fff;
 }
 .ide-info .ide-info-sidebar .ide-info-nav .ide-info-nav-i:hover {
   color: #494949;
+  background: #f7f7f7;
 }
-.ide-info .ide-info-sidebar .ide-info-exit {
+.ide-info .ide-info-sidebar .ide-sidebar-opear {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 40px;
+  bottom: 25px;
+}
+.ide-info .ide-info-sidebar .ide-sidebar-sep {
+  width: 70%;
+  height: 1px;
+  background: #dddddd;
+  margin: 0 auto 20px;
+}
+.ide-info .ide-info-sidebar .ide-info-exit {
   text-align: center;
   cursor: pointer;
 }
@@ -80,7 +124,15 @@ body {
   background-size: cover;
 }
 .ide-info .ide-info-sidebar .ide-info-exit span {
-  font-size: 14px;
+  color: #777777;
+  font-size: 13px;
+}
+.ide-info .ide-info-sidebar .ide-info-exit:hover .ide-info-exit-ico {
+  background: url(/build/images/close-hover.png) no-repeat;
+  background-size: cover;
+}
+.ide-info .ide-info-sidebar .ide-info-exit:hover span {
+  color: #1b222a;
 }
 .ide-info .ide-info-childview {
   position: absolute;
@@ -110,7 +162,7 @@ body {
   left: 0;
   bottom: 0;
   background: #fff;
-  border-left: 1px solid #d8d8d8;
+  border-left: 1px solid #e7e7e7;
   overflow-y: auto;
 }
 
@@ -129,19 +181,19 @@ body {
 .info-project .info-project-w .info-project-name {
   margin-top: 20px;
   font-size: 16px;
-  color: #000000;
+  color: #333333;
 }
 .info-project .info-project-w .info-project-appid {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #646464;
-  margin-bottom: 30px;
+  margin-top: 0px;
+  font-size: 14px;
+  color: #999999;
+  margin-bottom: 40px;
 }
 .info-project .info-project-w .info-project-item {
   padding: 20px 0;
   margin-top: -1px;
-  border-top: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
 }
 .info-project .info-project-w .info-project-item .info-project-i-c {
   line-height: 30px;
@@ -154,13 +206,24 @@ body {
   height: 30px;
   line-height: 1;
   padding: 0 10px;
-  border: 1px solid #888888;
+  border: 1px solid #999;
   color: #000;
   min-width: 70px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 .info-project .info-project-w .info-project-item .info-project-i-btn:hover {
   background: #f0f0f0;
+  color: #1b222a;
+}
+.info-project .info-project-w .info-project-item.update-time .info-project-i-btn:hover {
+  background: #6f7378;
+  color: #fff;
+  border-color: #6f7378;
+}
+.info-project .info-project-w .info-project-item.upload-time .info-project-i-btn:hover {
+  background: #6f7378;
+  color: #fff;
+  border-color: #6f7378;
 }
 .info-project .info-project-w .info-project-tools {
   text-align: left;
@@ -178,12 +241,21 @@ body {
   height: 16px;
 }
 .info-project .info-project-w .info-project-tools .info-project-tools-i .info-project-tools-status input {
-  display: block;
+  display: none;
   margin: 0;
+  -webkit-appearance: checkbox;
+}
+.info-project .info-project-w .info-project-tools .info-project-tools-i .info-project-tools-status input + label {
+  display: block;
   width: 16px;
   height: 16px;
-  outline: none;
-  -webkit-appearance: checkbox;
+  background: url(/build/images/checkbox.png) no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+.info-project .info-project-w .info-project-tools .info-project-tools-i .info-project-tools-status input:checked + label {
+  background: url(/build/images/checkbox-active.png) no-repeat;
+  background-size: cover;
 }
 .info-project .info-project-w .info-project-tools .info-project-tools-i .info-project-tools-val {
   margin-left: 5px;
@@ -193,9 +265,9 @@ body {
   margin: 50px auto 0;
   width: 120px;
   height: 40px;
-  border: 1px solid #888;
-  color: #000;
-  border-radius: 4px;
+  border: 1px solid #999;
+  color: #494949;
+  border-radius: 3px;
 }
 .info-project .info-project-w .info-project-remove:hover {
   background: #f0f0f0;
@@ -298,6 +370,13 @@ body {
   background: #fff;
   margin-bottom: 30px;
   overflow: hidden;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all /opera15+*/
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
 }
 .info-edit-phone .info-edit-phone-container .phone-header {
   position: absolute;
@@ -515,4 +594,11 @@ iframe {
   bottom: 0px;
   height: auto;
   overflow: hidden;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all /opera15+*/
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
 }

@@ -80,7 +80,7 @@ module.exports = function(){
   function openProject(id, value){
       window.user.openId = id;
       let userinfo  = window.user;
-      localstore.update({id:'login',data:userinfo});
+      UserStore.update({id:'login',data:userinfo});
       setTimeout(function(){
         hashHistory.push("/info");  
       })
@@ -117,6 +117,9 @@ module.exports = function(){
               <div className="apps-user-c">
                 <div className="apps-info-avatar">
                   <img src={serverUrl + this.props.userinfo.avatar.avatar_l}/>
+                  <div className="apps-info-exit" onClick={(e)=>this.logout()}>
+                    <i className="fa fa-sign-in"></i>
+                  </div>
                 </div>
                 <div className="apps-info-name">{this.props.userinfo.name}</div>
               </div>
@@ -264,7 +267,7 @@ module.exports = function(){
         })
         setTimeout(function(){
           if(exists){
-            localstore.update({id:'projects',data:projects});
+            ProjectStore.update({id:'projects',data:projects});
             // fs.writeFile('project.json',JSON.stringify(projects),function(){
               store.dispatch({
                 type:'apps/backList',
@@ -280,7 +283,7 @@ module.exports = function(){
               console.log('Caught an error');
             });
             unzipper.on('extract', function (log) {
-              localstore.update({id:'projects',data:projects});
+              ProjectStore.update({id:'projects',data:projects});
               // fs.writeFile('project.json',JSON.stringify(projects),function(){
                 store.dispatch({
                   type:'apps/backList',
@@ -303,6 +306,19 @@ module.exports = function(){
           }
         })
       });
+    }
+    logout(){
+      localStorage.removeItem('Joywok:User');
+      localStorage.removeItem('Joywok:Projects');
+      window.user = {};
+      window.projects = [];
+      let nowWin = require('nw.gui').Window.get();
+      let platformWindow = window.Screen.screens[0]['bounds'];
+      nowWin.resizeTo(840,640);
+      nowWin.moveTo((platformWindow['width']-840)/2,(platformWindow['height']-640)/2);
+      setTimeout(function(){
+        hashHistory.push("/login");
+      })
     }
   }
   function mapStateToProps(state) {

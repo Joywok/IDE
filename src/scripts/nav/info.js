@@ -228,21 +228,24 @@ module.exports = function(){
             </div>
             <div className="ide-info-nav">
               <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='edit'?'active':'')} onClick={(e)=>this.changeSidebar(e,'edit')}>
-                <div className="ide-info-nav-icon"><i className="fa fa-edit"></i></div>
+                <div className="ide-info-nav-icon"><i className="icon-edit"></i></div>
                 <div className="ide-info-nav-val">编辑</div>
               </div>
               <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='debug'?'active':'')} onClick={(e)=>this.changeSidebar(e,'debug')}>
-                <div className="ide-info-nav-icon"><i className="fa fa-code"></i></div>
+                <div className="ide-info-nav-icon"><i className="icon-code"></i></div>
                 <div className="ide-info-nav-val">调试</div>
               </div>
               <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='project'?'active':'')} onClick={(e)=>this.changeSidebar(e,'project')}>
-                <div className="ide-info-nav-icon"><i className="fa fa-bars"></i></div>
+                <div className="ide-info-nav-icon"><i className="icon-project"></i></div>
                 <div className="ide-info-nav-val">项目</div>
               </div>
             </div>
-            <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
-              <div className="ide-info-exit-ico"></div>
-              <span>退出</span>
+            <div className="ide-sidebar-opear">
+              <div className="ide-sidebar-sep"></div>
+              <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
+                <div className="ide-info-exit-ico"></div>
+                <span>退出</span>
+              </div>
             </div>
           </div>
           <div className="ide-info-childview">
@@ -307,7 +310,7 @@ module.exports = function(){
     exitProject(e){
       let data = user;
       delete data['openId'];
-      localstore.update({id:'login',data:data});
+      UserStore.update({id:'login',data:data});
       // fs.writeFile('config.json',JSON.stringify(data),function(){
         window.user = data;
         hashHistory.push("/apps");  

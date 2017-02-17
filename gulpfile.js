@@ -42,14 +42,34 @@ gulp.task('default',["html","styles"],function(){
   gulp.watch(['src/template/*.html'],['html']);
   gulp.watch(['src/styles/*.scss'],['styles:sass']);
 });
-gulp.task('platform',function(){
+gulp.task('platform:mac',function(){
   var nw = new NwBuilder({
       files: './aaaaa/**/*', // use the glob format
       platforms: ['osx64'],
       downloadUrl: 'https://dl.nwjs.io/',
       buildDir:'./platform',
       cacheDir:'./platform',
-      version:'0.19.5'
+      version:'0.19.5',
+      macIcns:'IDE_logo.icns'
+  });
+  //Log stuff you want
+  nw.on('log',  console.log);
+  // Build returns a promise
+  nw.build().then(function () {
+    console.log('all done!');
+  }).catch(function (error) {
+      console.error(error);
+  });
+})
+gulp.task('platform:win',function(){
+  var nw = new NwBuilder({
+      files: './aaaaa/**/*', // use the glob format
+      platforms: ['win64'],
+      downloadUrl: 'https://dl.nwjs.io/',
+      buildDir:'./platform',
+      cacheDir:'./platform',
+      version:'0.19.5',
+      winIco:'icon_1024.ico'
   });
   //Log stuff you want
   nw.on('log',  console.log);

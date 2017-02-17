@@ -5,7 +5,6 @@ import { Provider ,connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const request = require('superagent/superagent');
-import { RaisedButton ,TextField,FlatButton} from 'material-ui';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 module.exports = function(){
@@ -47,14 +46,14 @@ module.exports = function(){
           datas['passwdError'] = ''
           datas['passwdHasError'] = ''
         }
-        datas['isdis'] = true
+        datas['isdis'] = true;
         if(datas['passwd'].length!=0){
           datas['isdis'] = false
         }
         return datas;
         break;
       case 'changeError':
-        let aaa = _.extend({},state,action['data'])
+        let aaa = _.extend({},state,action['data'],{loginVal:'登录'})
         return aaa;
         break;
       case "changeBtn":
@@ -72,6 +71,10 @@ module.exports = function(){
         padding:0,
         border:'none'
       }
+      let textStyle={
+        bottom:"0px",
+        color:'#e7e7e7'
+      }
       return (<MuiThemeProvider>
                 <div className="blog">
                   <div className="blog-w">
@@ -83,19 +86,17 @@ module.exports = function(){
                       <div className="login">
                         <div className="login-w">
                           <div className="login-t">
-                            <img src="../images/login-logo.png"/>
+                            <div></div>
                           </div>
                           <div className="login-c">
-                            <div className="login-logo hide">
-                              <img src="../images/login-normal-pic.png" />
-                            </div>
                             <div className="login-title">LOGIN</div>
-                            <div className="login-info" autoComplete="off">
-                              {this.props.nameShow?<div className="login-info-name">{this.props["name"]}</div>:''}
+                            <div className="login-info" autocomplete="off">
                               <div className="login-user">
                                 <div className="login-user-input">
-                                  {!this.props.nameShow?<div className="login-user-input-c">{this.props.email}</div>:<TextField autoComplete="off" type="text" className="email" id="exampleInputEmail1" hintText="邮箱/手机号" fullWidth={true} onChange={(e)=>this.changeValue(e,'email')} errorText={this.props.nameError} onKeyUp={(e)=>this.Keyup(e,'email')} />}
-                                  <input id="exampleInputEmail1" type="text" className="email hide" type="text" autoComplete="off"/>
+                                  <div className={"login-input-c "+(this.props.nameError.length!=0?'haserror':'')}>
+                                    <input  className="email" type="text" autoComplete="new-password" placeholder="邮箱/手机号" onChange={(e)=>this.changeValue(e,'email')}  onKeyUp={(e)=>this.Keyup(e,'email')} />
+                                    <div className={"login-input-error "+(this.props.nameError.length!=0?'':'hide')}>{this.props.nameError}</div>
+                                  </div>
                                   <div className="login-tip">
                                     <i className="login-tip-icon"></i>
                                     <div className="login-tip-c">
@@ -108,7 +109,10 @@ module.exports = function(){
                               </div>
                               <div className="login-passwd">
                                 <div className="login-passwd-input">
-                                  <TextField autoComplete="off" type="password" className={"passwd "+this.props.passwdHasError} id="exampleInputEmail1" hintText="密码"  fullWidth={true} onChange={(e)=>this.changeValue(e,'passwd')} errorText={this.props.passwdError} onKeyUp={(e)=>this.Keyup(e,'passwd')} />
+                                  <div className={"login-input-c "+(this.props.passwdError.length!=0?'haserror':'')}>
+                                    <input type="password" className="passwd" autoComplete="new-password" placeholder="密码" onChange={(e)=>this.changeValue(e,'passwd')}  onKeyUp={(e)=>this.Keyup(e,'passwd')}  />
+                                    <div className={"login-input-error "+(this.props.passwdError.length!=0?'':'hide')}>{this.props.passwdError}</div>
+                                  </div>
                                 </div>
                               </div>
                               <div className="login-forget" ng-class="data['nameClass']" ><a href="javascript:;" onClick={(e)=>this.forgetPwd(e)}><span>忘记密码?</span></a></div>
@@ -192,7 +196,7 @@ module.exports = function(){
               time:Date.parse(new Date())/1000
             }
             window.user = userinfo;
-            localstore.update({id:'login',data:userinfo});
+            UserStore.update({id:'login',data:userinfo});
             setTimeout(function(){
               hashHistory.push("/apps");
             })

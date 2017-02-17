@@ -5,7 +5,7 @@
 	<meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" id="View">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Joywok IDE</title>
+  <title>乐工Web开发者工具</title>
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="../styles/reset.css" />
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../styles/info.css">
 </head>
 <body id="body">
-<div class="main" id="main">
+<div class="main" id="main" draggable="false">
 </div>
 <webview id="aaa" partition ="trusted"></webview>
 </body>
@@ -26,8 +26,9 @@
   // const bodyParser = require('body-parser');
   window.ide = require(basurl+'/package.json');
   window.serverUrl = ide['serverurl'];
-  window.localstore = new Store('Joywok:IDE');
-  var userCache = localstore.find({id:'login'});
+  window.UserStore = new Store('Joywok:User');
+  window.ProjectStore = new Store('Joywok:Projects');
+  var userCache = UserStore.find({id:'login'});
   let nowDate = Date.parse(new Date())/1000;
   if(userCache){
     if(userCache['data']['time'] && nowDate-userCache['data']['time']<30*86400){
@@ -38,8 +39,7 @@
   }else{
     window.user = {} 
   }
-  console.log(window.user,'12312312312312')
-  var projectsCache = localstore.find({id:'projects'});
+  var projectsCache = ProjectStore.find({id:'projects'});
   if(projectsCache){
     window.projects = projectsCache['data']
   }else{
@@ -56,6 +56,7 @@
   const httpUrl = require("url");
   const DecompressZip = require('decompress-zip');
   const platform = (process.platform == 'darwin'?'mac':'win')
+  window.Screen = require('nw.gui').Screen.Init();
   // require('nw.gui').Window.get().showDevTools()
 </script>
 <script type="text/javascript" src="../scripts/platform/update.js"></script>

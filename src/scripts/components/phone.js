@@ -84,6 +84,15 @@ module.exports = function(app){
 			webview.addEventListener('permissionrequest', function (s) {
         s.request.allow()
       })
+      webview.addContentScripts([
+      	{
+      		name:'myRule',
+      		matches: ['<all_urls>'],
+      		css: { files: ['build/styles/phone-inset.css'] },
+      		run_at: 'document_start'
+
+      	}
+      ])
       webview.addEventListener('dialog', function (e) {
       	if(e.messageType == 'alert'){
       		window.alert(e['messageText'])

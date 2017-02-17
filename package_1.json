@@ -1,12 +1,12 @@
 {
   "private": true,
-  "version": "0.0.2",
-  "name": "Joywok-IDE",
+  "version": "0.0.4",
+  "name": "乐工Web开发者工具",
   "main": "build/template/index.html",
   "serverurl": "http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",
   "window": {
-    "icon":"build/images/ico-s.png",
-    "title": "Joywok IDE",
+    "icon": "build/images/icon-1024.png",
+    "title": "乐工Web开发者工具",
     "toolbar": false,
     "frame": true,
     "width": 840,
@@ -21,7 +21,7 @@
   "permissions": "system",
   "chromium-args": "-ignore-certificate-errors",
   "node-remote": [
-    "127.0.0.1",
+    "http://127.0.0.1",
     "http://192.168.1.73"
   ],
   "inject-js-start": "src/scripts/test.js",
@@ -47,6 +47,7 @@
     "chokidar": "^1.6.1",
     "decompress-zip": "^0.3.0",
     "fs-extra": "^1.0.0",
+    "http-proxy": "^1.16.2",
     "request": "^2.79.0",
     "url": "^0.11.0"
   },

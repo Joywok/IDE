@@ -14,10 +14,22 @@
 	margin-top: -58px;
 }
 .apps-user .apps-info-avatar{
+	position: relative;
 	margin:0 auto;
-	width: 76px;height: 76px;border-radius: 76px;overflow: hidden;
+	width: 76px;height: 76px;
 }
-.apps-user .apps-info-avatar img{max-width: 100%;}
+.apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}
+.apps-user .apps-info-avatar .apps-info-exit{
+	cursor: pointer;
+	position: absolute;right: 0;bottom: 0;font-size: 14px;
+	width: 20px;height: 20px;background: #fff;color: #494949;
+	vertical-align: middle;text-align: center;
+	border-radius: 20px;
+}
+.apps-info-exit i{
+	vertical-align: top;
+	margin-top:3px;
+}
 .apps-user .apps-info-name{
 	margin-top: 20px;
 	font-size: 16px;color: #ffffff;
@@ -25,7 +37,7 @@
 }
 .apps .apps-list{
 	position: relative;
-	width: 100%;height: 60%;background: #f7f7f7;-webkit-app-region: drag;
+	width: 100%;height: 60%;background: #fff;-webkit-app-region: drag;
 	text-align: center;
 	padding:40px 0 0 0;
 }
@@ -73,7 +85,7 @@
 	background: #f0f0f0!important;
 }
 .apps-create-btn:hover .apps-list-i-val{
-	color: #444;
+	color: #1b222a;
 }
 
 
@@ -172,7 +184,7 @@
 	width: 120px;height: 36px;
 	display: inline-block;margin-left: 60px;
 	text-align: center;
-	border-radius: 3px;
+	border-radius: 2px;
 }
 .create-form-buttons .create-form-button:first-child{
 	margin-left: 0;
@@ -205,10 +217,10 @@
 	min-width: 250px;
 }
 .apps-tip-c .apps-tip-bg{
-	position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 10px;
+	position: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 4px;
 }
 .apps-tip-c .apps-tip-val{
-	position: relative;z-index: 2;padding: 15px 15px;color: #fff;line-height: 20px;font-size: 13px;
+	position: relative;z-index: 2;padding: 10px 10px;color: #fff;line-height: 20px;font-size: 13px;
 }
 .apps-tip-c .apps-tip-cirtle{
 	position: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;
