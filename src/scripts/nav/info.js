@@ -10,57 +10,52 @@ module.exports = function(){
   let project;
   let url ;
   let server;
+  let proxy;
   let appServer
   const app = dva();
   const emitter = new EventEmitter();
-  const mime = {
-    "css": "text/css",
-    "gif": "image/gif",
-    "html": "text/html",
-    "ico": "image/x-icon",
-    "jpeg": "image/jpeg",
-    "jpg": "image/jpeg",
-    "js": "text/javascript",
-    "json": "application/json",
-    "pdf": "application/pdf",
-    "png": "image/png",
-    "svg": "image/svg+xml",
-    "swf": "application/x-shockwave-flash",
-    "tiff": "image/tiff",
-    "txt": "text/plain",
-    "wav": "audio/x-wav",
-    "wma": "audio/x-ms-wma",
-    "wmv": "video/x-ms-wmv",
-    "xml": "text/xml"
+  const mimeType = {
+    '.ico': 'image/x-icon',
+    '.html': 'text/html',
+    '.js': 'text/javascript',
+    '.json': 'application/json',
+    '.css': 'text/css',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.wav': 'audio/wav',
+    '.mp3': 'audio/mpeg',
+    '.svg': 'image/svg+xml',
+    '.pdf': 'application/pdf',
+    '.doc': 'application/msword',
+    '.eot': 'appliaction/vnd.ms-fontobject',
+    '.ttf': 'aplication/font-sfnt'
   };
   function initServer(){
-    if(init){
+    if(init && server){
       server.close();
       // server.exit();
     }
-    console.log(init,'41');
+    proxy = httpProxy.createProxyServer({
+      target: url,   //接口地址
+      // 下面的设置用于https
+      // ssl: {
+      //     key: fs.readFileSync('server_decrypt.key', 'utf8'),
+      //     cert: fs.readFileSync('server.crt', 'utf8')
+      // },
+      // secure: false
+    });
+    // proxy.on('error', function(err, req, res){
+    //   res.writeHead(500, {
+    //       'content-type': 'text/plain'
+    //   });
+    //   console.log(err);
+    //   res.end('Something went wrong. And we are reporting a custom error message.');
+    // });
     server = http.createServer(function (req, res) {
       console.log(`${req.method} ${req.url}`);
       const parsedUrl = httpUrl.parse(req.url);
       let pathname = `${parsedUrl.pathname}`;
-      console.log(parsedUrl,'123123',pathname)
-      const mimeType = {
-        '.ico': 'image/x-icon',
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.json': 'application/json',
-        '.css': 'text/css',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.wav': 'audio/wav',
-        '.mp3': 'audio/mpeg',
-        '.svg': 'image/svg+xml',
-        '.pdf': 'application/pdf',
-        '.doc': 'application/msword',
-        '.eot': 'appliaction/vnd.ms-fontobject',
-        '.ttf': 'aplication/font-sfnt'
-      };
-      pathname = url+pathname
+      pathname = url+pathname;
       fs.exists(pathname, function (exist) {
         if(!exist) {
           res.statusCode = 404;
@@ -82,7 +77,6 @@ module.exports = function(){
         });
       });
     })
-    
     server.listen('0','127.0.0.1',function(){
       var port = server.address().port;
       window.nodeServerPort = port;
@@ -92,18 +86,22 @@ module.exports = function(){
     });
   }
   function initController(){
-    project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
-    url = project['src'].split('file://')[1];
-    console.log(project,'94行');
-    initServer();
+    window.project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
+    console.log(window.project,'xxxxxxxxxx');
+    if(window.project.remote){
+      $("#phone-inset").attr({src:window.project['remote']["remotepath"]});
+      $("#phone-inset").removeClass('hide');
+    }else{
+      url = window.project['src'].split('file://')[1];  
+      initServer();
+    }
   }
-
-  initController();
+  
   const nowWin = require('nw.gui').Window.get();
   let initData = {
     windowW:nowWin.width,
     windowH:nowWin.height,
-    project:project,
+    project:window.project,
     sidebar:'edit',
     showPlatform:false,
     showPlatformVal:'iPhone 4',
@@ -120,6 +118,11 @@ module.exports = function(){
     namespace: 'info',
     state: initData,
     reducers: {
+      initProject(state,action){
+        return { ...state,
+          project: action["payload"],
+        };
+      },
       changeSidebar(state,action){
         return { ...state,
           sidebar: action["payload"],
@@ -180,10 +183,11 @@ module.exports = function(){
         return _.extend({},state,{tabs:[],tabsBg:'',btns:[],footer:[],title:'Joywok'});
       },
       allreset:function(){
+        console.log('dispatch触发了一次')
         return _.extend({},{
           windowW:nowWin.width,
           windowH:nowWin.height,
-          project:project,
+          project:window.project,
           sidebar:'edit',
           showPlatform:false,
           showPlatformVal:'iPhone 4',
@@ -196,6 +200,11 @@ module.exports = function(){
           tabs:[],
           tabsBg:''
         })
+      },
+      changeProjectUrl:function(state,action){
+        let data = state['project'];
+        data['remotepath'] = action['payload']
+        return _.extend({},state,{project:data});
       }
     }
   });
@@ -217,29 +226,55 @@ module.exports = function(){
   const Edit = require('./../editinfo/edit')(app,store);
   const Debug = require('./../editinfo/debug')(app,store);
   const Project = require('./../editinfo/project')(app,store);
-  const windows = require('./../platform/windows')(app,store,emitter)
+  const windows = require('./../platform/windows')(app,store,emitter);
+  emitter.on('phoneReload',function(){
+    let date = Date.parse(new Date())/1000;
+    // let src = $('#phone-inset').attr('src').split('?')[0];
+    // $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
+    // let consoleContainer = document.getElementById('phone-ins\et');
+    // consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
+    $('#phone-inset')[0].reload();
+    store.dispatch({
+      type:'info/resetNormal',
+    })
+    setTimeout(function(){
+      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+    },0)
+  })
+
   class CountApp extends Component{
-  	render(){	
+  	render(){
   		return (
   	    <div className="info ide-info">
           <div className="ide-info-sidebar">
             <div className="ide-info-user">
               <img src={serverUrl+user.avatar.avatar_l} />
             </div>
-            <div className="ide-info-nav">
-              <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='edit'?'active':'')} onClick={(e)=>this.changeSidebar(e,'edit')}>
-                <div className="ide-info-nav-icon"><i className="icon-edit"></i></div>
-                <div className="ide-info-nav-val">编辑</div>
+            {this.props.project['remote']?<div className="ide-info-nav">
+                <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar!='project'?'active':'')} onClick={(e)=>this.changeSidebar(e,'debug')}>
+                  <div className="ide-info-nav-icon"><i className="icon-code"></i></div>
+                  <div className="ide-info-nav-val">调试</div>
+                </div>
+                <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='project'?'active':'')} onClick={(e)=>this.changeSidebar(e,'project')}>
+                  <div className="ide-info-nav-icon"><i className="icon-project"></i></div>
+                  <div className="ide-info-nav-val">项目</div>
+                </div>
+              </div>:
+              <div className="ide-info-nav">
+                <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='edit'?'active':'')} onClick={(e)=>this.changeSidebar(e,'edit')}>
+                  <div className="ide-info-nav-icon"><i className="icon-edit"></i></div>
+                  <div className="ide-info-nav-val">编辑</div>
+                </div>
+                <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='debug'?'active':'')} onClick={(e)=>this.changeSidebar(e,'debug')}>
+                  <div className="ide-info-nav-icon"><i className="icon-code"></i></div>
+                  <div className="ide-info-nav-val">调试</div>
+                </div>
+                <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='project'?'active':'')} onClick={(e)=>this.changeSidebar(e,'project')}>
+                  <div className="ide-info-nav-icon"><i className="icon-project"></i></div>
+                  <div className="ide-info-nav-val">项目</div>
+                </div>
               </div>
-              <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='debug'?'active':'')} onClick={(e)=>this.changeSidebar(e,'debug')}>
-                <div className="ide-info-nav-icon"><i className="icon-code"></i></div>
-                <div className="ide-info-nav-val">调试</div>
-              </div>
-              <div activeClassName="active" className={"ide-info-nav-i "+(this.props.sidebar=='project'?'active':'')} onClick={(e)=>this.changeSidebar(e,'project')}>
-                <div className="ide-info-nav-icon"><i className="icon-project"></i></div>
-                <div className="ide-info-nav-val">项目</div>
-              </div>
-            </div>
+            }
             <div className="ide-sidebar-opear">
               <div className="ide-sidebar-sep"></div>
               <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
@@ -248,57 +283,28 @@ module.exports = function(){
               </div>
             </div>
           </div>
-          <div className="ide-info-childview">
-            <div className={"ide-info-spcail "+(this.props.sidebar=='project'?'hide':'')}>
-              <Phone {...this.props}></Phone>
-              <Edit {...this.props}></Edit>
-              <Debug {...this.props}></Debug>  
+          {this.props.project['remote']?
+            <div className="ide-info-childview">
+              <div className={"ide-info-spcail "+(this.props.sidebar=='project'?'hide':'')}>
+                <Phone {...this.props}></Phone>
+                <Debug {...this.props}></Debug>  
+              </div>
+              <Project {...this.props}></Project>
             </div>
-            <Project {...this.props}></Project>
-          </div>
+            :
+            <div className="ide-info-childview">
+              <div className={"ide-info-spcail "+(this.props.sidebar=='project'?'hide':'')}>
+                <Phone {...this.props}></Phone>
+                <Edit {...this.props}></Edit>
+                <Debug {...this.props}></Debug>  
+              </div>
+              <Project {...this.props}></Project>
+            </div>
+          }
   	    </div>
   	  );
   	}
     componentDidMount(){
-      const {dispatch} = this.props;
-      let fs = require('fs');
-      setTimeout(function(){
-        return 
-        $('.xxxxx').html('');
-        var oHead = document.getElementsByClassName('xxxxx')[0];
-        var oScript= document.createElement("iframe");
-        oScript.id = "foo";
-        oScript.src='file:///'+basurl+'/src/template/editor.html';
-        oScript.onload=function(){
-          fs.readFile(basurl+'/webpack.config.js',{
-            encoding:'utf-8'
-          },function(err,data){
-            console.log('发送数据')
-            oScript.contentWindow.postMessage(data, "*");
-          })
-        }
-        oHead.appendChild(oScript);
-        return 
-        let iframeWin =  document.getElementById("foo").contentWindow;
-        console.log(iframeWin,'1231231');
-        fs.readFile(basurl+'/webpack.config.js',{
-          encoding:'utf-8'
-        },function(err,data){
-          console.log('发送数据')
-          iframeWin.postMessage(data, "*");
-        })
-        return 
-        $('.xxxxx').html('')
-        var oHead = document.getElementsByClassName('xxxxx')[0];
-        var oScript= document.createElement("iframe");
-        oScript.id = "foo";
-        oScript.partition = "trusted";
-        // oScript.src='file:///'+basurl+'/src/template/template.html?src=xxxxxxxxx';
-         oScript.src='chrome-extension://lblocnhdapdghmpkknoijhgonjfikalb/src/template/template.html';
-        oHead.appendChild(oScript);
-        console.log(oScript,'1231');
-      },0)
-      console.log(document.getElementById('body'))
     }
     changeSidebar(e,data){
       let dispatch = this.props.dispatch;
@@ -317,18 +323,18 @@ module.exports = function(){
       // })
     }
   }
-  function mapStateToProps(state) {
-    console.log('这里会走几次');
+  function mapStateToProps(state,type) {
+    state['project'] = window.project;
     return state;
   }
-  const RootApp = connect(mapStateToProps)(CountApp);
+  let RootApp = connect(mapStateToProps)(CountApp);
   class Main extends Component{
     constructor(props){
       super(props);
+      initController();
       if(!init){
-        init = true
+        init = true;
       }else{
-        initController();
         setTimeout(function(){
           store.dispatch({
             type:'info/allreset'

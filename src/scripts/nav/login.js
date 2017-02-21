@@ -169,6 +169,7 @@ module.exports = function(){
         .post(serverUrl+'/ide/account/login')
         .send(data)
         .end(function(err,res){
+          console.log(err,'123123');
           let data = JSON.parse(res["text"]);
           if(data["data"]["errcode"]){
             if(data["data"]["errcode"] == 20301){

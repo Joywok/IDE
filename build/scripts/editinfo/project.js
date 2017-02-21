@@ -22350,7 +22350,46 @@
 					return _react2.default.createElement(
 						'div',
 						{ className: "info-project " + (this.props.sidebar == 'project' ? '' : 'hide') },
-						_react2.default.createElement(
+						this.props.project['remote'] ? _react2.default.createElement(
+							'div',
+							{ className: 'info-project-w has-remote' },
+							_react2.default.createElement('div', { className: 'info-project-icon' }),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-name' },
+								this.props.project['name']
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-appid' },
+								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-item path' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-i-c' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-label' },
+										'\u670D\u52A1\u5668\u5730\u5740'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-content' },
+										this.props.project.remotepath
+									)
+								)
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'info-project-remove', type: 'button', onClick: function onClick(e) {
+										return _this2.removeProject(e);
+									} },
+								'\u5220\u9664\u9879\u76EE'
+							)
+						) : _react2.default.createElement(
 							'div',
 							{ className: 'info-project-w' },
 							_react2.default.createElement('div', { className: 'info-project-icon' }),
@@ -22499,7 +22538,6 @@
 			}, {
 				key: 'openFolder',
 				value: function openFolder() {
-					// console.log(this.props.project.src)
 					gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1] + '/index.html');
 				}
 			}, {
@@ -22515,7 +22553,7 @@
 						return i['id'] != user["openId"];
 					});
 					var url = this.props.project['src'].split('file://')[1];
-					fsExtra.remove(url, function (err) {});
+					// fsExtra.remove(url, function(err){})
 					ProjectStore.update({ id: 'projects', data: projects });
 					// fs.writeFile('project.json',JSON.stringify(projects),function(){
 					window.projects = projects;

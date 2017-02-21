@@ -54,6 +54,7 @@
   const gui = require('nw.gui');
   const http = require('http');
   const httpUrl = require("url");
+  const httpProxy = require('http-proxy');
   const DecompressZip = require('decompress-zip');
   const platform = (process.platform == 'darwin'?'mac':'win')
   window.Screen = require('nw.gui').Screen.Init();

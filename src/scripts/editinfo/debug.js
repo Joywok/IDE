@@ -8,12 +8,20 @@ module.exports = function(app){
 	class Controller extends Component{
 		render(){
 			let self = this;
-			return (<div className={"info-debug "+(this.props.sidebar=='debug'?'':'hide')}>
+			if(this.props.project){
+				return (<div className="info-debug ">
 								<div className="info-debug-console" id="info-debug-console">
 								</div>
 							</div>)
+			}else{
+				return (<div className={"info-debug "+(this.props.sidebar=='debug'?'':'hide')}>
+								<div className="info-debug-console" id="info-debug-console">
+								</div>
+							</div>)	
+			}
 		}
 		componentDidMount(){
+			let self = this;
 			let webview = document.createElement('webview');
 			webview.setAttribute('partition', 'trusted');
 			webview.id = 'cdt'
@@ -21,8 +29,10 @@ module.exports = function(app){
 				console.log('loadcommit')
 			})
 			webview.addEventListener('contentload', function(e) {
-				// setTimeout(function(){
-				// },0)
+				if(self.props.project){
+					$('.info-debug').removeClass('hide');
+        	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+				}
 			});
 			webview.addEventListener('loadstop',function(e){
 				console.log('loadstop')
@@ -31,12 +41,17 @@ module.exports = function(app){
 			document.getElementById('info-debug-console').appendChild(webview);
 		}
 		shouldComponentUpdate(data){
-      if(data['sidebar'] == 'debug'){
-        $('.info-debug').removeClass('hide');
+			if(this.props.project){
+				$('.info-debug').removeClass('hide');
         document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-      }else{
-        $('.info-debug').addClass('hide')
-      }
+			}else{
+				if(data['sidebar'] == 'debug'){
+	        $('.info-debug').removeClass('hide');
+	        document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+	      }else{
+	        $('.info-debug').addClass('hide')
+	      }
+			}
 			return false
 		}
 	}

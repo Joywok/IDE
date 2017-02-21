@@ -1,4 +1,4 @@
-webpackJsonp([9],[
+webpackJsonp([10],[
 /* 0 */,
 /* 1 */,
 /* 2 */,
@@ -25748,7 +25748,8 @@ webpackJsonp([9],[
 /* 479 */,
 /* 480 */,
 /* 481 */,
-/* 482 */
+/* 482 */,
+/* 483 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25803,7 +25804,7 @@ webpackJsonp([9],[
 	};
 
 /***/ },
-/* 483 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -26055,7 +26056,7 @@ webpackJsonp([9],[
 
 
 /***/ },
-/* 484 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26068,7 +26069,7 @@ webpackJsonp([9],[
 
 	var _dva2 = _interopRequireDefault(_dva);
 
-	var _router = __webpack_require__(374);
+	var _router = __webpack_require__(375);
 
 	var _react = __webpack_require__(129);
 
@@ -26086,7 +26087,7 @@ webpackJsonp([9],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(485);
+	__webpack_require__(486);
 
 	module.exports = function () {
 	  var app = (0, _dva2.default)();
@@ -26102,6 +26103,8 @@ webpackJsonp([9],[
 	      copesecret: '',
 	      appid: '',
 	      dirpath: '',
+	      remote: false,
+	      remotepath: '',
 	      babel: true, completion: true, compress: true
 	    },
 	    reducers: {
@@ -26121,6 +26124,8 @@ webpackJsonp([9],[
 	          copesecret: '',
 	          appid: '',
 	          dirpath: '',
+	          remote: false,
+	          remotepath: '',
 	          babel: true, completion: true, compress: true
 	        });
 	      },
@@ -26134,13 +26139,18 @@ webpackJsonp([9],[
 	          corpid: '',
 	          copesecret: '',
 	          appid: '',
-	          dirpath: ''
+	          dirpath: '',
+	          remote: false,
+	          remotepath: ''
 	        });
 	      },
 	      changeInputVal: function changeInputVal(state, action) {
 	        var data = _.extend({}, state);
 	        data[action['target']] = action['payload'];
 	        return data;
+	      },
+	      changeRadio: function changeRadio(state, action) {
+	        return _.extend({}, state, { remote: action['payload'] });
 	      }
 	    }
 	  });
@@ -26437,7 +26447,50 @@ webpackJsonp([9],[
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'create-form-i' },
+	                { className: 'create-form-i project-remote' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  '\u8FDC\u7A0B\u9879\u76EE'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'create-form-checkboxs' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'create-form-checkbox' },
+	                      _react2.default.createElement('input', { type: 'radio', name: 'site_name', onClick: function onClick(e) {
+	                          return _this3.changeRadio(e, true);
+	                        }, id: 'project-radio-y', checked: data["remote"] ? true : false }),
+	                      _react2.default.createElement('label', { htmlFor: 'project-radio-y' }),
+	                      _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        '\u662F'
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'create-form-checkbox' },
+	                      _react2.default.createElement('input', { type: 'radio', name: 'site_name', onClick: function onClick(e) {
+	                          return _this3.changeRadio(e, false);
+	                        }, id: 'project-radio-n', checked: data["remote"] ? false : true }),
+	                      _react2.default.createElement('label', { htmlFor: 'project-radio-n' }),
+	                      _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        '\u5426'
+	                      )
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: "create-form-i " + (data["remote"] ? 'hide' : '') },
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'create-form-label' },
@@ -26452,15 +26505,31 @@ webpackJsonp([9],[
 	                    { className: 'chose-directory' },
 	                    _react2.default.createElement(
 	                      'button',
-	                      { className: 'apps-form-open-dir', type: 'button' },
+	                      { className: 'apps-form-open-dir', type: 'button', onClick: function onClick(e) {
+	                          return _this3.choseDirectory(e);
+	                        } },
 	                      '\u6253\u5F00'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'file', className: 'chose-directory-input', nwdirectory: true, onClick: function onClick(e) {
-	                        return _this3.choseDirectory(e);
-	                      }, onChange: function onChange(e) {
+	                    _react2.default.createElement('input', { type: 'file', id: 'choseDirectory', className: 'chose-directory-input', nwdirectory: true, onChange: function onChange(e) {
 	                        return _this3.changeInputVal(e, 'dirpath');
 	                      } })
 	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: "create-form-i " + (data["remote"] ? '' : 'hide') },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-label' },
+	                  '\u670D\u52A1\u5668\u8DEF\u5F84'
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'create-form-i-c' },
+	                  _react2.default.createElement('input', { type: 'text', className: 'create-form-input', value: data['remotepath'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "remotepath");
+	                    } })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -26475,7 +26544,7 @@ webpackJsonp([9],[
 	                ),
 	                _react2.default.createElement(
 	                  'button',
-	                  { type: 'button', disabled: data["pname"].length != 0 && data["dirpath"].length != 0 ? false : true, className: 'create-form-button create-btn', onClick: function onClick(e) {
+	                  { type: 'button', disabled: data["pname"].length != 0 && (data["remote"] == true && data["remotepath"].length != 0 || data["remote"] == false && data["dirpath"].length != 0) ? false : true, className: 'create-form-button create-btn', onClick: function onClick(e) {
 	                      return _this3.submit(e);
 	                    } },
 	                  '\u4FDD\u5B58'
@@ -26531,6 +26600,15 @@ webpackJsonp([9],[
 	        });
 	      }
 	    }, {
+	      key: 'changeRadio',
+	      value: function changeRadio(e, type) {
+	        var dispatch = this.props.dispatch;
+	        dispatch({
+	          type: 'apps/changeRadio',
+	          payload: type
+	        });
+	      }
+	    }, {
 	      key: 'submit',
 	      value: function submit() {
 	        var project = {};
@@ -26542,6 +26620,9 @@ webpackJsonp([9],[
 	        project.appID = data['appid'];
 	        project.src = "file://" + data["dirpath"];
 	        project.tools = { babel: true, completion: true, compress: true };
+	        project.remote = data["remote"];
+	        project.remotepath = data["remotepath"];
+
 	        fs.exists(data["dirpath"] + '/index.html', function (exists) {
 	          // window.projects.push(project);
 	          store.dispatch({
@@ -26594,10 +26675,8 @@ webpackJsonp([9],[
 	      key: 'logout',
 	      value: function logout() {
 	        localStorage.removeItem('Joywok:User');
-	        localStorage.removeItem('Joywok:Projects');
 	        window.user = {};
-	        window.projects = [];
-	        var nowWin = __webpack_require__(487).Window.get();
+	        var nowWin = __webpack_require__(488).Window.get();
 	        var platformWindow = window.Screen.screens[0]['bounds'];
 	        nowWin.resizeTo(840, 640);
 	        nowWin.moveTo((platformWindow['width'] - 840) / 2, (platformWindow['height'] - 640) / 2);
@@ -26654,16 +26733,16 @@ webpackJsonp([9],[
 	}();
 
 /***/ },
-/* 485 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(486);
+	var content = __webpack_require__(487);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(483)(content, {});
+	var update = __webpack_require__(484)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26680,21 +26759,21 @@ webpackJsonp([9],[
 	}
 
 /***/ },
-/* 486 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(482)();
+	exports = module.exports = __webpack_require__(483)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".apps{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n\tbackground: #ffffff\n}\n.apps-tabs-i{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\t\n}\n.apps .apps-user{\n\tposition: relative;\n\twidth: 100%;height: 40%;background: #323940;-webkit-app-region: drag;\n}\n.apps .apps-user .apps-user-c{\n\tposition: absolute;top:50%;left: 0;right: 0;\n\tmargin-top: -58px;\n}\n.apps-user .apps-info-avatar{\n\tposition: relative;\n\tmargin:0 auto;\n\twidth: 76px;height: 76px;\n}\n.apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}\n.apps-user .apps-info-avatar .apps-info-exit{\n\tcursor: pointer;\n\tposition: absolute;right: 0;bottom: 0;font-size: 14px;\n\twidth: 20px;height: 20px;background: #fff;color: #494949;\n\tvertical-align: middle;text-align: center;\n\tborder-radius: 20px;\n}\n.apps-info-exit i{\n\tvertical-align: top;\n\tmargin-top:3px;\n}\n.apps-user .apps-info-name{\n\tmargin-top: 20px;\n\tfont-size: 16px;color: #ffffff;\n\ttext-align: center;\n}\n.apps .apps-list{\n\tposition: relative;\n\twidth: 100%;height: 60%;background: #fff;-webkit-app-region: drag;\n\ttext-align: center;\n\tpadding:40px 0 0 0;\n}\n.apps-list-i{\n\tdisplay: inline-block;\n\tvertical-align: top;\n\tmargin:20px 15px 0 ;\n\tcursor: pointer;\n}\n.apps-list-i .apps-list-i-c{width: 80px;}\n.apps-list-i .apps-list-i-c .apps-list-i-pic{\n\twidth: 80px;height: 80px;display: table-cell;\n\tvertical-align: middle;text-align: center;\n\tbackground: #6f7378;\n}\n.apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;\n\tbackground-size: cover;\n}\n.apps-list-i .apps-list-i-c .apps-list-i-val{\n\tmargin-top: 20px;text-align: center;font-size: 14px;color: #666666;\n}\n.apps-create-btn{\n\tcursor: pointer;\n}\n.apps-create-btn .apps-list-i-pic{\n\tborder:2px dashed #dddddd;\n\tbackground: none!important;\n}\n.apps-create-btn .apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;\n\tbackground-size: cover;\n}\n.xxxxx{\n\twidth: 140px;\n  height: 31px;\n  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;\n  background-size: cover;\n}\n.apps-create-btn:hover .apps-list-i-pic{\n\tbackground: #f0f0f0!important;\n}\n.apps-create-btn:hover .apps-list-i-val{\n\tcolor: #1b222a;\n}\n\n\n\n.create-form{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n}\n.create-form-back{\n\tmargin:25px 30px;height: 21px;line-height: 21px;\n\tcursor: pointer;\n}\n.create-form-back .create-form-back-pic{\n\tfloat: left;\n\tmargin:3px 0 0 0;\n\twidth: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;\n\tbackground-size: cover;\n}\n.create-form-back .create-form-back-val{\n\tfloat: left;\n\tmargin-left: 10px;\n}\n\n.create-form .create-form-c{\n\tposition: absolute;top:50%;margin-top: -228px;\n\tleft: 50%;margin-left: -260px;\n\twidth: 520px;\n}\n.create-form-c .create-form-title{\n\ttext-align: center;\n\tcolor: #333333;\n\tfont-size: 20px;\n\tmargin-bottom: 40px;\n}\n.create-form-c .create-form-i{\n\tposition: relative;\n\tmargin-top: 30px;\n}\n.create-form-c .create-form-i:first-child{\n}\n.create-form-i .create-form-label{\n\tdisplay: inline-block;\n\twidth: 90px;\n\ttext-align: right;\n\tcolor: #333333;\n\tfont-size: 14px;\n\tline-height: 36px;\n}\n.create-form-i .create-form-i-c{\n\tdisplay: inline-block;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-input{\n\tpadding:0 10px;\n\twidth: 320px;\n\theight: 36px;line-height: 36px;border:1px solid #dddddd;\n\tborder-radius: 3px;\n}\n.apps-tip-specail{\n\tdisplay: inline-block;\n\tmargin-left: 15px;line-height: 36px;\n\tcolor: #4174d9;\n\tfont-size: 13px;\n}\n\n.chose-directory{\n\tdisplay: inline-block;\n\tposition: relative;\n\twidth: 70px;\n\theight: 36px;\n\tborder-radius: 3px;\n\tborder:1px solid #ddd;\n\tvertical-align: top;\n\tmargin-left: 15px;\n\ttext-align: center;\n\toverflow: hidden;\n}\n.chose-directory .apps-form-open-dir{\n\ttext-align: center;\n\tline-height: 36px;\n\tpadding: 0;\n\tcursor:pointer;\n}\n.chose-directory .chose-directory-input{\n\tposition: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;\n}\n\n.apps-form-open-dir:hover{\n\tborder-color: #4174d9;\n\tcolor: #4174d9;\n}\n.create-form-c .create-form-buttons{\n\ttext-align: center;\n\tmargin-top: 50px;\n}\n.create-form-buttons .create-form-button{\n\twidth: 120px;height: 36px;\n\tdisplay: inline-block;margin-left: 60px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.create-form-buttons .create-form-button:first-child{\n\tmargin-left: 0;\n}\n.create-form-button.cancel-btn{\n\tbackground: #e7e7e7;\n\tcolor: #999999;\n}\n.create-form-button.create-btn{\n\tbackground: #8d9094;\n\tcolor: #ffffff;\n}\n.create-form-button.create-btn[disabled]{\n\topacity: 0.5\n}\n\n\n.apps-tip{\n\tposition: relative;\n\tdisplay: inline-block;\n\tmargin:10px 0 0 15px;\n\tz-index: 2222222;\n\tvertical-align: top;\n}\n.apps-tip .apps-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.apps-tip .apps-tip-c{\n\tdisplay: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.apps-tip-c .apps-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 4px;\n}\n.apps-tip-c .apps-tip-val{\n\tposition: relative;z-index: 2;padding: 10px 10px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.apps-tip-c .apps-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.apps-tip:hover .apps-tip-c{\n\tdisplay: block;\n}\n\n", ""]);
+	exports.push([module.id, ".apps{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n\tbackground: #ffffff\n}\n.apps-tabs-i{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\t\n}\n.apps .apps-user{\n\tposition: relative;\n\twidth: 100%;height: 40%;background: #323940;-webkit-app-region: drag;\n}\n.apps .apps-user .apps-user-c{\n\tposition: absolute;top:50%;left: 0;right: 0;\n\tmargin-top: -58px;\n}\n.apps-user .apps-info-avatar{\n\tposition: relative;\n\tmargin:0 auto;\n\twidth: 76px;height: 76px;\n}\n.apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}\n.apps-user .apps-info-avatar .apps-info-exit{\n\tcursor: pointer;\n\tposition: absolute;right: 0;bottom: 0;font-size: 14px;\n\twidth: 20px;height: 20px;background: #fff;color: #494949;\n\tvertical-align: middle;text-align: center;\n\tborder-radius: 20px;\n}\n.apps-info-exit i{\n\tvertical-align: top;\n\tmargin-top:3px;\n}\n.apps-user .apps-info-name{\n\tmargin-top: 20px;\n\tfont-size: 16px;color: #ffffff;\n\ttext-align: center;\n}\n.apps .apps-list{\n\tposition: relative;\n\twidth: 100%;height: 60%;background: #fff;-webkit-app-region: drag;\n\ttext-align: center;\n\tpadding:40px 0 0 0;\n}\n.apps-list-i{\n\tdisplay: inline-block;\n\tvertical-align: top;\n\tmargin:20px 15px 0 ;\n\tcursor: pointer;\n}\n.apps-list-i .apps-list-i-c{width: 80px;}\n.apps-list-i .apps-list-i-c .apps-list-i-pic{\n\twidth: 80px;height: 80px;display: table-cell;\n\tvertical-align: middle;text-align: center;\n\tbackground: #6f7378;\n}\n.apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;\n\tbackground-size: cover;\n}\n.apps-list-i .apps-list-i-c .apps-list-i-val{\n\tmargin-top: 20px;text-align: center;font-size: 14px;color: #666666;\n}\n.apps-create-btn{\n\tcursor: pointer;\n}\n.apps-create-btn .apps-list-i-pic{\n\tborder:2px dashed #dddddd;\n\tbackground: none!important;\n}\n.apps-create-btn .apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;\n\tbackground-size: cover;\n}\n.xxxxx{\n\twidth: 140px;\n  height: 31px;\n  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;\n  background-size: cover;\n}\n.apps-create-btn:hover .apps-list-i-pic{\n\tbackground: #f0f0f0!important;\n}\n.apps-create-btn:hover .apps-list-i-val{\n\tcolor: #1b222a;\n}\n\n\n.create-form{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n}\n.create-form-back{\n\tmargin:25px 30px;height: 21px;line-height: 21px;\n\tcursor: pointer;\n}\n.create-form-back .create-form-back-pic{\n\tfloat: left;\n\tmargin:3px 0 0 0;\n\twidth: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;\n\tbackground-size: cover;\n}\n.create-form-back .create-form-back-val{\n\tfloat: left;\n\tmargin-left: 10px;\n}\n\n.create-form .create-form-c{\n\tposition: absolute;top:50%;margin-top: -260px;\n\tleft: 50%;margin-left: -260px;\n\twidth: 520px;\n}\n.create-form-c .create-form-title{\n\ttext-align: center;\n\tcolor: #333333;\n\tfont-size: 20px;\n\tmargin-bottom: 40px;\n}\n.create-form-c .create-form-i{\n\toverflow-y: hidden;\n\tposition: relative;\n\tmargin-top: 30px;\n}\n.create-form-c .create-form-i:first-child{\n}\n.create-form-i .create-form-label{\n\tfloat: left;\n\twidth: 90px;\n\ttext-align: right;\n\tcolor: #333333;\n\tfont-size: 14px;\n\tline-height: 36px;\n}\n.create-form-i .create-form-i-c{\n\tfloat: left;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-input{\n\tpadding:0 10px;\n\twidth: 320px;\n\theight: 36px;line-height: 36px;border:1px solid #dddddd;\n\tborder-radius: 3px;\n}\n.apps-tip-specail{\n\tdisplay: inline-block;\n\tmargin-left: 15px;line-height: 36px;\n\tcolor: #4174d9;\n\tfont-size: 13px;\n}\n\n.chose-directory{\n\tdisplay: inline-block;\n\tposition: relative;\n\twidth: 70px;\n\theight: 36px;\n\tborder-radius: 3px;\n\tvertical-align: top;\n\tmargin-left: 15px;\n\ttext-align: center;\n\toverflow: hidden;\n}\n.chose-directory .apps-form-open-dir{\n\tposition: relative;z-index: 2222;\n\twidth: 100%;\n\ttext-align: center;\n\tline-height: 34px;\n\tpadding: 0;\n\tcursor:pointer;\n\tborder:1px solid #999;\n\tcolor: #000;\n\tborder-radius: 3px;\n}\n.chose-directory .chose-directory-input{\n\tposition: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;\n}\n.apps-form-open-dir:hover{\n\t// border-color: #4174d9;\n\t// color: #4174d9;\n\tbackground: #6f7378;\n\tcolor: #fff;\n\tborder-color: #6f7378;\n}\n.create-form-c .create-form-buttons{\n\ttext-align: center;\n\tmargin-top: 50px;\n}\n.create-form-buttons .create-form-button{\n\twidth: 120px;height: 36px;\n\tdisplay: inline-block;margin-left: 60px;\n\ttext-align: center;\n\tborder-radius: 2px;\n\n}\n.create-form-buttons .create-form-button:first-child{\n\tmargin-left: 0;\n}\n.create-form-button.cancel-btn{\n\tbackground: #e7e7e7;\n\tcolor: #999999;\n}\n.create-form-button.create-btn{\n\tbackground: #8d9094;\n\tcolor: #ffffff;\n}\n.create-form-button.create-btn[disabled]{\n\topacity: 0.5\n}\n\n\n.apps-tip{\n\tposition: relative;\n\tdisplay: inline-block;\n\tmargin:10px 0 0 15px;\n\tz-index: 2222222;\n\tvertical-align: top;\n}\n.apps-tip .apps-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.apps-tip .apps-tip-c{\n\tdisplay: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.apps-tip-c .apps-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 4px;\n}\n.apps-tip-c .apps-tip-val{\n\tposition: relative;z-index: 2;padding: 10px 10px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.apps-tip-c .apps-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.apps-tip:hover .apps-tip-c{\n\tdisplay: block;\n}\n\n.project-remote{\n\toverflow:hidden;\n}\n.project-remote .create-form-i-c{\n\toverflow:hidden;\n}\n.create-form-checkboxs{\n\tfloat: left;margin-top: 9px;\n}\n.create-form-i-c .create-form-checkbox{\n\tfloat: left;margin-top: 2px;height: 16px;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-checkbox:first-child{\n\tmargin-left: 0;\n}\n.create-form-checkbox input{\n\tdisplay: none;\n  margin: 0;\n  -webkit-appearance: checkbox;\n  float: left;\n}\n.create-form-checkbox input + label{\n\tmargin:0;\n\tfloat: left;\n  width: 16px;\n  height: 16px;\n  background: url(/build/images/checkbox.png) no-repeat;\n  background-size: cover;\n  cursor: pointer;\n}\n.create-form-checkbox input:checked + label{\n\tbackground: url(/build/images/checkbox-active.png) no-repeat;\n  background-size: cover;\n}\n\n.create-form-checkbox span{\n\tfloat: left;line-height: 16px;\n\tmargin-left: 10px;\n}\n\n\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 487 */
+/* 488 */
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");

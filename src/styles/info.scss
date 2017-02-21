@@ -122,7 +122,38 @@ body{
   }
 }
 
-
+.ide-info-childview{
+	.ide-info-remote{
+		position: absolute;top:0;left: 0px;right: 0;height: 50px;
+		background: #efefef;
+		.ide-remote-input{
+			height: 30px;
+			width: 100%;
+			margin-top: 10px;
+			margin-left: 15px;
+			input{
+				float: left;
+				width: 90%;
+				padding:0 10px;
+				background: #fff;
+				height: 30px;
+			}
+			.ide-remote-refresh{
+				float: left;
+				width: 70px;height: 30px;margin:0px 0 0 10px;
+				background: #fff;
+				cursor: pointer;
+			}
+		}
+	}
+	.ide-info-remote-specail{
+		position: absolute;
+    top: 50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+	}
+}
 
 .info-project{
 	.info-project-w{
@@ -226,6 +257,14 @@ body{
 		.info-project-remove:hover{
 			background: #f0f0f0;
 		}
+	}
+	.info-project-w.has-remote{
+		width: 600px;
+		margin:0;
+		position: absolute;top:50%;left: 50%;
+		margin-left: -300px;
+		margin-top: -169px;
+		margin-bottom: 0;
 	}
 }
 

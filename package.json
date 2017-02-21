@@ -1,11 +1,11 @@
 {
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "name": "乐工Web开发者工具",
   "main": "build/template/index.html",
-  "serverurl": "http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",
+  "serverurl": "http://10.211.55.3",
   "window": {
-    "icon": "build/images/icon-32.png",
+    "icon": "build/images/icon-1024.png",
     "title": "乐工Web开发者工具",
     "toolbar": false,
     "frame": true,
@@ -21,9 +21,7 @@
   "permissions": "system",
   "chromium-args": "-ignore-certificate-errors",
   "node-remote": [
-    "http://127.0.0.1:10000",
-    "http://192.168.1.73",
-    "http://10.211.55.3"
+    "http://127.0.0.1"
   ],
   "inject-js-start": "src/scripts/test.js",
   "webview": {

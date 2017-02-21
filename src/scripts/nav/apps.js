@@ -20,6 +20,8 @@ module.exports = function(){
       copesecret:'',
       appid:'',
       dirpath:'',
+      remote:false,
+      remotepath:'',
       babel:true,completion:true,compress:true
     },
     reducers: {
@@ -39,6 +41,8 @@ module.exports = function(){
           copesecret:'',
           appid:'',
           dirpath:'',
+          remote:false,
+          remotepath:'',
           babel:true,completion:true,compress:true
         })
       },
@@ -52,13 +56,18 @@ module.exports = function(){
           corpid:'',
           copesecret:'',
           appid:'',
-          dirpath:''
+          dirpath:'',
+          remote:false,
+          remotepath:''
         })
       },
       changeInputVal:function(state,action){
         let data = _.extend({},state);
         data[action['target']] = action['payload']
         return data;
+      },
+      changeRadio:function(state,action){
+        return _.extend({},state,{remote:action['payload']})
       }
     }
   });
@@ -195,19 +204,42 @@ module.exports = function(){
                   <div className="apps-tip-specail">无 AppID</div>
                 </div>
               </div>
-              <div className="create-form-i">
+              <div className="create-form-i project-remote">
+                <div className="create-form-label">远程项目</div>
+                <div className="create-form-i-c">
+                  <div className="create-form-checkboxs">
+                    <div className="create-form-checkbox">
+                      <input type="radio" name="site_name" onClick={(e)=>this.changeRadio(e,true)} id="project-radio-y" checked={data["remote"]?true:false}/>
+                      <label htmlFor="project-radio-y"></label>
+                      <span>是</span>
+                    </div>
+                    <div className="create-form-checkbox">
+                      <input type="radio" name="site_name" onClick={(e)=>this.changeRadio(e,false)} id="project-radio-n" checked={data["remote"]?false:true}/>
+                      <label htmlFor="project-radio-n"></label>
+                      <span>否</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={"create-form-i "+(data["remote"]?'hide':'')}>
                 <div className="create-form-label">项目目录</div>
                 <div className="create-form-i-c">
                   <input type="text" className="create-form-input" value={data['dirpath']} disabled="disabled"/>
                   <div className="chose-directory">
-                    <button className="apps-form-open-dir" type="button">打开</button>
-                    <input type="file" className="chose-directory-input" nwdirectory onClick={(e)=>this.choseDirectory(e)} onChange={(e)=>this.changeInputVal(e,'dirpath')}/>
+                    <button className="apps-form-open-dir" type="button" onClick={(e)=>this.choseDirectory(e)}>打开</button>
+                    <input type="file" id="choseDirectory" className="chose-directory-input" nwdirectory  onChange={(e)=>this.changeInputVal(e,'dirpath')}/>
                   </div>
+                </div>
+              </div>
+              <div className={"create-form-i "+(data["remote"]?'':'hide')}>
+                <div className="create-form-label">服务器路径</div>
+                <div className="create-form-i-c">
+                  <input type="text" className="create-form-input" value={data['remotepath']} onChange={(e)=>this.changeInputVal(e,"remotepath")}/>
                 </div>
               </div>
               <div className="create-form-buttons">
                 <button type="button" className="create-form-button cancel-btn" onClick={(e)=>this.backList(e)}>取消</button>
-                <button type="button" disabled={(data["pname"].length!=0&& data["dirpath"].length!=0?false:true)} className="create-form-button create-btn" onClick={(e)=>this.submit(e)}>保存</button>
+                <button type="button" disabled={(data["pname"].length!=0&&((data["remote"]==true&&data["remotepath"].length!=0)||(data["remote"]==false&&data["dirpath"].length!=0))?false:true)} className="create-form-button create-btn" onClick={(e)=>this.submit(e)}>保存</button>
               </div>
             </div>
           </div>
@@ -249,6 +281,13 @@ module.exports = function(){
         payload:text
       })
     }
+    changeRadio(e,type){
+      let dispatch = this.props.dispatch;
+      dispatch({
+        type:'apps/changeRadio',
+        payload:type
+      })
+    }
     submit(){
       let project = {};
       let data = this.props;
@@ -259,6 +298,9 @@ module.exports = function(){
       project.appID = data['appid']
       project.src = "file://"+data["dirpath"];
       project.tools = {babel:true,completion:true,compress:true};
+      project.remote = data["remote"];
+      project.remotepath = data["remotepath"];
+
       fs.exists(data["dirpath"]+'/index.html', function(exists) {
         // window.projects.push(project);
         store.dispatch({
@@ -309,9 +351,7 @@ module.exports = function(){
     }
     logout(){
       localStorage.removeItem('Joywok:User');
-      localStorage.removeItem('Joywok:Projects');
       window.user = {};
-      window.projects = [];
       let nowWin = require('nw.gui').Window.get();
       let platformWindow = window.Screen.screens[0]['bounds'];
       nowWin.resizeTo(840,640);

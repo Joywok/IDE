@@ -31209,15 +31209,24 @@
 				key: 'render',
 				value: function render() {
 					var self = this;
-					return _react2.default.createElement(
-						'div',
-						{ className: "info-debug " + (this.props.sidebar == 'debug' ? '' : 'hide') },
-						_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
-					);
+					if (this.props.project) {
+						return _react2.default.createElement(
+							'div',
+							{ className: 'info-debug ' },
+							_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
+						);
+					} else {
+						return _react2.default.createElement(
+							'div',
+							{ className: "info-debug " + (this.props.sidebar == 'debug' ? '' : 'hide') },
+							_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
+						);
+					}
 				}
 			}, {
 				key: 'componentDidMount',
 				value: function componentDidMount() {
+					var self = this;
 					var webview = document.createElement('webview');
 					webview.setAttribute('partition', 'trusted');
 					webview.id = 'cdt';
@@ -31225,8 +31234,10 @@
 						console.log('loadcommit');
 					});
 					webview.addEventListener('contentload', function (e) {
-						// setTimeout(function(){
-						// },0)
+						if (self.props.project) {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						}
 					});
 					webview.addEventListener('loadstop', function (e) {
 						console.log('loadstop');
@@ -31237,11 +31248,16 @@
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(data) {
-					if (data['sidebar'] == 'debug') {
+					if (this.props.project) {
 						$('.info-debug').removeClass('hide');
 						document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
 					} else {
-						$('.info-debug').addClass('hide');
+						if (data['sidebar'] == 'debug') {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						} else {
+							$('.info-debug').addClass('hide');
+						}
 					}
 					return false;
 				}

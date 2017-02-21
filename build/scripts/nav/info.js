@@ -1,4 +1,4 @@
-webpackJsonp([10],[
+webpackJsonp([17],[
 /* 0 */,
 /* 1 */,
 /* 2 */
@@ -164,8 +164,10 @@ webpackJsonp([10],[
 					webview.contextmenu = function () {
 						return false;
 					};
+					if (this.props.project['remote']) {
+						webview.src = this.props.project['remotepath'];
+					}
 					document.getElementById('phone-container').appendChild(webview);
-
 					webview.addEventListener('permissionrequest', function (s) {
 						s.request.allow();
 					});
@@ -203,15 +205,25 @@ webpackJsonp([10],[
 						// .on('contextmenu',function(e){
 						// 	return false;
 						// })	
+
+						if (self.props.project['remote']) {
+							setTimeout(function () {
+								document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+							}, 100);
+						}
+
 						e.target.contentWindow.postMessage({
-							type: 'init'
+							type: 'init',
+							data: {
+								user: window.user,
+								project: window.project
+							}
 						}, '*');
 						// console.log(e,'contentWindow')
 					});
 					webview.contextMenus.onShow.addListener(function (e) {
 						e.preventDefault();
 					});
-
 					// $('#phone-inset').on('contextmenu',function(e){
 					// 	return false;
 					// })	
@@ -219,7 +231,6 @@ webpackJsonp([10],[
 					//   console.log('Guest page logged a message: ', e.message);
 					// });
 					// webview.setUserAgentOverride(this.props.showPlatformVal)
-					// webview.setAttribute('src', 'http://127.0.0.1:10000')
 				}
 			}, {
 				key: 'showPlatform',
@@ -25958,15 +25969,24 @@ webpackJsonp([10],[
 				key: 'render',
 				value: function render() {
 					var self = this;
-					return _react2.default.createElement(
-						'div',
-						{ className: "info-debug " + (this.props.sidebar == 'debug' ? '' : 'hide') },
-						_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
-					);
+					if (this.props.project) {
+						return _react2.default.createElement(
+							'div',
+							{ className: 'info-debug ' },
+							_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
+						);
+					} else {
+						return _react2.default.createElement(
+							'div',
+							{ className: "info-debug " + (this.props.sidebar == 'debug' ? '' : 'hide') },
+							_react2.default.createElement('div', { className: 'info-debug-console', id: 'info-debug-console' })
+						);
+					}
 				}
 			}, {
 				key: 'componentDidMount',
 				value: function componentDidMount() {
+					var self = this;
 					var webview = document.createElement('webview');
 					webview.setAttribute('partition', 'trusted');
 					webview.id = 'cdt';
@@ -25974,8 +25994,10 @@ webpackJsonp([10],[
 						console.log('loadcommit');
 					});
 					webview.addEventListener('contentload', function (e) {
-						// setTimeout(function(){
-						// },0)
+						if (self.props.project) {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						}
 					});
 					webview.addEventListener('loadstop', function (e) {
 						console.log('loadstop');
@@ -25986,11 +26008,16 @@ webpackJsonp([10],[
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(data) {
-					if (data['sidebar'] == 'debug') {
+					if (this.props.project) {
 						$('.info-debug').removeClass('hide');
 						document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
 					} else {
-						$('.info-debug').addClass('hide');
+						if (data['sidebar'] == 'debug') {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						} else {
+							$('.info-debug').addClass('hide');
+						}
 					}
 					return false;
 				}
@@ -26157,7 +26184,46 @@ webpackJsonp([10],[
 					return _react2.default.createElement(
 						'div',
 						{ className: "info-project " + (this.props.sidebar == 'project' ? '' : 'hide') },
-						_react2.default.createElement(
+						this.props.project['remote'] ? _react2.default.createElement(
+							'div',
+							{ className: 'info-project-w has-remote' },
+							_react2.default.createElement('div', { className: 'info-project-icon' }),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-name' },
+								this.props.project['name']
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-appid' },
+								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'info-project-item path' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'info-project-i-c' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-label' },
+										'\u670D\u52A1\u5668\u5730\u5740'
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'info-project-i-content' },
+										this.props.project.remotepath
+									)
+								)
+							),
+							_react2.default.createElement(
+								'button',
+								{ className: 'info-project-remove', type: 'button', onClick: function onClick(e) {
+										return _this2.removeProject(e);
+									} },
+								'\u5220\u9664\u9879\u76EE'
+							)
+						) : _react2.default.createElement(
 							'div',
 							{ className: 'info-project-w' },
 							_react2.default.createElement('div', { className: 'info-project-icon' }),
@@ -26306,7 +26372,6 @@ webpackJsonp([10],[
 			}, {
 				key: 'openFolder',
 				value: function openFolder() {
-					// console.log(this.props.project.src)
 					gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1] + '/index.html');
 				}
 			}, {
@@ -26322,7 +26387,7 @@ webpackJsonp([10],[
 						return i['id'] != user["openId"];
 					});
 					var url = this.props.project['src'].split('file://')[1];
-					fsExtra.remove(url, function (err) {});
+					// fsExtra.remove(url, function(err){})
 					ProjectStore.update({ id: 'projects', data: projects });
 					// fs.writeFile('project.json',JSON.stringify(projects),function(){
 					window.projects = projects;
@@ -26460,13 +26525,14 @@ webpackJsonp([10],[
 /* 484 */,
 /* 485 */,
 /* 486 */,
-/* 487 */
+/* 487 */,
+/* 488 */
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
-/* 488 */
+/* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26479,7 +26545,7 @@ webpackJsonp([10],[
 
 	var _dva2 = _interopRequireDefault(_dva);
 
-	var _router = __webpack_require__(374);
+	var _router = __webpack_require__(375);
 
 	var _react = __webpack_require__(129);
 
@@ -26489,7 +26555,7 @@ webpackJsonp([10],[
 
 	var _reactRedux = __webpack_require__(156);
 
-	var _events = __webpack_require__(489);
+	var _events = __webpack_require__(496);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26505,56 +26571,44 @@ webpackJsonp([10],[
 	  var project = void 0;
 	  var url = void 0;
 	  var server = void 0;
+	  var proxy = void 0;
 	  var appServer = void 0;
 	  var app = (0, _dva2.default)();
 	  var emitter = new _events.EventEmitter();
-	  var mime = {
-	    "css": "text/css",
-	    "gif": "image/gif",
-	    "html": "text/html",
-	    "ico": "image/x-icon",
-	    "jpeg": "image/jpeg",
-	    "jpg": "image/jpeg",
-	    "js": "text/javascript",
-	    "json": "application/json",
-	    "pdf": "application/pdf",
-	    "png": "image/png",
-	    "svg": "image/svg+xml",
-	    "swf": "application/x-shockwave-flash",
-	    "tiff": "image/tiff",
-	    "txt": "text/plain",
-	    "wav": "audio/x-wav",
-	    "wma": "audio/x-ms-wma",
-	    "wmv": "video/x-ms-wmv",
-	    "xml": "text/xml"
+	  var mimeType = {
+	    '.ico': 'image/x-icon',
+	    '.html': 'text/html',
+	    '.js': 'text/javascript',
+	    '.json': 'application/json',
+	    '.css': 'text/css',
+	    '.png': 'image/png',
+	    '.jpg': 'image/jpeg',
+	    '.wav': 'audio/wav',
+	    '.mp3': 'audio/mpeg',
+	    '.svg': 'image/svg+xml',
+	    '.pdf': 'application/pdf',
+	    '.doc': 'application/msword',
+	    '.eot': 'appliaction/vnd.ms-fontobject',
+	    '.ttf': 'aplication/font-sfnt'
 	  };
 	  function initServer() {
-	    if (init) {
+	    if (init && server) {
 	      server.close();
 	      // server.exit();
 	    }
-	    console.log(init, '41');
+	    proxy = httpProxy.createProxyServer({
+	      target: url });
+	    // proxy.on('error', function(err, req, res){
+	    //   res.writeHead(500, {
+	    //       'content-type': 'text/plain'
+	    //   });
+	    //   console.log(err);
+	    //   res.end('Something went wrong. And we are reporting a custom error message.');
+	    // });
 	    server = http.createServer(function (req, res) {
 	      console.log(req.method + ' ' + req.url);
 	      var parsedUrl = httpUrl.parse(req.url);
 	      var pathname = '' + parsedUrl.pathname;
-	      console.log(parsedUrl, '123123', pathname);
-	      var mimeType = {
-	        '.ico': 'image/x-icon',
-	        '.html': 'text/html',
-	        '.js': 'text/javascript',
-	        '.json': 'application/json',
-	        '.css': 'text/css',
-	        '.png': 'image/png',
-	        '.jpg': 'image/jpeg',
-	        '.wav': 'audio/wav',
-	        '.mp3': 'audio/mpeg',
-	        '.svg': 'image/svg+xml',
-	        '.pdf': 'application/pdf',
-	        '.doc': 'application/msword',
-	        '.eot': 'appliaction/vnd.ms-fontobject',
-	        '.ttf': 'aplication/font-sfnt'
-	      };
 	      pathname = url + pathname;
 	      fs.exists(pathname, function (exist) {
 	        if (!exist) {
@@ -26577,7 +26631,6 @@ webpackJsonp([10],[
 	        });
 	      });
 	    });
-
 	    server.listen('0', '127.0.0.1', function () {
 	      var port = server.address().port;
 	      window.nodeServerPort = port;
@@ -26587,20 +26640,24 @@ webpackJsonp([10],[
 	    });
 	  }
 	  function initController() {
-	    project = _.filter(projects, function (i) {
+	    window.project = _.filter(projects, function (i) {
 	      return i['id'] == user['openId'];
 	    })[0];
-	    url = project['src'].split('file://')[1];
-	    console.log(project, '94行');
-	    initServer();
+	    console.log(window.project, 'xxxxxxxxxx');
+	    if (window.project.remote) {
+	      $("#phone-inset").attr({ src: window.project['remote']["remotepath"] });
+	      $("#phone-inset").removeClass('hide');
+	    } else {
+	      url = window.project['src'].split('file://')[1];
+	      initServer();
+	    }
 	  }
 
-	  initController();
-	  var nowWin = __webpack_require__(487).Window.get();
+	  var nowWin = __webpack_require__(488).Window.get();
 	  var initData = {
 	    windowW: nowWin.width,
 	    windowH: nowWin.height,
-	    project: project,
+	    project: window.project,
 	    sidebar: 'edit',
 	    showPlatform: false,
 	    showPlatformVal: 'iPhone 4',
@@ -26617,6 +26674,11 @@ webpackJsonp([10],[
 	    namespace: 'info',
 	    state: initData,
 	    reducers: {
+	      initProject: function initProject(state, action) {
+	        return _extends({}, state, {
+	          project: action["payload"]
+	        });
+	      },
 	      changeSidebar: function changeSidebar(state, action) {
 	        return _extends({}, state, {
 	          sidebar: action["payload"]
@@ -26678,10 +26740,11 @@ webpackJsonp([10],[
 	        return _.extend({}, state, { tabs: [], tabsBg: '', btns: [], footer: [], title: 'Joywok' });
 	      },
 	      allreset: function allreset() {
+	        console.log('dispatch触发了一次');
 	        return _.extend({}, {
 	          windowW: nowWin.width,
 	          windowH: nowWin.height,
-	          project: project,
+	          project: window.project,
 	          sidebar: 'edit',
 	          showPlatform: false,
 	          showPlatformVal: 'iPhone 4',
@@ -26694,6 +26757,11 @@ webpackJsonp([10],[
 	          tabs: [],
 	          tabsBg: ''
 	        });
+	      },
+	      changeProjectUrl: function changeProjectUrl(state, action) {
+	        var data = state['project'];
+	        data['remotepath'] = action['payload'];
+	        return _.extend({}, state, { project: data });
 	      }
 	    }
 	  });
@@ -26715,12 +26783,26 @@ webpackJsonp([10],[
 	    }
 	  }
 	  var store = (0, _redux.createStore)(App);
-	  var menu = __webpack_require__(490)(emitter);
+	  var menu = __webpack_require__(492)(emitter);
 	  var Phone = __webpack_require__(2)(app, store);
 	  var Edit = __webpack_require__(369)(app, store);
 	  var Debug = __webpack_require__(368)(app, store);
 	  var Project = __webpack_require__(370)(app, store);
-	  var windows = __webpack_require__(491)(app, store, emitter);
+	  var windows = __webpack_require__(495)(app, store, emitter);
+	  emitter.on('phoneReload', function () {
+	    var date = Date.parse(new Date()) / 1000;
+	    // let src = $('#phone-inset').attr('src').split('?')[0];
+	    // $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
+	    // let consoleContainer = document.getElementById('phone-ins\et');
+	    // consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
+	    $('#phone-inset')[0].reload();
+	    store.dispatch({
+	      type: 'info/resetNormal'
+	    });
+	    setTimeout(function () {
+	      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+	    }, 0);
+	  });
 
 	  var CountApp = function (_Component) {
 	    _inherits(CountApp, _Component);
@@ -26747,7 +26829,42 @@ webpackJsonp([10],[
 	              { className: 'ide-info-user' },
 	              _react2.default.createElement('img', { src: serverUrl + user.avatar.avatar_l })
 	            ),
-	            _react2.default.createElement(
+	            this.props.project['remote'] ? _react2.default.createElement(
+	              'div',
+	              { className: 'ide-info-nav' },
+	              _react2.default.createElement(
+	                'div',
+	                { activeClassName: 'active', className: "ide-info-nav-i " + (this.props.sidebar != 'project' ? 'active' : ''), onClick: function onClick(e) {
+	                    return _this2.changeSidebar(e, 'debug');
+	                  } },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'ide-info-nav-icon' },
+	                  _react2.default.createElement('i', { className: 'icon-code' })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'ide-info-nav-val' },
+	                  '\u8C03\u8BD5'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { activeClassName: 'active', className: "ide-info-nav-i " + (this.props.sidebar == 'project' ? 'active' : ''), onClick: function onClick(e) {
+	                    return _this2.changeSidebar(e, 'project');
+	                  } },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'ide-info-nav-icon' },
+	                  _react2.default.createElement('i', { className: 'icon-project' })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'ide-info-nav-val' },
+	                  '\u9879\u76EE'
+	                )
+	              )
+	            ) : _react2.default.createElement(
 	              'div',
 	              { className: 'ide-info-nav' },
 	              _react2.default.createElement(
@@ -26817,7 +26934,17 @@ webpackJsonp([10],[
 	              )
 	            )
 	          ),
-	          _react2.default.createElement(
+	          this.props.project['remote'] ? _react2.default.createElement(
+	            'div',
+	            { className: 'ide-info-childview' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: "ide-info-spcail " + (this.props.sidebar == 'project' ? 'hide' : '') },
+	              _react2.default.createElement(Phone, this.props),
+	              _react2.default.createElement(Debug, this.props)
+	            ),
+	            _react2.default.createElement(Project, this.props)
+	          ) : _react2.default.createElement(
 	            'div',
 	            { className: 'ide-info-childview' },
 	            _react2.default.createElement(
@@ -26833,48 +26960,7 @@ webpackJsonp([10],[
 	      }
 	    }, {
 	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	        var dispatch = this.props.dispatch;
-
-	        var fs = __webpack_require__(492);
-	        setTimeout(function () {
-	          return;
-	          $('.xxxxx').html('');
-	          var oHead = document.getElementsByClassName('xxxxx')[0];
-	          var oScript = document.createElement("iframe");
-	          oScript.id = "foo";
-	          oScript.src = 'file:///' + basurl + '/src/template/editor.html';
-	          oScript.onload = function () {
-	            fs.readFile(basurl + '/webpack.config.js', {
-	              encoding: 'utf-8'
-	            }, function (err, data) {
-	              console.log('发送数据');
-	              oScript.contentWindow.postMessage(data, "*");
-	            });
-	          };
-	          oHead.appendChild(oScript);
-	          return;
-	          var iframeWin = document.getElementById("foo").contentWindow;
-	          console.log(iframeWin, '1231231');
-	          fs.readFile(basurl + '/webpack.config.js', {
-	            encoding: 'utf-8'
-	          }, function (err, data) {
-	            console.log('发送数据');
-	            iframeWin.postMessage(data, "*");
-	          });
-	          return;
-	          $('.xxxxx').html('');
-	          var oHead = document.getElementsByClassName('xxxxx')[0];
-	          var oScript = document.createElement("iframe");
-	          oScript.id = "foo";
-	          oScript.partition = "trusted";
-	          // oScript.src='file:///'+basurl+'/src/template/template.html?src=xxxxxxxxx';
-	          oScript.src = 'chrome-extension://lblocnhdapdghmpkknoijhgonjfikalb/src/template/template.html';
-	          oHead.appendChild(oScript);
-	          console.log(oScript, '1231');
-	        }, 0);
-	        console.log(document.getElementById('body'));
-	      }
+	      value: function componentDidMount() {}
 	    }, {
 	      key: 'changeSidebar',
 	      value: function changeSidebar(e, data) {
@@ -26900,8 +26986,8 @@ webpackJsonp([10],[
 	    return CountApp;
 	  }(_react.Component);
 
-	  function mapStateToProps(state) {
-	    console.log('这里会走几次');
+	  function mapStateToProps(state, type) {
+	    state['project'] = window.project;
 	    return state;
 	  }
 	  var RootApp = (0, _reactRedux.connect)(mapStateToProps)(CountApp);
@@ -26914,10 +27000,10 @@ webpackJsonp([10],[
 
 	      var _this3 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
+	      initController();
 	      if (!init) {
 	        init = true;
 	      } else {
-	        initController();
 	        setTimeout(function () {
 	          store.dispatch({
 	            type: 'info/allreset'
@@ -26945,19 +27031,15 @@ webpackJsonp([10],[
 	}();
 
 /***/ },
-/* 489 */
-/***/ function(module, exports) {
-
-	module.exports = require("events");
-
-/***/ },
-/* 490 */
+/* 490 */,
+/* 491 */,
+/* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(487);
+		var gui = __webpack_require__(488);
 		var nowWin = gui.Window.get();
 		var tray = new gui.Tray({
 			icon: platform == "mac" ? 'build/images/icon-64.icns' : 'build/images/icon-32.png',
@@ -26981,7 +27063,7 @@ webpackJsonp([10],[
 			key: 'R',
 			modifiers: platformKey,
 			click: function click() {
-				emitter.emit('reload');
+				emitter.emit('phoneReload');
 			}
 		}));
 		// menuItems.append(new gui.MenuItem({ 
@@ -27024,13 +27106,14 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 491 */
+/* 493 */,
+/* 494 */,
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(487).Window.get();
-	var Screen = __webpack_require__(487).Screen.Init();
+	var nowWin = __webpack_require__(488).Window.get();
 	window.phoneInset;
 	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
@@ -27055,34 +27138,40 @@ webpackJsonp([10],[
 	      nowWin.maximize();
 	    }
 	  }
+	  var time = void 0;
 	  nowWin.on('resize', function () {
-	    store.dispatch({
-	      type: 'info/changeWindow',
-	      data: {
-	        windowW: nowWin.width,
-	        windowH: nowWin.height
-	      }
-	    });
+	    clearTimeout(time);
+	    time = setTimeout(function () {
+	      store.dispatch({
+	        type: 'info/changeWindow',
+	        data: {
+	          windowW: nowWin.width,
+	          windowH: nowWin.height
+	        }
+	      });
+	    }, 400);
 	  });
-	  function reloadWindow() {
-	    var date = Date.parse(new Date()) / 1000;
-	    // let src = $('#phone-inset').attr('src').split('?')[0];
-	    $('#phone-inset').attr('src', 'http://127.0.0.1:' + nodeServerPort + '?time=' + date);
-	    var consoleContainer = document.getElementById('phone-inset');
-	    consoleContainer.src = 'http://127.0.0.1:' + nodeServerPort + '?time=' + date;
-	    store.dispatch({
-	      type: 'info/resetNormal'
-	    });
-	    setTimeout(function () {
-	      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-	    }, 0);
-	  }
-	  emitter.on('reload', reloadWindow);
+	  // function reloadWindow(){
+	  //   console.log(window.project,'222222222222');
+	  //   let date = Date.parse(new Date())/1000;
+	  //   // let src = $('#phone-inset').attr('src').split('?')[0];
+	  //   $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
+	  //   let consoleContainer = document.getElementById('phone-inset');
+	  //   consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
+	  //   store.dispatch({
+	  //     type:'info/resetNormal',
+	  //   })
+	  //   setTimeout(function(){
+	  //     document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+	  //   },0)
+	  // }
+	  // emitter.on('reload',reloadWindow)
 	  window.addEventListener('message', function (e) {
 	    var type = e.data['type'];
 	    var data = e.data;
 	    if (type == 'changeFile') {
-	      reloadWindow();
+	      // reloadWindow();
+	      emitter.emit('phoneReload');
 	    } else if (type == 'changePhone') {
 	      switch (data['phoneType']) {
 	        case "setTitle":
@@ -27148,10 +27237,10 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 492 */
+/* 496 */
 /***/ function(module, exports) {
 
-	module.exports = require("fs");
+	module.exports = require("events");
 
 /***/ }
 ]);

@@ -45,25 +45,24 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(491);
+	module.exports = __webpack_require__(495);
 
 
 /***/ },
 
-/***/ 487:
+/***/ 488:
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
 
-/***/ 491:
+/***/ 495:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(487).Window.get();
-	var Screen = __webpack_require__(487).Screen.Init();
+	var nowWin = __webpack_require__(488).Window.get();
 	window.phoneInset;
 	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
@@ -88,34 +87,40 @@
 	      nowWin.maximize();
 	    }
 	  }
+	  var time = void 0;
 	  nowWin.on('resize', function () {
-	    store.dispatch({
-	      type: 'info/changeWindow',
-	      data: {
-	        windowW: nowWin.width,
-	        windowH: nowWin.height
-	      }
-	    });
+	    clearTimeout(time);
+	    time = setTimeout(function () {
+	      store.dispatch({
+	        type: 'info/changeWindow',
+	        data: {
+	          windowW: nowWin.width,
+	          windowH: nowWin.height
+	        }
+	      });
+	    }, 400);
 	  });
-	  function reloadWindow() {
-	    var date = Date.parse(new Date()) / 1000;
-	    // let src = $('#phone-inset').attr('src').split('?')[0];
-	    $('#phone-inset').attr('src', 'http://127.0.0.1:' + nodeServerPort + '?time=' + date);
-	    var consoleContainer = document.getElementById('phone-inset');
-	    consoleContainer.src = 'http://127.0.0.1:' + nodeServerPort + '?time=' + date;
-	    store.dispatch({
-	      type: 'info/resetNormal'
-	    });
-	    setTimeout(function () {
-	      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-	    }, 0);
-	  }
-	  emitter.on('reload', reloadWindow);
+	  // function reloadWindow(){
+	  //   console.log(window.project,'222222222222');
+	  //   let date = Date.parse(new Date())/1000;
+	  //   // let src = $('#phone-inset').attr('src').split('?')[0];
+	  //   $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
+	  //   let consoleContainer = document.getElementById('phone-inset');
+	  //   consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
+	  //   store.dispatch({
+	  //     type:'info/resetNormal',
+	  //   })
+	  //   setTimeout(function(){
+	  //     document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+	  //   },0)
+	  // }
+	  // emitter.on('reload',reloadWindow)
 	  window.addEventListener('message', function (e) {
 	    var type = e.data['type'];
 	    var data = e.data;
 	    if (type == 'changeFile') {
-	      reloadWindow();
+	      // reloadWindow();
+	      emitter.emit('phoneReload');
 	    } else if (type == 'changePhone') {
 	      switch (data['phoneType']) {
 	        case "setTitle":

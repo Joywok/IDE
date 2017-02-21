@@ -50,7 +50,7 @@ gulp.task('platform:mac',function(){
       buildDir:'./platform',
       cacheDir:'./platform',
       version:'0.19.5',
-      macIcns:'IDE_logo.icns'
+      // macIcns:'IDE_logo.icns'
   });
   //Log stuff you want
   nw.on('log',  console.log);

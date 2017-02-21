@@ -79,8 +79,10 @@ module.exports = function(app){
 			webview.contextmenu = function(){
 				return false;
 			}
+			if(this.props.project['remote']){
+				webview.src = this.props.project['remotepath']
+			}
 			document.getElementById('phone-container').appendChild(webview);
-
 			webview.addEventListener('permissionrequest', function (s) {
         s.request.allow()
       })
@@ -120,15 +122,25 @@ module.exports = function(app){
 				// .on('contextmenu',function(e){
 				// 	return false;
 				// })	
+
+				if(self.props.project['remote']){
+					setTimeout(function(){
+						document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'))	
+					},100)
+				}
+
 				e.target.contentWindow.postMessage({
-					type:'init'
+					type:'init',
+					data:{
+						user:window.user,
+						project:window.project
+					}
 				},'*');
 				// console.log(e,'contentWindow')
 			});
 			webview.contextMenus.onShow.addListener(function(e){
 				e.preventDefault()
 			})
-
 			// $('#phone-inset').on('contextmenu',function(e){
 			// 	return false;
 			// })	
@@ -136,7 +148,6 @@ module.exports = function(app){
 			//   console.log('Guest page logged a message: ', e.message);
 			// });
 			// webview.setUserAgentOverride(this.props.showPlatformVal)
-			// webview.setAttribute('src', 'http://127.0.0.1:10000')
 		}
 		showPlatform(evt){
 			let target = $(evt.currentTarget);

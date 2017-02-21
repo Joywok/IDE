@@ -23,7 +23,7 @@ module.exports = function(emitter){
 		key: 'R',
 		modifiers:platformKey,
 		click:function(){
-			emitter.emit('reload')
+			emitter.emit('phoneReload');
 		}
 	}));
 	// menuItems.append(new gui.MenuItem({ 

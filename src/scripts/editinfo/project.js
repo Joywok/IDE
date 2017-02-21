@@ -7,9 +7,21 @@ module.exports = function(app,store){
 	class Controller extends Component{
 		render(){
 			return (<div className={"info-project "+(this.props.sidebar=='project'?'':'hide')}>
-								<div className="info-project-w">
-									<div className="info-project-icon">
+								{this.props.project['remote']?
+								<div className="info-project-w has-remote">
+									<div className="info-project-icon"></div>
+									<div className="info-project-name">{this.props.project['name']}</div>
+									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appID'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
+									<div className="info-project-item path">
+										<div className="info-project-i-c">
+											<div className="info-project-i-label">服务器地址</div>
+											<div className="info-project-i-content">{this.props.project.remotepath}</div>
+										</div>
 									</div>
+									<button className="info-project-remove" type="button" onClick={(e)=>this.removeProject(e)}>删除项目</button>
+								</div>
+								:<div className="info-project-w">
+									<div className="info-project-icon"></div>
 									<div className="info-project-name">{this.props.project['name']}</div>
 									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appID'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
 									<div className="info-project-item path">
@@ -57,11 +69,10 @@ module.exports = function(app,store){
 										</div>
 									</div>
 									<button className="info-project-remove" type="button" onClick={(e)=>this.removeProject(e)}>删除项目</button>
-								</div>
+								</div>}
 							</div>)
 		}
 		openFolder(){
-			// console.log(this.props.project.src)
 			gui.Shell.showItemInFolder(this.props.project.src.split('file://')[1]+'/index.html');
 		}
 		uploadProject(){
@@ -71,7 +82,7 @@ module.exports = function(app,store){
 		removeProject(){
 			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
 			let url = this.props.project['src'].split('file://')[1];
-			fsExtra.remove(url, function(err){})
+			// fsExtra.remove(url, function(err){})
 			ProjectStore.update({id:'projects',data:projects});
 			// fs.writeFile('project.json',JSON.stringify(projects),function(){
 				window.projects = projects;
