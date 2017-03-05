@@ -22362,7 +22362,7 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appId'] && this.props.project['appId'].length != 0 ? 'AppID:' + this.props.project['appId'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -22401,7 +22401,7 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appId'] && this.props.project['appId'].length != 0 ? 'AppID:' + this.props.project['appId'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -22447,7 +22447,7 @@
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										'\u9879\u76EE\u672A\u5173\u8054AppID'
+										'\u6B64\u529F\u80FD\u5F00\u53D1\u4E2D\u2026'
 									)
 								)
 							),
@@ -22472,7 +22472,7 @@
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										'\u9879\u76EE\u672A\u5173\u8054AppID'
+										'\u6B64\u529F\u80FD\u5F00\u53D1\u4E2D\u2026'
 									)
 								)
 							),
@@ -22549,11 +22549,9 @@
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					var projects = _.filter(projects, function (i) {
+					var projects = _.filter(window.projects, function (i) {
 						return i['id'] != user["openId"];
 					});
-					var url = this.props.project['src'].split('file://')[1];
-					// fsExtra.remove(url, function(err){})
 					ProjectStore.update({ id: 'projects', data: projects });
 					// fs.writeFile('project.json',JSON.stringify(projects),function(){
 					window.projects = projects;

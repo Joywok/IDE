@@ -1,4 +1,4 @@
-webpackJsonp([17],[
+webpackJsonp([11],[
 /* 0 */,
 /* 1 */,
 /* 2 */
@@ -54,9 +54,17 @@ webpackJsonp([17],[
 						marginLeft: -+(this.props.phoneW / 2) + 'px'
 					};
 					var phoneInsetStyle = {
-						top: this.props.tabs.length != 0 ? "90px" : '40px',
+						top: this.props.tabs.length != 0 ? "90px" : '39px',
 						bottom: this.props.footer.length != 0 ? '45px' : '0px'
 					};
+					var phoneHeaderBar = {};
+					if (this.props.navBg && this.props.navBg.length != 0) {
+						phoneHeaderBar['background'] = '#' + this.props.navBg;
+						phoneHeaderBar['color'] = '#fff';
+						if (this.props.navBg == 'fffff' || this.props.navBg == 'fff') {
+							phoneHeaderBar['color'] = '#494949';
+						}
+					}
 					return _react2.default.createElement(
 						'div',
 						{ className: 'info-edit-phone' },
@@ -108,10 +116,13 @@ webpackJsonp([17],[
 							{ className: 'info-edit-phone-container', id: 'info-edit-phone-container', style: phoneCstyle },
 							_react2.default.createElement(
 								'div',
-								{ className: "phone-header " + (this.props.btns.length != 0 ? 'has-btns' : '') + (this.props.tabsBg.length != 0 ? ' has-tabs tabs-bg-' + this.props.tabsBg : '') },
+								{ className: "phone-header " + (this.props.btns.length != 0 ? 'has-btns' : '') + (this.props.tabsBg.length != 0 ? ' has-tabs tabs-bg-' + this.props.tabsBg : ''), style: phoneHeaderBar },
+								this.props.page != 0 ? _react2.default.createElement('button', { type: 'button', className: 'header-back', onClick: function onClick(e) {
+										return _this2.backPhoneUrl(e);
+									} }) : '',
 								_react2.default.createElement(
 									'div',
-									{ className: 'phone-title' },
+									{ className: "phone-title " + (this.props.page != 0 ? 'has-back' : '') },
 									this.props.title
 								),
 								this.props.btns.length != 0 ? _react2.default.createElement(
@@ -122,7 +133,7 @@ webpackJsonp([17],[
 											'button',
 											{ onClick: function onClick(e) {
 													return self.NavBtnClick(e, i);
-												}, disabled: i["disabled"], className: "phone-btns-i " + (i["type"] > 3 ? 'phone-btns-i-specail' : 'phone-btns-i-' + i["type"]), type: 'button' },
+												}, disabled: i["disabled"], className: "phone-btns-i " + (i["type"] > 10 ? 'phone-btns-i-specail' : 'phone-btns-i-' + i["type"]), type: 'button' },
 											i["name"] ? i["name"] : ''
 										);
 									})
@@ -156,14 +167,38 @@ webpackJsonp([17],[
 				key: 'componentDidMount',
 				value: function componentDidMount() {
 					var self = this;
+					var init = false;
+					var dispatch = this.props.dispatch;
 					var webview = document.createElement('webview');
-					webview.setAttribute('partition', 'trusted');
+					// webview.setAttribute('partition', 'trusted');
+					// webview.setAttribute('allowtransparency', 'trusted');
 					webview.setAttribute('allownw', 'true');
 					webview.setAttribute('class', 'hide');
 					webview.id = 'phone-inset';
 					webview.contextmenu = function () {
 						return false;
 					};
+					webview.setAttribute('autosize', 'on');
+					var showPlatformVal = this.props.showPlatformVal;
+					if (showPlatformVal == 'iPhone 4') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 4s') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 6') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 6 Plus') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Galaxy S5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 4') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 6') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					}
 					if (this.props.project['remote']) {
 						webview.src = this.props.project['remotepath'];
 					}
@@ -175,8 +210,11 @@ webpackJsonp([17],[
 						name: 'myRule',
 						matches: ['<all_urls>'],
 						css: { files: ['build/styles/phone-inset.css'] },
-						run_at: 'document_start'
-
+						// js: {
+						//     files: ['src/scripts/jssdk-callHander.js']
+						//   },
+						run_at: 'document_start',
+						all_frames: true
 					}]);
 					webview.addEventListener('dialog', function (e) {
 						if (e.messageType == 'alert') {
@@ -188,49 +226,88 @@ webpackJsonp([17],[
 					webview.addEventListener('permissionrequest', function (e) {
 						e.request.allow();
 					});
-
-					// webview.ClearDataTypeSet({
-					// 	appcache:false,
-					// 	cache:false,
-					// 	cookies:false,
-					// 	fileSystems:false,
-					// 	indexedDB:false,
-					// 	localStorage:false,
-					// 	webSQL:false
-					// })
+					webview.addEventListener('loadabort', function (e) {
+						console.log(e, '这个错误信息是什么');
+					});
+					webview.addEventListener('loadcommit', function (e) {
+						// console.log('url-里面是什么',e)
+					});
+					webview.addEventListener('loadredirect', function (e) {
+						console.log('loadredirect', arguments);
+					});
+					webview.addEventListener('loadstop', function (e) {
+						// console.log('这里走了几次啊');
+						if (init == false) {
+							if (self.props.project['remotepath'] != $('#phone-inset').attr('src')) {
+								$('#phone-inset').attr({ src: $('#phone-inset').attr('src') });
+								init = true;
+							}
+						}
+					});
 					webview.addEventListener('contentload', function (e) {
 						$("#phone-inset").removeClass('hide');
-						// console.log(e.target.contentWindow,'这个是108行');
-						// e.target.contentWindow.oncontextmenu=function(){ return false;} 
-						// .on('contextmenu',function(e){
-						// 	return false;
-						// })	
-
-						if (self.props.project['remote']) {
-							setTimeout(function () {
-								document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-							}, 100);
-						}
-
-						e.target.contentWindow.postMessage({
-							type: 'init',
-							data: {
-								user: window.user,
-								project: window.project
-							}
-						}, '*');
-						// console.log(e,'contentWindow')
+						console.log(e.target.contentWindow, '这个是108行');
+						webview.clearData({ since: 0 }, {
+							appcache: true,
+							cache: true, cookies: true, fileSystems: true, indexedDB: true, localStorage: true, webSQL: true
+						}, function () {});
+						setTimeout(function () {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						}, 100);
+						// if(self.props.project['remotepath']!=$('#phone-inset').attr('src')){
+						// 	$('#phone-inset')[0].reload();
+						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
+						// }
+						console.log(self.props.page, 'phone手机壳里面');
+						setTimeout(function () {
+							e.target.contentWindow.postMessage({
+								type: 'init',
+								data: {
+									user: window.user,
+									project: window.project,
+									page: self.props.page
+								}
+							}, '*');
+						}, 0);
 					});
 					webview.contextMenus.onShow.addListener(function (e) {
 						e.preventDefault();
 					});
-					// $('#phone-inset').on('contextmenu',function(e){
-					// 	return false;
-					// })	
-					// webview.addEventListener('consolemessage', function(e) {
-					//   console.log('Guest page logged a message: ', e.message);
-					// });
-					// webview.setUserAgentOverride(this.props.showPlatformVal)
+				}
+			}, {
+				key: 'shouldComponentUpdate',
+				value: function shouldComponentUpdate(nextProps, nextState) {
+					console.log(this.state, nextProps);
+					return true;
+				}
+			}, {
+				key: 'componentDidUpdate',
+				value: function componentDidUpdate() {
+					// let webview = document.getElementById('phone-inset');
+					// let showPlatformVal = this.props.showPlatformVal
+					// if(showPlatformVal=='iPhone 4'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 4s'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 6'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 6 Plus'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Galaxy S5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 4'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 6'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }
+					// if(this.props.project['remote']){
+					// 	webview.src = this.props.project['remotepath']
+					// }
 				}
 			}, {
 				key: 'showPlatform',
@@ -260,6 +337,20 @@ webpackJsonp([17],[
 				key: 'handleChange',
 				value: function handleChange() {}
 			}, {
+				key: 'backPhoneUrl',
+				value: function backPhoneUrl() {
+					var dispatch = this.props.dispatch;
+					var page = this.props.page - 1;
+					dispatch({
+						type: 'info/changePhoneUrl',
+						data: page
+					});
+					phoneInset.postMessage({
+						type: 'changePhoneURL',
+						data: page
+					}, '*');
+				}
+			}, {
 				key: 'change',
 				value: function change(data) {}
 			}, {
@@ -268,7 +359,7 @@ webpackJsonp([17],[
 					phoneInset.postMessage({
 						type: 'register',
 						register: 'onNavBtnClick',
-						data: i
+						data: JSON.stringify(i)
 					}, '*');
 				}
 			}, {
@@ -25993,28 +26084,24 @@ webpackJsonp([17],[
 					webview.addEventListener('loadcommit', function (e) {
 						console.log('loadcommit');
 					});
-					webview.addEventListener('contentload', function (e) {
-						if (self.props.project) {
-							$('.info-debug').removeClass('hide');
-							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-						}
-					});
+					webview.addEventListener('contentload', function (e) {});
 					webview.addEventListener('loadstop', function (e) {
 						console.log('loadstop');
 					});
-					webview.setAttribute('src', 'about:blank');
+					webview.src = 'about:blank';
+					// webview.setAttribute('src','about:blank');
 					document.getElementById('info-debug-console').appendChild(webview);
 				}
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(data) {
 					if (this.props.project) {
-						$('.info-debug').removeClass('hide');
-						document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						// $('.info-debug').removeClass('hide');
+						// document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
 					} else {
 						if (data['sidebar'] == 'debug') {
-							$('.info-debug').removeClass('hide');
-							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+							// $('.info-debug').removeClass('hide');
+							// document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
 						} else {
 							$('.info-debug').addClass('hide');
 						}
@@ -26196,7 +26283,7 @@ webpackJsonp([17],[
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appId'] && this.props.project['appId'].length != 0 ? 'AppID:' + this.props.project['appId'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -26235,7 +26322,7 @@ webpackJsonp([17],[
 							_react2.default.createElement(
 								'div',
 								{ className: 'info-project-appid' },
-								this.props.project['appID'] && this.props.project['appID'].length != 0 ? 'AppID:' + this.props.project['appID'] : '项目未关联AppID'
+								this.props.project['appId'] && this.props.project['appId'].length != 0 ? 'AppID:' + this.props.project['appId'] : '项目未关联AppID'
 							),
 							_react2.default.createElement(
 								'div',
@@ -26281,7 +26368,7 @@ webpackJsonp([17],[
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										'\u9879\u76EE\u672A\u5173\u8054AppID'
+										'\u6B64\u529F\u80FD\u5F00\u53D1\u4E2D\u2026'
 									)
 								)
 							),
@@ -26306,7 +26393,7 @@ webpackJsonp([17],[
 									_react2.default.createElement(
 										'div',
 										{ className: 'info-project-i-content' },
-										'\u9879\u76EE\u672A\u5173\u8054AppID'
+										'\u6B64\u529F\u80FD\u5F00\u53D1\u4E2D\u2026'
 									)
 								)
 							),
@@ -26383,11 +26470,9 @@ webpackJsonp([17],[
 			}, {
 				key: 'removeProject',
 				value: function removeProject() {
-					var projects = _.filter(projects, function (i) {
+					var projects = _.filter(window.projects, function (i) {
 						return i['id'] != user["openId"];
 					});
-					var url = this.props.project['src'].split('file://')[1];
-					// fsExtra.remove(url, function(err){})
 					ProjectStore.update({ id: 'projects', data: projects });
 					// fs.writeFile('project.json',JSON.stringify(projects),function(){
 					window.projects = projects;
@@ -26526,12 +26611,7 @@ webpackJsonp([17],[
 /* 485 */,
 /* 486 */,
 /* 487 */,
-/* 488 */
-/***/ function(module, exports) {
-
-	module.exports = require("nw.gui");
-
-/***/ },
+/* 488 */,
 /* 489 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26555,7 +26635,7 @@ webpackJsonp([17],[
 
 	var _reactRedux = __webpack_require__(156);
 
-	var _events = __webpack_require__(496);
+	var _events = __webpack_require__(490);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26643,37 +26723,43 @@ webpackJsonp([17],[
 	    window.project = _.filter(projects, function (i) {
 	      return i['id'] == user['openId'];
 	    })[0];
-	    console.log(window.project, 'xxxxxxxxxx');
 	    if (window.project.remote) {
-	      $("#phone-inset").attr({ src: window.project['remote']["remotepath"] });
-	      $("#phone-inset").removeClass('hide');
+	      // $("#phone-inset").attr({src:window.project['remote']["remotepath"]});
+	      // $("#phone-inset").removeClass('hide');
 	    } else {
 	      url = window.project['src'].split('file://')[1];
 	      initServer();
 	    }
 	  }
 
-	  var nowWin = __webpack_require__(488).Window.get();
+	  var nowWin = __webpack_require__(413).Window.get();
 	  var initData = {
+	    page: 0,
 	    windowW: nowWin.width,
 	    windowH: nowWin.height,
 	    project: window.project,
 	    sidebar: 'edit',
 	    showPlatform: false,
-	    showPlatformVal: 'iPhone 4',
-	    phoneW: 320,
-	    phoneH: 480,
+	    showPlatformVal: 'iPhone 6',
+	    phoneW: 375,
+	    phoneH: 667,
 	    filesList: [],
 	    title: 'Joywok',
 	    btns: [],
 	    footer: [],
 	    tabs: [],
-	    tabsBg: ''
+	    tabsBg: '',
+	    navBg: ''
 	  };
 	  app.model({
 	    namespace: 'info',
 	    state: initData,
 	    reducers: {
+	      changePhoneUrl: function changePhoneUrl(state, action) {
+	        return _extends({}, state, {
+	          page: action["data"]
+	        });
+	      },
 	      initProject: function initProject(state, action) {
 	        return _extends({}, state, {
 	          project: action["payload"]
@@ -26718,7 +26804,7 @@ webpackJsonp([17],[
 	        return _.extend({}, state, { btns: btns });
 	      },
 	      showTabs: function showTabs(state, action) {
-	        return _.extend({}, state, { tabs: action['data']['tabs'], tabsBg: action['data']['style'] });
+	        return _.extend({}, state, { tabs: action['data']['tabs'], tabsBg: action['data']['style'], navBg: '' });
 	      },
 	      changeTabs: function changeTabs(state, action) {
 	        var tabs = [];
@@ -26736,32 +26822,36 @@ webpackJsonp([17],[
 	      hideTabs: function hideTabs(state) {
 	        return _.extend({}, state, { tabs: [], tabsBg: '' });
 	      },
+	      setBarBg: function setBarBg(state, action) {
+	        return _.extend({}, state, { navBg: action['data'] });
+	      },
 	      resetNormal: function resetNormal(state) {
-	        return _.extend({}, state, { tabs: [], tabsBg: '', btns: [], footer: [], title: 'Joywok' });
+	        return _.extend({}, state, { tabs: [], tabsBg: '', btns: [], footer: [], title: 'Joywok', navBg: "" });
 	      },
 	      allreset: function allreset() {
-	        console.log('dispatch触发了一次');
 	        return _.extend({}, {
+	          page: 0,
 	          windowW: nowWin.width,
 	          windowH: nowWin.height,
 	          project: window.project,
 	          sidebar: 'edit',
 	          showPlatform: false,
-	          showPlatformVal: 'iPhone 4',
-	          phoneW: 320,
-	          phoneH: 480,
+	          showPlatformVal: 'iPhone 6',
+	          phoneW: 375,
+	          phoneH: 667,
 	          filesList: [],
 	          title: 'Joywok',
 	          btns: [],
 	          footer: [],
 	          tabs: [],
-	          tabsBg: ''
+	          tabsBg: '',
+	          navBg: ''
 	        });
 	      },
 	      changeProjectUrl: function changeProjectUrl(state, action) {
 	        var data = state['project'];
 	        data['remotepath'] = action['payload'];
-	        return _.extend({}, state, { project: data });
+	        return _.extend({}, state, { project: data, random: Math.random() });
 	      }
 	    }
 	  });
@@ -26783,12 +26873,12 @@ webpackJsonp([17],[
 	    }
 	  }
 	  var store = (0, _redux.createStore)(App);
-	  var menu = __webpack_require__(492)(emitter);
+	  var menu = __webpack_require__(491)(emitter);
 	  var Phone = __webpack_require__(2)(app, store);
 	  var Edit = __webpack_require__(369)(app, store);
 	  var Debug = __webpack_require__(368)(app, store);
 	  var Project = __webpack_require__(370)(app, store);
-	  var windows = __webpack_require__(495)(app, store, emitter);
+	  var windows = __webpack_require__(492)(app, store, emitter);
 	  emitter.on('phoneReload', function () {
 	    var date = Date.parse(new Date()) / 1000;
 	    // let src = $('#phone-inset').attr('src').split('?')[0];
@@ -26799,9 +26889,9 @@ webpackJsonp([17],[
 	    store.dispatch({
 	      type: 'info/resetNormal'
 	    });
-	    setTimeout(function () {
-	      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-	    }, 0);
+	    // setTimeout(function(){
+	    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+	    // },0)
 	  });
 
 	  var CountApp = function (_Component) {
@@ -26929,7 +27019,7 @@ webpackJsonp([17],[
 	                _react2.default.createElement(
 	                  'span',
 	                  null,
-	                  '\u9000\u51FA'
+	                  '\u5173\u95ED'
 	                )
 	              )
 	            )
@@ -27031,18 +27121,22 @@ webpackJsonp([17],[
 	}();
 
 /***/ },
-/* 490 */,
-/* 491 */,
-/* 492 */
+/* 490 */
+/***/ function(module, exports) {
+
+	module.exports = require("events");
+
+/***/ },
+/* 491 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = function (emitter) {
-		var gui = __webpack_require__(488);
+		var gui = __webpack_require__(413);
 		var nowWin = gui.Window.get();
 		var tray = new gui.Tray({
-			icon: platform == "mac" ? 'build/images/icon-64.icns' : 'build/images/icon-32.png',
+			icon: platform == "mac" ? 'build/images/icon-64.icns' : 'build/images/icon-16.png',
 			alticon: true
 		}); //window下面可以
 		tray.tooltip = '点击打开';
@@ -27106,17 +27200,17 @@ webpackJsonp([17],[
 	};
 
 /***/ },
-/* 493 */,
-/* 494 */,
-/* 495 */
+/* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var nowWin = __webpack_require__(488).Window.get();
+	var nowWin = __webpack_require__(413).Window.get();
 	window.phoneInset;
 	window.EditorTarget;
 	module.exports = function (app, store, emitter) {
+	  var jssdkCallHander = __webpack_require__(493);
+	  jssdkCallHander = new jssdkCallHander(store);
 	  var platformWindow = Screen.screens[0]['bounds'];
 	  if (platformWindow['width'] > 1440) {
 	    nowWin.resizeTo(1440, 900);
@@ -27151,21 +27245,6 @@ webpackJsonp([17],[
 	      });
 	    }, 400);
 	  });
-	  // function reloadWindow(){
-	  //   console.log(window.project,'222222222222');
-	  //   let date = Date.parse(new Date())/1000;
-	  //   // let src = $('#phone-inset').attr('src').split('?')[0];
-	  //   $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
-	  //   let consoleContainer = document.getElementById('phone-inset');
-	  //   consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
-	  //   store.dispatch({
-	  //     type:'info/resetNormal',
-	  //   })
-	  //   setTimeout(function(){
-	  //     document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-	  //   },0)
-	  // }
-	  // emitter.on('reload',reloadWindow)
 	  window.addEventListener('message', function (e) {
 	    var type = e.data['type'];
 	    var data = e.data;
@@ -27210,9 +27289,12 @@ webpackJsonp([17],[
 	          break;
 	      }
 	    } else if (type == "phoneInsetInit") {
-	      if (!window.phoneInset) {
-	        window.phoneInset = e.source;
-	      }
+	      // if(!window.phoneInset) {
+	      window.phoneInset = e.source;
+	      store.dispatch({
+	        type: 'info/resetNormal'
+	      });
+	      // }
 	    } else if (type == "phoneFile") {
 	      if (data['phoneType'] == 'choseFile') {
 	        $('.phone-specail').html('<input style="display:none;" id="fileDialog" type="file" accept=".png,.gif,.jpg,.jpeg" />');
@@ -27232,15 +27314,177 @@ webpackJsonp([17],[
 	        });
 	        chooser.click();
 	      } else if (data['phoneType'] == 'xxxxx') {}
+	    } else if (type == 'jssdk') {
+	      jssdkCallHander.init(data["data"]);
+	    } else if (type == 'changePhoneUrl') {
+	      store.dispatch({
+	        type: 'info/changePhoneUrl',
+	        data: data['data']
+	      });
 	    }
 	  });
 	};
 
 /***/ },
-/* 496 */
+/* 493 */
 /***/ function(module, exports) {
 
-	module.exports = require("events");
+	'use strict';
+
+	module.exports = function () {
+			function JssdkCallhander(store) {
+					this.callback = function (func_name, data) {
+							window.phoneInset.postMessage({
+									type: 'jssdkcallback',
+									data: {
+											func_name: func_name,
+											data: JSON.stringify(data)
+									}
+							}, '*');
+					};
+					this.init = function (data) {
+							if (typeof this[data.func_name] == 'function') {
+									this[data.func_name](data["data"]);
+							}
+					};
+					this.setTitle = function (data) {
+							store.dispatch({
+									type: 'info/changeTitle',
+									data: data['title']
+							});
+					};
+					this.checkJsApi = function (data) {
+							var self = this;
+							var datas = {
+									"errMsg": "checkJsApi:ok"
+							};
+							data["jsApiList"].forEach(function (i) {
+									if (typeof self[i] == 'function') {
+											datas[i] = 1;
+									} else {
+											datas[i] = 0;
+									}
+							});
+							this.callback("checkJsApi", datas);
+					};
+					this.getInfo = function (data) {
+							var datas = _.clone(window.user);
+							datas['avatar'] = {
+									avatar_l: serverUrl + datas['avatar']["avatar_l"],
+									avatar_s: serverUrl + datas['avatar']["avatar_s"]
+							};
+							this.callback("getInfo", { "info": datas, "errMsg": "getInfo:ok" });
+					};
+					this.pushWebView = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					this.newWebView = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					this.closeWebView = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					this.setFuncBtns = function (data) {
+							store.dispatch({
+									type: 'info/setFuncBtns',
+									data: data['buttons']
+							});
+					};
+					this.setFuncBtnStatus = function (data) {
+							store.dispatch({
+									type: 'info/setFuncBtnStatus',
+									data: {
+											type: data['type'],
+											disabled: data['status']
+									}
+							});
+					};
+					this.showTabs = function (data) {
+							var datas = [];
+							var num = 0;
+							data["tabs"].forEach(function (i) {
+									var obj = { num: num, val: i };
+									if (num == 0) {
+											obj['active'] = true;
+									}
+									datas.push(obj);
+									num++;
+							});
+							store.dispatch({
+									type: 'info/showTabs',
+									data: {
+											tabs: datas,
+											style: data['style']
+									}
+							});
+					};
+					this.hideTabs = function (data) {
+							store.dispatch({
+									type: 'info/hideTabs'
+							});
+					};
+					this.mailto = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					this.back = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					this.AuthCode = function (data) {
+							this.callback('AuthCode', {
+									code: 'HLCnErseMMsGxtF5',
+									errMsg: 'AuthCode:ok'
+							});
+					};
+					this.getLocation = function (data) {
+							this.callback("getLocation", { "altitude": 72.34257, "errMsg": "getLocation:ok", "latitude": 39.90902, "name": "融科创意中心", "longitude": 116.2, "address": "八角东街65幢(游乐园西南门对面)" });
+					};
+					this.openLocation = function (data) {
+							this.callback("openLocation", { "errMsg": "openLocation:ok" });
+					};
+					this.previewImages = function (data) {
+							this.callback("previewImages", { "errMsg": "previewImages:ok" });
+					};
+					this.choseFile = function (data) {
+							var self = this;
+							$('.phone-specail').html('<input style="display:none;" id="fileDialog" type="file" accept=".png,.gif,.jpg,.jpeg" />');
+							var chooser = $('#fileDialog');
+							chooser.unbind('change cancel');
+							chooser.change(function (evt) {
+									phoneInset.postMessage({
+											type: 'callback',
+											data: '{"errMsg":"choseFile:ok","localFiles":[{"id":"http://blogs-1774886889.cn-north-1.elb.amazonaws.com.cn/siteconsole/public/images/blog/article/1AdnlO_resize.jpeg","type":"image/jpeg"},{"id":"http://blogs-1774886889.cn-north-1.elb.amazonaws.com.cn/siteconsole/public/images/blog/article/1B5Rto_resize.png","type":"image/png"}]}'
+									}, '*');
+							});
+							chooser.on("cancel", function (evt) {
+									phoneInset.postMessage({
+											type: 'callback',
+											data: '{"errMsg":"choseFile:cancel"}'
+									}, '*');
+							});
+							chooser.click();
+					};
+					this.uploadFile = function (data) {
+							this.callback("uploadFile", { "serverId": data["localId"], "errMsg": "uploadFile:ok" });
+					};
+					this.downloadFile = function (data) {
+							this.callback("downloadFile", { "localId": data["serverId"], "errMsg": "downloadFile:ok" });
+					};
+					this.scanQRCode = function (data) {
+							this.callback("scanQRCode", { "errMsg": "scanQRCode:ok", "resultStr": "https://itunes.apple.com/cn/app/joywok/id734946636" });
+					};
+					this.setBarBg = function (data) {
+							store.dispatch({
+									type: 'info/setBarBg',
+									data: data['background']
+							});
+					};
+					this.chartInit = function (data) {
+							alert('此功能需要在真机模拟');
+					};
+					return this;
+			}
+			return JssdkCallhander;
+	}();
 
 /***/ }
 ]);

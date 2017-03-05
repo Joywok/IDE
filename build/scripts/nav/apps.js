@@ -25749,7 +25749,8 @@ webpackJsonp([10],[
 /* 480 */,
 /* 481 */,
 /* 482 */,
-/* 483 */
+/* 483 */,
+/* 484 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25804,7 +25805,7 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 484 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -26056,7 +26057,7 @@ webpackJsonp([10],[
 
 
 /***/ },
-/* 485 */
+/* 486 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26087,7 +26088,7 @@ webpackJsonp([10],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(486);
+	__webpack_require__(487);
 
 	module.exports = function () {
 	  var app = (0, _dva2.default)();
@@ -26099,9 +26100,9 @@ webpackJsonp([10],[
 	      userinfo: user,
 	      showList: true,
 	      pname: '',
-	      corpid: '',
+	      corpId: '',
 	      copesecret: '',
-	      appid: '',
+	      appId: '',
 	      dirpath: '',
 	      remote: false,
 	      remotepath: '',
@@ -26120,9 +26121,9 @@ webpackJsonp([10],[
 	          userinfo: user,
 	          showList: true,
 	          pname: '',
-	          corpid: '',
+	          corpId: '',
 	          copesecret: '',
-	          appid: '',
+	          appId: '',
 	          dirpath: '',
 	          remote: false,
 	          remotepath: '',
@@ -26136,9 +26137,9 @@ webpackJsonp([10],[
 	        return _.extend({}, state, {
 	          showList: true,
 	          pname: '',
-	          corpid: '',
+	          corpId: '',
 	          copesecret: '',
-	          appid: '',
+	          appId: '',
 	          dirpath: '',
 	          remote: false,
 	          remotepath: ''
@@ -26366,13 +26367,13 @@ webpackJsonp([10],[
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'create-form-label' },
-	                  'corpID'
+	                  'Corp_id'
 	                ),
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'create-form-i-c' },
-	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['corpid'], onChange: function onChange(e) {
-	                      return _this3.changeInputVal(e, "corpid");
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['corpId'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "corpId");
 	                    } }),
 	                  _react2.default.createElement(
 	                    'div',
@@ -26385,7 +26386,7 @@ webpackJsonp([10],[
 	                      _react2.default.createElement(
 	                        'div',
 	                        { className: 'apps-tip-val' },
-	                        'corpID'
+	                        '\u8F93\u5165\u60A8\u5728\u4E50\u5DE5\u5E73\u53F0\u83B7\u5F97\u7684\u4F01\u4E1AID\uFF0C\u8BE5ID\u5728\u5E73\u53F0\u7CFB\u7EDF\u7BA1\u7406\u4E2D\u4EA7\u751F'
 	                      ),
 	                      _react2.default.createElement('i', { className: 'apps-tip-cirtle' })
 	                    )
@@ -26398,7 +26399,7 @@ webpackJsonp([10],[
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'create-form-label' },
-	                  'copeSecret'
+	                  'Corp_Secret'
 	                ),
 	                _react2.default.createElement(
 	                  'div',
@@ -26417,7 +26418,7 @@ webpackJsonp([10],[
 	                      _react2.default.createElement(
 	                        'div',
 	                        { className: 'apps-tip-val' },
-	                        'copeSecret'
+	                        '\u8F93\u5165\u60A8\u5728\u4E50\u5DE5\u5E73\u53F0\u7684\u4F01\u4E1A\u5BC6\u94A5\uFF0C\u8BE5\u5BC6\u94A5\u5728\u5E73\u53F0\u7CFB\u7EDF\u7BA1\u7406\u4E2D\u4EA7\u751F'
 	                      ),
 	                      _react2.default.createElement('i', { className: 'apps-tip-cirtle' })
 	                    )
@@ -26435,14 +26436,9 @@ webpackJsonp([10],[
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'create-form-i-c' },
-	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['appid'], onChange: function onChange(e) {
-	                      return _this3.changeInputVal(e, "appid");
-	                    } }),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'apps-tip-specail' },
-	                    '\u65E0 AppID'
-	                  )
+	                  _react2.default.createElement('input', { type: 'input', className: 'create-form-input', value: data['appId'], onChange: function onChange(e) {
+	                      return _this3.changeInputVal(e, "appId");
+	                    } })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -26615,13 +26611,29 @@ webpackJsonp([10],[
 	        var data = this.props;
 	        project.id = parseInt(Math.random() * 1000000000);
 	        project.name = data["pname"];
-	        project.corpID = data['corpid'];
+	        project.corpId = data['corpId'];
 	        project.copeSecret = data['copesecret'];
-	        project.appID = data['appid'];
+	        project.appId = data['appId'];
 	        project.src = "file://" + data["dirpath"];
 	        project.tools = { babel: true, completion: true, compress: true };
 	        project.remote = data["remote"];
 	        project.remotepath = data["remotepath"];
+
+	        if (data['remote']) {
+	          store.dispatch({
+	            type: 'apps/add',
+	            data: project
+	          });
+	          ProjectStore.update({ id: 'projects', data: projects });
+	          store.dispatch({
+	            type: 'apps/backList',
+	            payload: false
+	          });
+	          setTimeout(function () {
+	            openProject(project["id"]);
+	          }, 50);
+	          return;
+	        }
 
 	        fs.exists(data["dirpath"] + '/index.html', function (exists) {
 	          // window.projects.push(project);
@@ -26647,16 +26659,16 @@ webpackJsonp([10],[
 	                console.log('Caught an error');
 	              });
 	              unzipper.on('extract', function (log) {
-	                ProjectStore.update({ id: 'projects', data: projects });
-	                // fs.writeFile('project.json',JSON.stringify(projects),function(){
-	                store.dispatch({
-	                  type: 'apps/backList',
-	                  payload: false
+	                fs.readFile(data["dirpath"] + '/index.html', 'utf8', function (err, template) {
+	                  template = template.replace('{username}', window.user['name']);
+	                  fs.writeFile(data["dirpath"] + '/index.html', template, function (error) {
+	                    ProjectStore.update({ id: 'projects', data: projects });
+	                    store.dispatch({ type: 'apps/backList', payload: false });
+	                    setTimeout(function () {
+	                      openProject(project["id"]);
+	                    }, 50);
+	                  });
 	                });
-	                setTimeout(function () {
-	                  openProject(project["id"]);
-	                }, 50);
-	                // })
 	              });
 	              unzipper.on('progress', function (fileIndex, fileCount) {
 	                console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
@@ -26674,9 +26686,11 @@ webpackJsonp([10],[
 	    }, {
 	      key: 'logout',
 	      value: function logout() {
+	        var win = __webpack_require__(413).Window.get();
+	        win.leaveFullscreen();
 	        localStorage.removeItem('Joywok:User');
 	        window.user = {};
-	        var nowWin = __webpack_require__(488).Window.get();
+	        var nowWin = __webpack_require__(413).Window.get();
 	        var platformWindow = window.Screen.screens[0]['bounds'];
 	        nowWin.resizeTo(840, 640);
 	        nowWin.moveTo((platformWindow['width'] - 840) / 2, (platformWindow['height'] - 640) / 2);
@@ -26733,16 +26747,16 @@ webpackJsonp([10],[
 	}();
 
 /***/ },
-/* 486 */
+/* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(487);
+	var content = __webpack_require__(488);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(484)(content, {});
+	var update = __webpack_require__(485)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26759,24 +26773,18 @@ webpackJsonp([10],[
 	}
 
 /***/ },
-/* 487 */
+/* 488 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(483)();
+	exports = module.exports = __webpack_require__(484)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".apps{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n\tbackground: #ffffff\n}\n.apps-tabs-i{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\t\n}\n.apps .apps-user{\n\tposition: relative;\n\twidth: 100%;height: 40%;background: #323940;-webkit-app-region: drag;\n}\n.apps .apps-user .apps-user-c{\n\tposition: absolute;top:50%;left: 0;right: 0;\n\tmargin-top: -58px;\n}\n.apps-user .apps-info-avatar{\n\tposition: relative;\n\tmargin:0 auto;\n\twidth: 76px;height: 76px;\n}\n.apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}\n.apps-user .apps-info-avatar .apps-info-exit{\n\tcursor: pointer;\n\tposition: absolute;right: 0;bottom: 0;font-size: 14px;\n\twidth: 20px;height: 20px;background: #fff;color: #494949;\n\tvertical-align: middle;text-align: center;\n\tborder-radius: 20px;\n}\n.apps-info-exit i{\n\tvertical-align: top;\n\tmargin-top:3px;\n}\n.apps-user .apps-info-name{\n\tmargin-top: 20px;\n\tfont-size: 16px;color: #ffffff;\n\ttext-align: center;\n}\n.apps .apps-list{\n\tposition: relative;\n\twidth: 100%;height: 60%;background: #fff;-webkit-app-region: drag;\n\ttext-align: center;\n\tpadding:40px 0 0 0;\n}\n.apps-list-i{\n\tdisplay: inline-block;\n\tvertical-align: top;\n\tmargin:20px 15px 0 ;\n\tcursor: pointer;\n}\n.apps-list-i .apps-list-i-c{width: 80px;}\n.apps-list-i .apps-list-i-c .apps-list-i-pic{\n\twidth: 80px;height: 80px;display: table-cell;\n\tvertical-align: middle;text-align: center;\n\tbackground: #6f7378;\n}\n.apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;\n\tbackground-size: cover;\n}\n.apps-list-i .apps-list-i-c .apps-list-i-val{\n\tmargin-top: 20px;text-align: center;font-size: 14px;color: #666666;\n}\n.apps-create-btn{\n\tcursor: pointer;\n}\n.apps-create-btn .apps-list-i-pic{\n\tborder:2px dashed #dddddd;\n\tbackground: none!important;\n}\n.apps-create-btn .apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;\n\tbackground-size: cover;\n}\n.xxxxx{\n\twidth: 140px;\n  height: 31px;\n  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;\n  background-size: cover;\n}\n.apps-create-btn:hover .apps-list-i-pic{\n\tbackground: #f0f0f0!important;\n}\n.apps-create-btn:hover .apps-list-i-val{\n\tcolor: #1b222a;\n}\n\n\n.create-form{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n}\n.create-form-back{\n\tmargin:25px 30px;height: 21px;line-height: 21px;\n\tcursor: pointer;\n}\n.create-form-back .create-form-back-pic{\n\tfloat: left;\n\tmargin:3px 0 0 0;\n\twidth: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;\n\tbackground-size: cover;\n}\n.create-form-back .create-form-back-val{\n\tfloat: left;\n\tmargin-left: 10px;\n}\n\n.create-form .create-form-c{\n\tposition: absolute;top:50%;margin-top: -260px;\n\tleft: 50%;margin-left: -260px;\n\twidth: 520px;\n}\n.create-form-c .create-form-title{\n\ttext-align: center;\n\tcolor: #333333;\n\tfont-size: 20px;\n\tmargin-bottom: 40px;\n}\n.create-form-c .create-form-i{\n\toverflow-y: hidden;\n\tposition: relative;\n\tmargin-top: 30px;\n}\n.create-form-c .create-form-i:first-child{\n}\n.create-form-i .create-form-label{\n\tfloat: left;\n\twidth: 90px;\n\ttext-align: right;\n\tcolor: #333333;\n\tfont-size: 14px;\n\tline-height: 36px;\n}\n.create-form-i .create-form-i-c{\n\tfloat: left;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-input{\n\tpadding:0 10px;\n\twidth: 320px;\n\theight: 36px;line-height: 36px;border:1px solid #dddddd;\n\tborder-radius: 3px;\n}\n.apps-tip-specail{\n\tdisplay: inline-block;\n\tmargin-left: 15px;line-height: 36px;\n\tcolor: #4174d9;\n\tfont-size: 13px;\n}\n\n.chose-directory{\n\tdisplay: inline-block;\n\tposition: relative;\n\twidth: 70px;\n\theight: 36px;\n\tborder-radius: 3px;\n\tvertical-align: top;\n\tmargin-left: 15px;\n\ttext-align: center;\n\toverflow: hidden;\n}\n.chose-directory .apps-form-open-dir{\n\tposition: relative;z-index: 2222;\n\twidth: 100%;\n\ttext-align: center;\n\tline-height: 34px;\n\tpadding: 0;\n\tcursor:pointer;\n\tborder:1px solid #999;\n\tcolor: #000;\n\tborder-radius: 3px;\n}\n.chose-directory .chose-directory-input{\n\tposition: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;\n}\n.apps-form-open-dir:hover{\n\t// border-color: #4174d9;\n\t// color: #4174d9;\n\tbackground: #6f7378;\n\tcolor: #fff;\n\tborder-color: #6f7378;\n}\n.create-form-c .create-form-buttons{\n\ttext-align: center;\n\tmargin-top: 50px;\n}\n.create-form-buttons .create-form-button{\n\twidth: 120px;height: 36px;\n\tdisplay: inline-block;margin-left: 60px;\n\ttext-align: center;\n\tborder-radius: 2px;\n\n}\n.create-form-buttons .create-form-button:first-child{\n\tmargin-left: 0;\n}\n.create-form-button.cancel-btn{\n\tbackground: #e7e7e7;\n\tcolor: #999999;\n}\n.create-form-button.create-btn{\n\tbackground: #8d9094;\n\tcolor: #ffffff;\n}\n.create-form-button.create-btn[disabled]{\n\topacity: 0.5\n}\n\n\n.apps-tip{\n\tposition: relative;\n\tdisplay: inline-block;\n\tmargin:10px 0 0 15px;\n\tz-index: 2222222;\n\tvertical-align: top;\n}\n.apps-tip .apps-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.apps-tip .apps-tip-c{\n\tdisplay: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.apps-tip-c .apps-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 4px;\n}\n.apps-tip-c .apps-tip-val{\n\tposition: relative;z-index: 2;padding: 10px 10px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.apps-tip-c .apps-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.apps-tip:hover .apps-tip-c{\n\tdisplay: block;\n}\n\n.project-remote{\n\toverflow:hidden;\n}\n.project-remote .create-form-i-c{\n\toverflow:hidden;\n}\n.create-form-checkboxs{\n\tfloat: left;margin-top: 9px;\n}\n.create-form-i-c .create-form-checkbox{\n\tfloat: left;margin-top: 2px;height: 16px;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-checkbox:first-child{\n\tmargin-left: 0;\n}\n.create-form-checkbox input{\n\tdisplay: none;\n  margin: 0;\n  -webkit-appearance: checkbox;\n  float: left;\n}\n.create-form-checkbox input + label{\n\tmargin:0;\n\tfloat: left;\n  width: 16px;\n  height: 16px;\n  background: url(/build/images/checkbox.png) no-repeat;\n  background-size: cover;\n  cursor: pointer;\n}\n.create-form-checkbox input:checked + label{\n\tbackground: url(/build/images/checkbox-active.png) no-repeat;\n  background-size: cover;\n}\n\n.create-form-checkbox span{\n\tfloat: left;line-height: 16px;\n\tmargin-left: 10px;\n}\n\n\n", ""]);
+	exports.push([module.id, ".apps{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n\tbackground: #ffffff\n}\n.apps-tabs-i{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\t\n}\n.apps .apps-user{\n\tposition: relative;\n\twidth: 100%;height: 40%;background: #323940;-webkit-app-region: drag;\n}\n.apps .apps-user .apps-user-c{\n\tposition: absolute;top:50%;left: 0;right: 0;\n\tmargin-top: -58px;\n}\n.apps-user .apps-info-avatar{\n\tposition: relative;\n\tmargin:0 auto;\n\twidth: 76px;height: 76px;\n}\n.apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}\n.apps-user .apps-info-avatar .apps-info-exit{\n\tcursor: pointer;\n\tposition: absolute;right: 0;bottom: 0;font-size: 13px;\n\twidth: 21px;height: 21px;background: #fff;color: #767a7f;\n\tvertical-align: middle;text-align: center;\n\tborder-radius: 21px;\n}\n.apps-user .apps-info-avatar .apps-info-exit:hover{\n\tcolor: #1b222a;\n}\n.apps-info-exit i{\n\tvertical-align: top;\n\tmargin-top:4px;\n}\n.apps-user .apps-info-name{\n\tmargin-top: 20px;\n\tfont-size: 16px;color: #ffffff;\n\ttext-align: center;\n}\n.apps .apps-list{\n\tposition: relative;\n\twidth: 100%;height: 60%;background: #fff;-webkit-app-region: drag;\n\ttext-align: center;\n\tpadding:40px 0 40px 0;\n\toverflow-x: auto;\n}\n.apps-list-i{\n\tdisplay: inline-block;\n\tvertical-align: top;\n\tmargin:20px 15px 0 ;\n\tcursor: pointer;\n}\n.apps-list-i .apps-list-i-c{width: 80px;}\n.apps-list-i .apps-list-i-c .apps-list-i-pic{\n\twidth: 80px;height: 80px;display: table-cell;\n\tvertical-align: middle;text-align: center;\n\tbackground: #6f7378;\n}\n.apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-i-pic.png) no-repeat;\n\tbackground-size: cover;\n}\n.apps-list-i .apps-list-i-c .apps-list-i-val{\n\tmargin-top: 20px;text-align: center;font-size: 14px;color: #666666;\n}\n\n.apps-list-i:hover .apps-list-i-c .apps-list-i-pic{\n\tbackground: #1b222a\n}\n.apps-list-i:hover .apps-list-i-c .apps-list-i-val{\n\tcolor: #1b222a;\n}\n.apps-create-btn{\n\tcursor: pointer;\n}\n.apps-create-btn .apps-list-i-pic{\n\tborder:2px dashed #dddddd;\n\tbackground: none!important;\n}\n.apps-create-btn .apps-list-i-pic div{\n\tmargin:0 auto;\n\tdisplay: block;\n\twidth: 30px;height: 30px;background: url(/build/images/apps-add.png) no-repeat;\n\tbackground-size: cover;\n}\n.xxxxx{\n\twidth: 140px;\n  height: 31px;\n  background: url(http://192.168.1.73/dist/images/saas/newLite/logo-bg.png) no-repeat;\n  background-size: cover;\n}\n.apps-create-btn:hover .apps-list-i-pic{\n\tbackground: #f0f0f0!important;\n}\n.apps-create-btn:hover .apps-list-i-val{\n\tcolor: #1b222a;\n}\n\n\n.create-form{\n\tposition: absolute;top:0;right: 0;bottom: 0;left: 0;\n}\n.create-form-back{\n\tmargin:25px 30px;height: 21px;line-height: 21px;\n\tcursor: pointer;\n}\n.create-form-back .create-form-back-pic{\n\tfloat: left;\n\twidth: 11px;height: 20px;background: url(/build/images/back-btn.png) no-repeat;\n\tbackground-size: cover;\n}\n.create-form-back .create-form-back-val{\n\tfloat: left;\n\tmargin-left: 10px;\n\tcolor: #494949;\n}\n\n.create-form .create-form-c{\n\tposition: absolute;top:50%;margin-top: -260px;\n\tleft: 50%;margin-left: -260px;\n\twidth: 520px;\n}\n.create-form-c .create-form-title{\n\ttext-align: center;\n\tcolor: #333333;\n\tfont-size: 20px;\n\tmargin-bottom: 40px;\n}\n.create-form-c .create-form-i{\n\tposition: relative;\n\tmargin-top: 30px;\n\theight: 36px;\n}\n.create-form-c .create-form-i:first-child{\n}\n.create-form-i .create-form-label{\n\tfloat: left;\n\twidth: 90px;\n\ttext-align: right;\n\tcolor: #333333;\n\tfont-size: 14px;\n\tline-height: 36px;\n}\n.create-form-i .create-form-i-c{\n\tfloat: left;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-input{\n\tpadding:0 10px;\n\twidth: 320px;\n\theight: 36px;line-height: 36px;border:1px solid #dddddd;\n\tborder-radius: 3px;\n}\n.apps-tip-specail{\n\tdisplay: inline-block;\n\tmargin-left: 15px;line-height: 36px;\n\tcolor: #4174d9;\n\tfont-size: 13px;\n}\n\n.chose-directory{\n\tdisplay: inline-block;\n\tposition: relative;\n\twidth: 70px;\n\theight: 36px;\n\tborder-radius: 3px;\n\tvertical-align: top;\n\tmargin-left: 15px;\n\ttext-align: center;\n\toverflow: hidden;\n}\n.chose-directory .apps-form-open-dir{\n\tposition: relative;z-index: 2222;\n\twidth: 100%;\n\ttext-align: center;\n\tline-height: 34px;\n\tpadding: 0;\n\tcursor:pointer;\n\tborder:1px solid #999;\n\tcolor: #000;\n\tborder-radius: 3px;\n}\n.chose-directory .chose-directory-input{\n\tposition: absolute;right: 0pt;top: 0pt;bottom: 0;z-index: 1;font-size: 460px;margin: 0pt;padding: 0pt;cursor: pointer;opacity: 0;\n}\n.apps-form-open-dir:hover{\n\t// border-color: #4174d9;\n\t// color: #4174d9;\n\tbackground: #6f7378;\n\tcolor: #fff;\n\tborder-color: #6f7378;\n}\n.create-form-c .create-form-buttons{\n\ttext-align: center;\n\tmargin-top: 50px;\n}\n.create-form-buttons .create-form-button{\n\twidth: 120px;height: 36px;\n\tdisplay: inline-block;margin-left: 60px;\n\ttext-align: center;\n\tborder-radius: 2px;\n\n}\n.create-form-buttons .create-form-button:first-child{\n\tmargin-left: 0;\n}\n.create-form-button.cancel-btn{\n\tbackground: #ebebeb;\n\tcolor: #999999;\n}\n.create-form-button.cancel-btn:hover{\n\tbackground: #ddd;\n}\n.create-form-button.create-btn{\n\tbackground: #6f7378;\n\tcolor: #ffffff;\n}\n.create-form-button.create-btn[disabled]{\n\topacity: 0.8\n}\n\n\n.apps-tip{\n\tposition: relative;\n\tdisplay: inline-block;\n\tmargin:10px 0 0 15px;\n\tz-index: 2222222;\n\tvertical-align: top;\n}\n.apps-tip .apps-tip-icon{\n\tdisplay: inline-block;width: 15px;height: 15px;background: url(/build/images/login-question.png) no-repeat;cursor: pointer;background-size: cover;\n}\n.apps-tip .apps-tip-c{\n\tdisplay: none;position: absolute;right: -45px;border-radius: 10px;bottom: 35px;padding:0 10px;\n\tmin-width: 250px;\n}\n.apps-tip-c .apps-tip-bg{\n\tposition: absolute;top: 0;right: 0;bottom: 0;left: 0;background: #6790e1;opacity: 0.8;border-radius: 4px;\n}\n.apps-tip-c .apps-tip-val{\n\tposition: relative;z-index: 2;padding: 10px 10px;color: #fff;line-height: 20px;font-size: 13px;\n}\n.apps-tip-c .apps-tip-cirtle{\n\tposition: absolute;right: 50px;bottom: -9px;width: 0;height: 0;border-top: 9px solid transparent;border-right: 18px solid #85a6e7;border-bottom: 9px solid transparent;\n}\n.apps-tip:hover .apps-tip-c{\n\tdisplay: block;\n}\n\n.project-remote{\n\toverflow:hidden;\n}\n.project-remote .create-form-i-c{\n\toverflow:hidden;\n}\n.create-form-checkboxs{\n\tfloat: left;margin-top: 9px;\n}\n.create-form-i-c .create-form-checkbox{\n\tfloat: left;margin-top: 2px;height: 16px;\n\tmargin-left: 20px;\n}\n.create-form-i-c .create-form-checkbox:first-child{\n\tmargin-left: 0;\n}\n.create-form-checkbox input{\n\tdisplay: none;\n  margin: 0;\n  -webkit-appearance: checkbox;\n  float: left;\n}\n.create-form-checkbox input + label{\n\tmargin:0;\n\tfloat: left;\n  width: 16px;\n  height: 16px;\n  background: url(/build/images/checkbox.png) no-repeat;\n  background-size: cover;\n  cursor: pointer;\n}\n.create-form-checkbox input:checked + label{\n\tbackground: url(/build/images/checkbox-active.png) no-repeat;\n  background-size: cover;\n}\n\n.create-form-checkbox span{\n\tfloat: left;line-height: 16px;\n\tmargin-left: 10px;\n}\n\n\n", ""]);
 
 	// exports
 
-
-/***/ },
-/* 488 */
-/***/ function(module, exports) {
-
-	module.exports = require("nw.gui");
 
 /***/ }
 ]);

@@ -2,7 +2,7 @@ module.exports = function(emitter){
 	var gui = require('nw.gui');
 	const nowWin = gui.Window.get()
 	const tray = new gui.Tray({
-		icon:(platform=="mac"?'build/images/icon-64.icns':'build/images/icon-32.png'),
+		icon:(platform=="mac"?'build/images/icon-64.icns':'build/images/icon-16.png'),
 		alticon:true
 	});//window下面可以
 	tray.tooltip = '点击打开'

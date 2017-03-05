@@ -18,6 +18,10 @@ class App extends Component {
     )
   }
   componentDidMount(){
+    let nowWin = require('nw.gui').Window.get();
+    nowWin.on('close',function(){
+      require('nw.gui').App.quit();
+    })
     window.checkVersion();
     if(user['id'] && user['name']){
       if(user.openId && user.openId.length!=0){

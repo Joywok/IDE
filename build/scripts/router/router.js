@@ -27,7 +27,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		16:0
+/******/ 		17:0
 /******/ 	};
 
 /******/ 	// The require function
@@ -73,7 +73,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "nav/" + ({"9":"login","10":"apps","17":"info"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "nav/" + ({"9":"login","10":"apps","11":"info"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -6019,6 +6019,10 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var nowWin = __webpack_require__(413).Window.get();
+	      nowWin.on('close', function () {
+	        __webpack_require__(413).App.quit();
+	      });
 	      window.checkVersion();
 	      if (user['id'] && user['name']) {
 	        if (user.openId && user.openId.length != 0) {
@@ -6056,7 +6060,7 @@
 	        }
 	      } else {
 	        __webpack_require__.e/* nsure */(9, function (require) {
-	          cb(null, __webpack_require__(413));
+	          cb(null, __webpack_require__(414));
 	        });
 	      }
 	    }
@@ -6066,7 +6070,7 @@
 	          app._history.push('/info');
 	        } else {
 	          __webpack_require__.e/* nsure */(10, function (require) {
-	            cb(null, __webpack_require__(485));
+	            cb(null, __webpack_require__(486));
 	          });
 	        }
 	      } else {
@@ -6076,7 +6080,7 @@
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
 	      if (user["name"] && user['id']) {
 	        if (user['openId'] && user['openId'].length != 0) {
-	          __webpack_require__.e/* nsure */(17/* empty */, function (require) {
+	          __webpack_require__.e/* nsure */(11, function (require) {
 	            cb(null, __webpack_require__(489));
 	          });
 	        } else {
@@ -10025,6 +10029,12 @@
 
 	exports['default'] = createBrowserHistory;
 	module.exports = exports['default'];
+
+/***/ },
+/* 413 */
+/***/ function(module, exports) {
+
+	module.exports = require("nw.gui");
 
 /***/ }
 /******/ ]);

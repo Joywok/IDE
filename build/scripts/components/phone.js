@@ -102,9 +102,17 @@
 						marginLeft: -+(this.props.phoneW / 2) + 'px'
 					};
 					var phoneInsetStyle = {
-						top: this.props.tabs.length != 0 ? "90px" : '40px',
+						top: this.props.tabs.length != 0 ? "90px" : '39px',
 						bottom: this.props.footer.length != 0 ? '45px' : '0px'
 					};
+					var phoneHeaderBar = {};
+					if (this.props.navBg && this.props.navBg.length != 0) {
+						phoneHeaderBar['background'] = '#' + this.props.navBg;
+						phoneHeaderBar['color'] = '#fff';
+						if (this.props.navBg == 'fffff' || this.props.navBg == 'fff') {
+							phoneHeaderBar['color'] = '#494949';
+						}
+					}
 					return _react2.default.createElement(
 						'div',
 						{ className: 'info-edit-phone' },
@@ -156,10 +164,13 @@
 							{ className: 'info-edit-phone-container', id: 'info-edit-phone-container', style: phoneCstyle },
 							_react2.default.createElement(
 								'div',
-								{ className: "phone-header " + (this.props.btns.length != 0 ? 'has-btns' : '') + (this.props.tabsBg.length != 0 ? ' has-tabs tabs-bg-' + this.props.tabsBg : '') },
+								{ className: "phone-header " + (this.props.btns.length != 0 ? 'has-btns' : '') + (this.props.tabsBg.length != 0 ? ' has-tabs tabs-bg-' + this.props.tabsBg : ''), style: phoneHeaderBar },
+								this.props.page != 0 ? _react2.default.createElement('button', { type: 'button', className: 'header-back', onClick: function onClick(e) {
+										return _this2.backPhoneUrl(e);
+									} }) : '',
 								_react2.default.createElement(
 									'div',
-									{ className: 'phone-title' },
+									{ className: "phone-title " + (this.props.page != 0 ? 'has-back' : '') },
 									this.props.title
 								),
 								this.props.btns.length != 0 ? _react2.default.createElement(
@@ -170,7 +181,7 @@
 											'button',
 											{ onClick: function onClick(e) {
 													return self.NavBtnClick(e, i);
-												}, disabled: i["disabled"], className: "phone-btns-i " + (i["type"] > 3 ? 'phone-btns-i-specail' : 'phone-btns-i-' + i["type"]), type: 'button' },
+												}, disabled: i["disabled"], className: "phone-btns-i " + (i["type"] > 10 ? 'phone-btns-i-specail' : 'phone-btns-i-' + i["type"]), type: 'button' },
 											i["name"] ? i["name"] : ''
 										);
 									})
@@ -204,14 +215,38 @@
 				key: 'componentDidMount',
 				value: function componentDidMount() {
 					var self = this;
+					var init = false;
+					var dispatch = this.props.dispatch;
 					var webview = document.createElement('webview');
-					webview.setAttribute('partition', 'trusted');
+					// webview.setAttribute('partition', 'trusted');
+					// webview.setAttribute('allowtransparency', 'trusted');
 					webview.setAttribute('allownw', 'true');
 					webview.setAttribute('class', 'hide');
 					webview.id = 'phone-inset';
 					webview.contextmenu = function () {
 						return false;
 					};
+					webview.setAttribute('autosize', 'on');
+					var showPlatformVal = this.props.showPlatformVal;
+					if (showPlatformVal == 'iPhone 4') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 4s') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 6') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'iPhone 6 Plus') {
+						webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Galaxy S5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 4') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 5') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					} else if (showPlatformVal == 'Nexus 6') {
+						webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN JoywokIDE');
+					}
 					if (this.props.project['remote']) {
 						webview.src = this.props.project['remotepath'];
 					}
@@ -223,8 +258,11 @@
 						name: 'myRule',
 						matches: ['<all_urls>'],
 						css: { files: ['build/styles/phone-inset.css'] },
-						run_at: 'document_start'
-
+						// js: {
+						//     files: ['src/scripts/jssdk-callHander.js']
+						//   },
+						run_at: 'document_start',
+						all_frames: true
 					}]);
 					webview.addEventListener('dialog', function (e) {
 						if (e.messageType == 'alert') {
@@ -236,49 +274,88 @@
 					webview.addEventListener('permissionrequest', function (e) {
 						e.request.allow();
 					});
-
-					// webview.ClearDataTypeSet({
-					// 	appcache:false,
-					// 	cache:false,
-					// 	cookies:false,
-					// 	fileSystems:false,
-					// 	indexedDB:false,
-					// 	localStorage:false,
-					// 	webSQL:false
-					// })
+					webview.addEventListener('loadabort', function (e) {
+						console.log(e, '这个错误信息是什么');
+					});
+					webview.addEventListener('loadcommit', function (e) {
+						// console.log('url-里面是什么',e)
+					});
+					webview.addEventListener('loadredirect', function (e) {
+						console.log('loadredirect', arguments);
+					});
+					webview.addEventListener('loadstop', function (e) {
+						// console.log('这里走了几次啊');
+						if (init == false) {
+							if (self.props.project['remotepath'] != $('#phone-inset').attr('src')) {
+								$('#phone-inset').attr({ src: $('#phone-inset').attr('src') });
+								init = true;
+							}
+						}
+					});
 					webview.addEventListener('contentload', function (e) {
 						$("#phone-inset").removeClass('hide');
-						// console.log(e.target.contentWindow,'这个是108行');
-						// e.target.contentWindow.oncontextmenu=function(){ return false;} 
-						// .on('contextmenu',function(e){
-						// 	return false;
-						// })	
-
-						if (self.props.project['remote']) {
-							setTimeout(function () {
-								document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-							}, 100);
-						}
-
-						e.target.contentWindow.postMessage({
-							type: 'init',
-							data: {
-								user: window.user,
-								project: window.project
-							}
-						}, '*');
-						// console.log(e,'contentWindow')
+						console.log(e.target.contentWindow, '这个是108行');
+						webview.clearData({ since: 0 }, {
+							appcache: true,
+							cache: true, cookies: true, fileSystems: true, indexedDB: true, localStorage: true, webSQL: true
+						}, function () {});
+						setTimeout(function () {
+							$('.info-debug').removeClass('hide');
+							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						}, 100);
+						// if(self.props.project['remotepath']!=$('#phone-inset').attr('src')){
+						// 	$('#phone-inset')[0].reload();
+						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
+						// }
+						console.log(self.props.page, 'phone手机壳里面');
+						setTimeout(function () {
+							e.target.contentWindow.postMessage({
+								type: 'init',
+								data: {
+									user: window.user,
+									project: window.project,
+									page: self.props.page
+								}
+							}, '*');
+						}, 0);
 					});
 					webview.contextMenus.onShow.addListener(function (e) {
 						e.preventDefault();
 					});
-					// $('#phone-inset').on('contextmenu',function(e){
-					// 	return false;
-					// })	
-					// webview.addEventListener('consolemessage', function(e) {
-					//   console.log('Guest page logged a message: ', e.message);
-					// });
-					// webview.setUserAgentOverride(this.props.showPlatformVal)
+				}
+			}, {
+				key: 'shouldComponentUpdate',
+				value: function shouldComponentUpdate(nextProps, nextState) {
+					console.log(this.state, nextProps);
+					return true;
+				}
+			}, {
+				key: 'componentDidUpdate',
+				value: function componentDidUpdate() {
+					// let webview = document.getElementById('phone-inset');
+					// let showPlatformVal = this.props.showPlatformVal
+					// if(showPlatformVal=='iPhone 4'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 4s'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 8_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 6'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'iPhone 6 Plus'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Galaxy S5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 4'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 5'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }else if(showPlatformVal == 'Nexus 6'){
+					// 	webview.setUserAgentOverride('Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 Language/zh_CN ')	
+					// }
+					// if(this.props.project['remote']){
+					// 	webview.src = this.props.project['remotepath']
+					// }
 				}
 			}, {
 				key: 'showPlatform',
@@ -308,6 +385,20 @@
 				key: 'handleChange',
 				value: function handleChange() {}
 			}, {
+				key: 'backPhoneUrl',
+				value: function backPhoneUrl() {
+					var dispatch = this.props.dispatch;
+					var page = this.props.page - 1;
+					dispatch({
+						type: 'info/changePhoneUrl',
+						data: page
+					});
+					phoneInset.postMessage({
+						type: 'changePhoneURL',
+						data: page
+					}, '*');
+				}
+			}, {
 				key: 'change',
 				value: function change(data) {}
 			}, {
@@ -316,7 +407,7 @@
 					phoneInset.postMessage({
 						type: 'register',
 						register: 'onNavBtnClick',
-						data: i
+						data: JSON.stringify(i)
 					}, '*');
 				}
 			}, {

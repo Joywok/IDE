@@ -31233,28 +31233,24 @@
 					webview.addEventListener('loadcommit', function (e) {
 						console.log('loadcommit');
 					});
-					webview.addEventListener('contentload', function (e) {
-						if (self.props.project) {
-							$('.info-debug').removeClass('hide');
-							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-						}
-					});
+					webview.addEventListener('contentload', function (e) {});
 					webview.addEventListener('loadstop', function (e) {
 						console.log('loadstop');
 					});
-					webview.setAttribute('src', 'about:blank');
+					webview.src = 'about:blank';
+					// webview.setAttribute('src','about:blank');
 					document.getElementById('info-debug-console').appendChild(webview);
 				}
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(data) {
 					if (this.props.project) {
-						$('.info-debug').removeClass('hide');
-						document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+						// $('.info-debug').removeClass('hide');
+						// document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
 					} else {
 						if (data['sidebar'] == 'debug') {
-							$('.info-debug').removeClass('hide');
-							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
+							// $('.info-debug').removeClass('hide');
+							// document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
 						} else {
 							$('.info-debug').addClass('hide');
 						}

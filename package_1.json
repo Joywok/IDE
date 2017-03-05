@@ -3,9 +3,9 @@
   "version": "0.0.5",
   "name": "乐工Web开发者工具",
   "main": "build/template/index.html",
-  "serverurl": "http://jwtest-1802568048.cn-north-1.elb.amazonaws.com.cn",
+  "serverurl": "https://www.joywok.com",
   "window": {
-    "icon": "build/images/icon-1024.png",
+    "icon": "build/images/icon-360.png",
     "title": "乐工Web开发者工具",
     "toolbar": false,
     "frame": true,

@@ -3,6 +3,8 @@ const nowWin = require('nw.gui').Window.get();
 window.phoneInset;
 window.EditorTarget
 module.exports = function(app,store,emitter){
+  let jssdkCallHander = require('./../jssdk/jssdk-callHander');
+  jssdkCallHander = new jssdkCallHander(store);
 	let platformWindow = Screen.screens[0]['bounds'];
 	if(platformWindow['width']>1440){
 		nowWin.resizeTo(1440,900);
@@ -37,21 +39,6 @@ module.exports = function(app,store,emitter){
       })  
     },400)
   })
-  // function reloadWindow(){
-  //   console.log(window.project,'222222222222');
-  //   let date = Date.parse(new Date())/1000;
-  //   // let src = $('#phone-inset').attr('src').split('?')[0];
-  //   $('#phone-inset').attr('src','http://127.0.0.1:'+nodeServerPort+'?time='+date);
-  //   let consoleContainer = document.getElementById('phone-inset');
-  //   consoleContainer.src = 'http://127.0.0.1:'+nodeServerPort+'?time='+date;
-  //   store.dispatch({
-  //     type:'info/resetNormal',
-  //   })
-  //   setTimeout(function(){
-  //     document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-  //   },0)
-  // }
-  // emitter.on('reload',reloadWindow)
   window.addEventListener('message',function(e){
     let type = e.data['type'];
     let data = e.data;
@@ -96,9 +83,12 @@ module.exports = function(app,store,emitter){
           break;
       }
     }else if(type=="phoneInsetInit"){
-      if(!window.phoneInset) {
+      // if(!window.phoneInset) {
         window.phoneInset = e.source;
-      }
+        store.dispatch({
+          type:'info/resetNormal'
+        })
+      // }
     }else if(type=="phoneFile"){
       if(data['phoneType'] == 'choseFile'){
         $('.phone-specail').html('<input style="display:none;" id="fileDialog" type="file" accept=".png,.gif,.jpg,.jpeg" />');
@@ -120,6 +110,13 @@ module.exports = function(app,store,emitter){
       }else if(data['phoneType'] == 'xxxxx'){
 
       }
+    }else if(type == 'jssdk'){
+      jssdkCallHander.init(data["data"])
+    }else if(type == 'changePhoneUrl'){
+      store.dispatch({
+        type:'info/changePhoneUrl',
+        data:data['data']
+      })
     }
   })
 };

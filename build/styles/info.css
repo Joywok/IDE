@@ -118,8 +118,8 @@ body {
 }
 .ide-info .ide-info-sidebar .ide-info-exit .ide-info-exit-ico {
   margin: 0 auto 10px;
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   background: url(/build/images/close.png) no-repeat;
   background-size: cover;
 }
@@ -205,8 +205,11 @@ body {
 
 .info-project .info-project-w {
   width: 600px;
-  margin: 75px auto 30px;
   text-align: center;
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  margin-left: -328px;
 }
 .info-project .info-project-w .info-project-icon {
   margin: 0 auto;
@@ -221,7 +224,7 @@ body {
   color: #333333;
 }
 .info-project .info-project-w .info-project-appid {
-  margin-top: 0px;
+  margin-top: 10px;
   font-size: 14px;
   color: #999999;
   margin-bottom: 40px;
@@ -249,8 +252,9 @@ body {
   border-radius: 3px;
 }
 .info-project .info-project-w .info-project-item .info-project-i-btn:hover {
-  background: #f0f0f0;
-  color: #1b222a;
+  background: #6f7378;
+  color: #fff;
+  border-color: #6f7378;
 }
 .info-project .info-project-w .info-project-item.update-time .info-project-i-btn:hover {
   background: #6f7378;
@@ -307,7 +311,8 @@ body {
   border-radius: 3px;
 }
 .info-project .info-project-w .info-project-remove:hover {
-  background: #f0f0f0;
+  background: #6f7378;
+  color: #fff;
 }
 .info-project .info-project-w.has-remote {
   width: 600px;
@@ -315,8 +320,8 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -300px;
-  margin-top: -169px;
+  margin-left: -328px;
+  margin-top: -200px;
   margin-bottom: 0;
 }
 
@@ -434,11 +439,30 @@ body {
   line-height: 39px;
   font-size: 16px;
   padding: 0 20px;
-  border-bottom: 1px solid #d7d7d7;
+  text-align: center;
+}
+.info-edit-phone .phone-header .phone-title.has-back {
+  position: absolute;
+  left: 0;
+  right: 0;
   text-align: center;
 }
 .info-edit-phone .phone-header .phone-btns {
+  position: relative;
+  z-index: 222222;
   float: right;
+}
+.info-edit-phone .phone-header .header-back {
+  position: absolute;
+  z-index: 22222;
+  width: 18.5px;
+  height: 15px;
+  background: url(/build/images/btns/back.png);
+  background-size: cover;
+  top: 11px;
+  left: 15px;
+  display: block;
+  cursor: pointer;
 }
 .info-edit-phone .phone-header.has-btns {
   text-align: left;
@@ -479,6 +503,14 @@ body {
   width: 16px;
   height: 16px;
   background: url(/build/images/btns/add.png);
+  background-size: cover;
+}
+.info-edit-phone .phone-btns-i.phone-btns-i-4 {
+  display: block;
+  margin: 12px 0 0 0;
+  width: 17px;
+  height: 17.5px;
+  background: url(/build/images/btns/chart.png);
   background-size: cover;
 }
 .info-edit-phone .phone-btns-i.phone-btns-i-specail {
@@ -564,7 +596,7 @@ body {
   width: 12%;
 }
 .info-edit-phone .tabs-bg-blue {
-  background: blue;
+  background: #558DFF;
   color: #fff;
 }
 .info-edit-phone .tabs-bg-red {
@@ -648,4 +680,8 @@ iframe {
   -ms-user-select: none;
   /* IE 10+ */
   user-select: none;
+}
+
+#phone-inset::-webkit-scrollbar {
+  display: none;
 }

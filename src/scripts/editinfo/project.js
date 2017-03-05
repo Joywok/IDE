@@ -11,7 +11,7 @@ module.exports = function(app,store){
 								<div className="info-project-w has-remote">
 									<div className="info-project-icon"></div>
 									<div className="info-project-name">{this.props.project['name']}</div>
-									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appID'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
+									<div className="info-project-appid">{this.props.project['appId'] && this.props.project['appId'].length!=0?'AppID:'+this.props.project['appId']:'项目未关联AppID'}</div>
 									<div className="info-project-item path">
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">服务器地址</div>
@@ -23,7 +23,7 @@ module.exports = function(app,store){
 								:<div className="info-project-w">
 									<div className="info-project-icon"></div>
 									<div className="info-project-name">{this.props.project['name']}</div>
-									<div className="info-project-appid">{this.props.project['appID'] && this.props.project['appID'].length!=0?'AppID:'+this.props.project['appID']:'项目未关联AppID'}</div>
+									<div className="info-project-appid">{this.props.project['appId'] && this.props.project['appId'].length!=0?('AppID:'+this.props.project['appId']):'项目未关联AppID'}</div>
 									<div className="info-project-item path">
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">本地开发目录</div>
@@ -35,14 +35,14 @@ module.exports = function(app,store){
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">最新更新时间</div>
 											<button className="info-project-i-btn" type="button">预览</button>	
-											<div className="info-project-i-content">项目未关联AppID</div>
+											<div className="info-project-i-content">此功能开发中…</div>
 										</div>
 									</div>
 									<div className="info-project-item upload-time">
 										<div className="info-project-i-c">
 											<div className="info-project-i-label">最近上传时间</div>
 											<button className="info-project-i-btn" type="button" onClick={(e)=>this.uploadProject(e)}>上传</button>	
-											<div className="info-project-i-content">项目未关联AppID</div>
+											<div className="info-project-i-content">此功能开发中…</div>
 										</div>
 									</div>
 									<div className="info-project-tools">
@@ -80,9 +80,7 @@ module.exports = function(app,store){
 		changeTools(evt,type){
 		}
 		removeProject(){
-			let projects = _.filter(projects,function(i){return i['id']!=user["openId"]});
-			let url = this.props.project['src'].split('file://')[1];
-			// fsExtra.remove(url, function(err){})
+			let projects = _.filter(window.projects,function(i){return i['id']!=user["openId"]});
 			ProjectStore.update({id:'projects',data:projects});
 			// fs.writeFile('project.json',JSON.stringify(projects),function(){
 				window.projects = projects;

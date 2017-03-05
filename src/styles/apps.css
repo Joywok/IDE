@@ -21,14 +21,17 @@
 .apps-user .apps-info-avatar img{max-width: 100%;border-radius: 76px;overflow: hidden;}
 .apps-user .apps-info-avatar .apps-info-exit{
 	cursor: pointer;
-	position: absolute;right: 0;bottom: 0;font-size: 14px;
-	width: 20px;height: 20px;background: #fff;color: #494949;
+	position: absolute;right: 0;bottom: 0;font-size: 13px;
+	width: 21px;height: 21px;background: #fff;color: #767a7f;
 	vertical-align: middle;text-align: center;
-	border-radius: 20px;
+	border-radius: 21px;
+}
+.apps-user .apps-info-avatar .apps-info-exit:hover{
+	color: #1b222a;
 }
 .apps-info-exit i{
 	vertical-align: top;
-	margin-top:3px;
+	margin-top:4px;
 }
 .apps-user .apps-info-name{
 	margin-top: 20px;
@@ -39,7 +42,8 @@
 	position: relative;
 	width: 100%;height: 60%;background: #fff;-webkit-app-region: drag;
 	text-align: center;
-	padding:40px 0 0 0;
+	padding:40px 0 40px 0;
+	overflow-x: auto;
 }
 .apps-list-i{
 	display: inline-block;
@@ -61,6 +65,13 @@
 }
 .apps-list-i .apps-list-i-c .apps-list-i-val{
 	margin-top: 20px;text-align: center;font-size: 14px;color: #666666;
+}
+
+.apps-list-i:hover .apps-list-i-c .apps-list-i-pic{
+	background: #1b222a
+}
+.apps-list-i:hover .apps-list-i-c .apps-list-i-val{
+	color: #1b222a;
 }
 .apps-create-btn{
 	cursor: pointer;
@@ -98,13 +109,13 @@
 }
 .create-form-back .create-form-back-pic{
 	float: left;
-	margin:3px 0 0 0;
-	width: 7px;height: 15px;background: url(/build/images/back-btn.png) no-repeat;
+	width: 11px;height: 20px;background: url(/build/images/back-btn.png) no-repeat;
 	background-size: cover;
 }
 .create-form-back .create-form-back-val{
 	float: left;
 	margin-left: 10px;
+	color: #494949;
 }
 
 .create-form .create-form-c{
@@ -119,9 +130,9 @@
 	margin-bottom: 40px;
 }
 .create-form-c .create-form-i{
-	overflow-y: hidden;
 	position: relative;
 	margin-top: 30px;
+	height: 36px;
 }
 .create-form-c .create-form-i:first-child{
 }
@@ -197,15 +208,18 @@
 	margin-left: 0;
 }
 .create-form-button.cancel-btn{
-	background: #e7e7e7;
+	background: #ebebeb;
 	color: #999999;
 }
+.create-form-button.cancel-btn:hover{
+	background: #ddd;
+}
 .create-form-button.create-btn{
-	background: #8d9094;
+	background: #6f7378;
 	color: #ffffff;
 }
 .create-form-button.create-btn[disabled]{
-	opacity: 0.5
+	opacity: 0.8
 }
 
 

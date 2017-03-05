@@ -16,9 +16,9 @@ module.exports = function(){
       userinfo: user,
       showList:true,
       pname:'',
-      corpid:'',
+      corpId:'',
       copesecret:'',
-      appid:'',
+      appId:'',
       dirpath:'',
       remote:false,
       remotepath:'',
@@ -37,9 +37,9 @@ module.exports = function(){
           userinfo: user,
           showList:true,
           pname:'',
-          corpid:'',
+          corpId:'',
           copesecret:'',
-          appid:'',
+          appId:'',
           dirpath:'',
           remote:false,
           remotepath:'',
@@ -53,9 +53,9 @@ module.exports = function(){
         return _.extend({},state,{
           showList:true,
           pname:'',
-          corpid:'',
+          corpId:'',
           copesecret:'',
-          appid:'',
+          appId:'',
           dirpath:'',
           remote:false,
           remotepath:''
@@ -170,28 +170,28 @@ module.exports = function(){
                 </div>
               </div>
               <div className="create-form-i">
-                <div className="create-form-label">corpID</div>
+                <div className="create-form-label">Corp_id</div>
                 <div className="create-form-i-c">
-                  <input type="input" className="create-form-input" value={data['corpid']} onChange={(e)=>this.changeInputVal(e,"corpid")}/>
+                  <input type="input" className="create-form-input" value={data['corpId']} onChange={(e)=>this.changeInputVal(e,"corpId")}/>
                   <div className="apps-tip">
                     <i className="apps-tip-icon"></i>
                     <div className="apps-tip-c">
                       <div className="apps-tip-bg"></div>
-                      <div className="apps-tip-val">corpID</div>
+                      <div className="apps-tip-val">输入您在乐工平台获得的企业ID，该ID在平台系统管理中产生</div>
                       <i className="apps-tip-cirtle"></i>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="create-form-i">
-                <div className="create-form-label">copeSecret</div>
+                <div className="create-form-label">Corp_Secret</div>
                 <div className="create-form-i-c">
                   <input type="input" className="create-form-input" value={data['copesecret']} onChange={(e)=>this.changeInputVal(e,"copesecret")}/>
                   <div className="apps-tip">
                     <i className="apps-tip-icon"></i>
                     <div className="apps-tip-c">
                       <div className="apps-tip-bg"></div>
-                      <div className="apps-tip-val">copeSecret</div>
+                      <div className="apps-tip-val">输入您在乐工平台的企业密钥，该密钥在平台系统管理中产生</div>
                       <i className="apps-tip-cirtle"></i>
                     </div>
                   </div>
@@ -200,8 +200,7 @@ module.exports = function(){
               <div className="create-form-i">
                 <div className="create-form-label">AppID</div>
                 <div className="create-form-i-c">
-                  <input type="input" className="create-form-input" value={data['appid']} onChange={(e)=>this.changeInputVal(e,"appid")}/>
-                  <div className="apps-tip-specail">无 AppID</div>
+                  <input type="input" className="create-form-input" value={data['appId']} onChange={(e)=>this.changeInputVal(e,"appId")}/>
                 </div>
               </div>
               <div className="create-form-i project-remote">
@@ -293,13 +292,29 @@ module.exports = function(){
       let data = this.props;
       project.id = parseInt(Math.random()*1000000000);
       project.name = data["pname"];
-      project.corpID = data['corpid']
+      project.corpId = data['corpId']
       project.copeSecret = data['copesecret']
-      project.appID = data['appid']
+      project.appId = data['appId']
       project.src = "file://"+data["dirpath"];
       project.tools = {babel:true,completion:true,compress:true};
       project.remote = data["remote"];
       project.remotepath = data["remotepath"];
+
+      if(data['remote']){
+        store.dispatch({
+          type:'apps/add',
+          data:project
+        })
+        ProjectStore.update({id:'projects',data:projects});
+        store.dispatch({
+          type:'apps/backList',
+          payload:false
+        })
+        setTimeout(function(){
+          openProject(project["id"])  
+        },50)
+        return 
+      }
 
       fs.exists(data["dirpath"]+'/index.html', function(exists) {
         // window.projects.push(project);
@@ -325,16 +340,16 @@ module.exports = function(){
               console.log('Caught an error');
             });
             unzipper.on('extract', function (log) {
-              ProjectStore.update({id:'projects',data:projects});
-              // fs.writeFile('project.json',JSON.stringify(projects),function(){
-                store.dispatch({
-                  type:'apps/backList',
-                  payload:false
+              fs.readFile(data["dirpath"]+'/index.html', 'utf8', (err, template)=>{
+                template = template.replace('{username}', window.user['name']);
+                fs.writeFile(data["dirpath"]+'/index.html',template,(error)=>{
+                  ProjectStore.update({id:'projects',data:projects});
+                  store.dispatch({type:'apps/backList',payload:false})
+                  setTimeout(function(){
+                    openProject(project["id"])  
+                  },50)
                 })
-                setTimeout(function(){
-                  openProject(project["id"])  
-                },50)
-              // })
+              })
             });
             unzipper.on('progress', function (fileIndex, fileCount) {
               console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
@@ -350,6 +365,8 @@ module.exports = function(){
       });
     }
     logout(){
+      let win = require('nw.gui').Window.get();
+      win.leaveFullscreen();
       localStorage.removeItem('Joywok:User');
       window.user = {};
       let nowWin = require('nw.gui').Window.get();

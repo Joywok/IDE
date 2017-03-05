@@ -45,19 +45,19 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(493);
+	module.exports = __webpack_require__(495);
 
 
 /***/ },
 
-/***/ 488:
+/***/ 413:
 /***/ function(module, exports) {
 
 	module.exports = require("nw.gui");
 
 /***/ },
 
-/***/ 493:
+/***/ 495:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -65,8 +65,8 @@
 	var nowVersion = ide.version;
 	window.AppRestart = function () {
 		var child,
-		    child_process = __webpack_require__(494),
-		    gui = __webpack_require__(488),
+		    child_process = __webpack_require__(496),
+		    gui = __webpack_require__(413),
 		    win = gui.Window.get();
 		if (process.platform == "darwin") {
 			child = child_process.spawn("open", ["-n", "-a", process.execPath.match(/^([^\0]+?\.app)\//)[1]], { detached: true });
@@ -150,7 +150,7 @@
 
 /***/ },
 
-/***/ 494:
+/***/ 496:
 /***/ function(module, exports) {
 
 	module.exports = require("child_process");

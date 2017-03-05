@@ -3,15 +3,16 @@
   "version": "0.0.5",
   "name": "乐工Web开发者工具",
   "main": "build/template/index.html",
-  "serverurl": "http://10.211.55.3",
+  "serverurl": "https://www.joywok.com",
   "window": {
-    "icon": "build/images/icon-1024.png",
+    "icon": "build/images/icon-360.png",
     "title": "乐工Web开发者工具",
     "toolbar": false,
     "frame": true,
     "width": 840,
     "height": 640,
-    "min_height": 640
+    "min_height": 640,
+    "min_width":840
   },
   "webkit": {
     "plugin": true,

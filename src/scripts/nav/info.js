@@ -87,10 +87,9 @@ module.exports = function(){
   }
   function initController(){
     window.project = _.filter(projects,function(i){return i['id'] == user['openId']})[0];
-    console.log(window.project,'xxxxxxxxxx');
     if(window.project.remote){
-      $("#phone-inset").attr({src:window.project['remote']["remotepath"]});
-      $("#phone-inset").removeClass('hide');
+      // $("#phone-inset").attr({src:window.project['remote']["remotepath"]});
+      // $("#phone-inset").removeClass('hide');
     }else{
       url = window.project['src'].split('file://')[1];  
       initServer();
@@ -99,25 +98,32 @@ module.exports = function(){
   
   const nowWin = require('nw.gui').Window.get();
   let initData = {
+    page:0,
     windowW:nowWin.width,
     windowH:nowWin.height,
     project:window.project,
     sidebar:'edit',
     showPlatform:false,
-    showPlatformVal:'iPhone 4',
-    phoneW:320,
-    phoneH:480,
+    showPlatformVal:'iPhone 6',
+    phoneW:375,
+    phoneH:667,
     filesList:[],
     title:'Joywok',
     btns:[],
     footer:[],
     tabs:[],
-    tabsBg:''
+    tabsBg:'',
+    navBg:''
   }
   app.model({
     namespace: 'info',
     state: initData,
     reducers: {
+      changePhoneUrl(state,action){
+        return { ...state,
+          page: action["data"],
+        };
+      },
       initProject(state,action){
         return { ...state,
           project: action["payload"],
@@ -161,7 +167,7 @@ module.exports = function(){
         return _.extend({},state,{btns:btns});
       },
       showTabs:function(state,action){
-        return _.extend({},state,{tabs:action['data']['tabs'],tabsBg:action['data']['style']});
+        return _.extend({},state,{tabs:action['data']['tabs'],tabsBg:action['data']['style'],navBg:''});
       },
       changeTabs:function(state,action){
         let tabs = [];
@@ -179,32 +185,36 @@ module.exports = function(){
       hideTabs:function(state){
         return _.extend({},state,{tabs:[],tabsBg:''});
       },
+      setBarBg:function(state,action){
+        return _.extend({},state,{navBg:action['data']});
+      },
       resetNormal:function(state){
-        return _.extend({},state,{tabs:[],tabsBg:'',btns:[],footer:[],title:'Joywok'});
+        return _.extend({},state,{tabs:[],tabsBg:'',btns:[],footer:[],title:'Joywok',navBg:""});
       },
       allreset:function(){
-        console.log('dispatch触发了一次')
         return _.extend({},{
+          page:0,
           windowW:nowWin.width,
           windowH:nowWin.height,
           project:window.project,
           sidebar:'edit',
           showPlatform:false,
-          showPlatformVal:'iPhone 4',
-          phoneW:320,
-          phoneH:480,
+          showPlatformVal:'iPhone 6',
+          phoneW:375,
+          phoneH:667,
           filesList:[],
           title:'Joywok',
           btns:[],
           footer:[],
           tabs:[],
-          tabsBg:''
+          tabsBg:'',
+          navBg:''
         })
       },
       changeProjectUrl:function(state,action){
         let data = state['project'];
         data['remotepath'] = action['payload']
-        return _.extend({},state,{project:data});
+        return _.extend({},state,{project:data,random:Math.random()});
       }
     }
   });
@@ -237,9 +247,9 @@ module.exports = function(){
     store.dispatch({
       type:'info/resetNormal',
     })
-    setTimeout(function(){
-      document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-    },0)
+    // setTimeout(function(){
+    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
+    // },0)
   })
 
   class CountApp extends Component{
@@ -279,7 +289,7 @@ module.exports = function(){
               <div className="ide-sidebar-sep"></div>
               <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
                 <div className="ide-info-exit-ico"></div>
-                <span>退出</span>
+                <span>关闭</span>
               </div>
             </div>
           </div>

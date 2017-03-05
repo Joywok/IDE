@@ -34,6 +34,12 @@ module.exports = function(){
   function changeBtn(data){
     return _.extend({},{type:'changeBtn'},{data:data})
   }
+  function resetNormal(){
+    return _.extend({},{type:'resetNormal'}) 
+  }
+  function serverError(){
+    return _.extend({},{type:'serverError'}) 
+  }
   function App(state = data,action){
     switch(action.type){
       case 'changeValue':
@@ -58,6 +64,26 @@ module.exports = function(){
         break;
       case "changeBtn":
         return _.extend({},state,action['data']);
+        break;
+      case "resetNormal":
+        return _.extend({},state,{
+          name:'',
+          nameShow:true,
+          nameClass:'',
+          email:'',
+          passwd:'',
+          nameError:'',
+          passwdError:'',
+          isdis:true,
+          loginVal:'登录',
+          signVal:'注册'
+        });
+        break;
+      case "serverError":
+        return _.extend({},state,{
+          loginVal:'登录',
+          isdis:false
+        })
         break;
       default:
         return state
@@ -170,6 +196,11 @@ module.exports = function(){
         .send(data)
         .end(function(err,res){
           console.log(err,'123123');
+          if(err){
+            dispatch(serverError());
+            $.notice({type:3,text:'服务器错误请联系管理员！',delay:2000})
+            return 
+          }
           let data = JSON.parse(res["text"]);
           if(data["data"]["errcode"]){
             if(data["data"]["errcode"] == 20301){
@@ -196,17 +227,11 @@ module.exports = function(){
               role : data.data.roles,
               time:Date.parse(new Date())/1000
             }
+            dispatch(resetNormal());
             window.user = userinfo;
             UserStore.update({id:'login',data:userinfo});
             setTimeout(function(){
               hashHistory.push("/apps");
-            })
-            return 
-            fs.writeFile('config.json',JSON.stringify(userinfo),function(error){
-              window.user = userinfo;
-              setTimeout(function(){
-                hashHistory.push("/apps");  
-              })
             })
           }
         });
