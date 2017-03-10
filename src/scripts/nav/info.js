@@ -122,6 +122,7 @@ module.exports = function(){
       changePhoneUrl(state,action){
         return { ...state,
           page: action["data"],
+          tabs:[],tabsBg:'',btns:[],footer:[],navBg:""
         };
       },
       initProject(state,action){
@@ -286,7 +287,12 @@ module.exports = function(){
               </div>
             }
             <div className="ide-sidebar-opear">
+              
               <div className="ide-sidebar-sep"></div>
+              <div className="ide-info-exit hide" onClick={(e)=>this.clearData(e)}>
+                <div className="ide-info-exit-ico"></div>
+                <span>清空缓存</span>
+              </div>
               <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
                 <div className="ide-info-exit-ico"></div>
                 <span>关闭</span>
@@ -321,6 +327,23 @@ module.exports = function(){
       dispatch({
         type:'info/changeSidebar',
         payload:data
+      })
+    }
+    clearData(){
+      let webview = document.getElementById('phone-inset');
+      console.log(webview);
+      var data = {
+        appcache: true,
+        cache: true,
+        cookies:true,
+        fileSystems: true,
+        indexedDB: true,
+        localStorage: true,
+        webSQL: true
+      }
+      webview.clearData(0, data, () => {
+        webview.reload();
+        console.info('WebviewBody.js _clearWebviewData success!')
       })
     }
     exitProject(e){

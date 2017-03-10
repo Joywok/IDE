@@ -227,13 +227,13 @@ webpackJsonp([11],[
 						e.request.allow();
 					});
 					webview.addEventListener('loadabort', function (e) {
-						console.log(e, '这个错误信息是什么');
+						// console.log(e,'这个错误信息是什么');
 					});
 					webview.addEventListener('loadcommit', function (e) {
 						// console.log('url-里面是什么',e)
 					});
 					webview.addEventListener('loadredirect', function (e) {
-						console.log('loadredirect', arguments);
+						// console.log('loadredirect',arguments);
 					});
 					webview.addEventListener('loadstop', function (e) {
 						// console.log('这里走了几次啊');
@@ -246,11 +246,6 @@ webpackJsonp([11],[
 					});
 					webview.addEventListener('contentload', function (e) {
 						$("#phone-inset").removeClass('hide');
-						console.log(e.target.contentWindow, '这个是108行');
-						webview.clearData({ since: 0 }, {
-							appcache: true,
-							cache: true, cookies: true, fileSystems: true, indexedDB: true, localStorage: true, webSQL: true
-						}, function () {});
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');
 							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
@@ -259,7 +254,7 @@ webpackJsonp([11],[
 						// 	$('#phone-inset')[0].reload();
 						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
 						// }
-						console.log(self.props.page, 'phone手机壳里面');
+						// console.log(self.props.page,'phone手机壳里面');
 						setTimeout(function () {
 							e.target.contentWindow.postMessage({
 								type: 'init',
@@ -278,7 +273,7 @@ webpackJsonp([11],[
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(nextProps, nextState) {
-					console.log(this.state, nextProps);
+					// console.log(this.state,nextProps)
 					return true;
 				}
 			}, {
@@ -26757,7 +26752,8 @@ webpackJsonp([11],[
 	    reducers: {
 	      changePhoneUrl: function changePhoneUrl(state, action) {
 	        return _extends({}, state, {
-	          page: action["data"]
+	          page: action["data"],
+	          tabs: [], tabsBg: '', btns: [], footer: [], navBg: ""
 	        });
 	      },
 	      initProject: function initProject(state, action) {
@@ -27012,6 +27008,18 @@ webpackJsonp([11],[
 	              _react2.default.createElement('div', { className: 'ide-sidebar-sep' }),
 	              _react2.default.createElement(
 	                'div',
+	                { className: 'ide-info-exit hide', onClick: function onClick(e) {
+	                    return _this2.clearData(e);
+	                  } },
+	                _react2.default.createElement('div', { className: 'ide-info-exit-ico' }),
+	                _react2.default.createElement(
+	                  'span',
+	                  null,
+	                  '\u6E05\u7A7A\u7F13\u5B58'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
 	                { className: 'ide-info-exit', onClick: function onClick(e) {
 	                    return _this2.exitProject(e);
 	                  } },
@@ -27058,6 +27066,25 @@ webpackJsonp([11],[
 	        dispatch({
 	          type: 'info/changeSidebar',
 	          payload: data
+	        });
+	      }
+	    }, {
+	      key: 'clearData',
+	      value: function clearData() {
+	        var webview = document.getElementById('phone-inset');
+	        console.log(webview);
+	        var data = {
+	          appcache: true,
+	          cache: true,
+	          cookies: true,
+	          fileSystems: true,
+	          indexedDB: true,
+	          localStorage: true,
+	          webSQL: true
+	        };
+	        webview.clearData(0, data, function () {
+	          webview.reload();
+	          console.info('WebviewBody.js _clearWebviewData success!');
 	        });
 	      }
 	    }, {
@@ -27376,13 +27403,13 @@ webpackJsonp([11],[
 							this.callback("getInfo", { "info": datas, "errMsg": "getInfo:ok" });
 					};
 					this.pushWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.newWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.closeWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.setFuncBtns = function (data) {
 							store.dispatch({
@@ -27424,10 +27451,10 @@ webpackJsonp([11],[
 							});
 					};
 					this.mailto = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.back = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.AuthCode = function (data) {
 							this.callback('AuthCode', {
@@ -27479,7 +27506,10 @@ webpackJsonp([11],[
 							});
 					};
 					this.chartInit = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
+					};
+					this.chartSingle = function (data) {
+							alert('此功能需要在真机调试！');
 					};
 					return this;
 			}

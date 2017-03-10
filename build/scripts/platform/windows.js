@@ -234,13 +234,13 @@
 							this.callback("getInfo", { "info": datas, "errMsg": "getInfo:ok" });
 					};
 					this.pushWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.newWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.closeWebView = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.setFuncBtns = function (data) {
 							store.dispatch({
@@ -282,10 +282,10 @@
 							});
 					};
 					this.mailto = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.back = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
 					};
 					this.AuthCode = function (data) {
 							this.callback('AuthCode', {
@@ -337,7 +337,10 @@
 							});
 					};
 					this.chartInit = function (data) {
-							alert('此功能需要在真机模拟');
+							alert('此功能需要在真机调试！');
+					};
+					this.chartSingle = function (data) {
+							alert('此功能需要在真机调试！');
 					};
 					return this;
 			}

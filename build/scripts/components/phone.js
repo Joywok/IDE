@@ -275,13 +275,13 @@
 						e.request.allow();
 					});
 					webview.addEventListener('loadabort', function (e) {
-						console.log(e, '这个错误信息是什么');
+						// console.log(e,'这个错误信息是什么');
 					});
 					webview.addEventListener('loadcommit', function (e) {
 						// console.log('url-里面是什么',e)
 					});
 					webview.addEventListener('loadredirect', function (e) {
-						console.log('loadredirect', arguments);
+						// console.log('loadredirect',arguments);
 					});
 					webview.addEventListener('loadstop', function (e) {
 						// console.log('这里走了几次啊');
@@ -294,11 +294,6 @@
 					});
 					webview.addEventListener('contentload', function (e) {
 						$("#phone-inset").removeClass('hide');
-						console.log(e.target.contentWindow, '这个是108行');
-						webview.clearData({ since: 0 }, {
-							appcache: true,
-							cache: true, cookies: true, fileSystems: true, indexedDB: true, localStorage: true, webSQL: true
-						}, function () {});
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');
 							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
@@ -307,7 +302,7 @@
 						// 	$('#phone-inset')[0].reload();
 						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
 						// }
-						console.log(self.props.page, 'phone手机壳里面');
+						// console.log(self.props.page,'phone手机壳里面');
 						setTimeout(function () {
 							e.target.contentWindow.postMessage({
 								type: 'init',
@@ -326,7 +321,7 @@
 			}, {
 				key: 'shouldComponentUpdate',
 				value: function shouldComponentUpdate(nextProps, nextState) {
-					console.log(this.state, nextProps);
+					// console.log(this.state,nextProps)
 					return true;
 				}
 			}, {
