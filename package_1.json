@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "乐工Web开发者工具",
   "main": "build/template/index.html",
   "serverurl": "https://www.joywok.com",
@@ -60,7 +60,7 @@
     "start": "dora --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js",
-    "public": "cp -R a.tgz payload package.json nwjc node_modules minidump_stackwalk chromedriver build bower_components ../public/.",
-    "edit": "cp -R tmp package_1.json project.json config.json node_modules_1 build bower_components aaaaa/."
+    "public": "cp -R tmp payload package_1.json nwjc node_modules_1 minidump_stackwalk chromedriver build bower_components ../public/.",
+    "edit": "cp -R tmp package_1.json node_modules_1 build bower_components aaaaa/."
   }
 }
