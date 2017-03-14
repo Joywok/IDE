@@ -289,8 +289,18 @@ module.exports = function(){
             <div className="ide-sidebar-opear">
               <div className="ide-sidebar-sep"></div>
               <div className="ide-info-cache" onClick={(e)=>this.clearData(e)}>
-                <div className="ide-info-cache-ico"></div>
-                <span>清空缓存</span>
+                <div className="ide-info-cache-opear">
+                  <div className="ide-info-cache-ico"></div>
+                  <span>缓存</span>
+                </div>
+                <div className="ide-info-cache-c">
+                  <div className="ide-info-cache-bg"></div>
+                  <div className="ide-info-cache-circle"></div>
+                  <div className="ide-info-cache-list">
+                    <div className="ide-info-cache-i" data-action="1" onClick={(e)=>this.clearData(e,1)}>清除数据缓存</div>
+                    <div className="ide-info-cache-i" data-action="2" onClick={(e)=>this.clearData(e,2)}>清除文件缓存</div>
+                  </div>
+                </div>
               </div>
               <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
                 <div className="ide-info-exit-ico"></div>
@@ -328,30 +338,34 @@ module.exports = function(){
         payload:data
       })
     }
-    clearData(){
+    clearData(evt,num){
+      console.log(num);
       let webview = document.getElementById('phone-inset');
-      var data = {
-        appcache: true,
-        cache: true,
-        cookies:true,
-        fileSystems: true,
-        indexedDB: true,
-        localStorage: true,
-        webSQL: true
+      var data = {}
+      if(num == '1'){
+        data = {
+          appcache: true,
+          cache: true,
+          cookies:true,
+          indexedDB: true,
+          localStorage: true,
+          webSQL: true
+        }
+        window.phoneInset.postMessage({
+          type:'clearAllData'
+        },'*')
+      }else{
+        data = {
+          fileSystems: true,
+        }
       }
       webview.clearData({
         since:0
       }, data, () => {
+        $.notice({type:2,text:'清除成功！请刷新当前页面。',delay:2000});
         console.info('WebviewBody.js _clearWebviewData success!')
       })
-      // window.phoneInset.postMessage({
-      //   type:'clearAllData'
-      // },'*')
-      // setTimeout(function(){
-      //   $('#phone-inset').attr({src:$('#phone-inset').attr('src')})
-      //   $('#cdt').attr({src:'about:blank'});
-      //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
-      // },10)
+      evt.stopPropagation();
     }
     exitProject(e){
       let data = user;

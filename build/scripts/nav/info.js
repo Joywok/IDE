@@ -27012,11 +27012,39 @@ webpackJsonp([11],[
 	                { className: 'ide-info-cache', onClick: function onClick(e) {
 	                    return _this2.clearData(e);
 	                  } },
-	                _react2.default.createElement('div', { className: 'ide-info-cache-ico' }),
 	                _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  '\u6E05\u7A7A\u7F13\u5B58'
+	                  'div',
+	                  { className: 'ide-info-cache-opear' },
+	                  _react2.default.createElement('div', { className: 'ide-info-cache-ico' }),
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    '\u7F13\u5B58'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'ide-info-cache-c' },
+	                  _react2.default.createElement('div', { className: 'ide-info-cache-bg' }),
+	                  _react2.default.createElement('div', { className: 'ide-info-cache-circle' }),
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'ide-info-cache-list' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'ide-info-cache-i', 'data-action': '1', onClick: function onClick(e) {
+	                          return _this2.clearData(e, 1);
+	                        } },
+	                      '\u6E05\u9664\u6570\u636E\u7F13\u5B58'
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'ide-info-cache-i', 'data-action': '2', onClick: function onClick(e) {
+	                          return _this2.clearData(e, 2);
+	                        } },
+	                      '\u6E05\u9664\u6587\u4EF6\u7F13\u5B58'
+	                    )
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -27071,30 +27099,34 @@ webpackJsonp([11],[
 	      }
 	    }, {
 	      key: 'clearData',
-	      value: function clearData() {
+	      value: function clearData(evt, num) {
+	        console.log(num);
 	        var webview = document.getElementById('phone-inset');
-	        var data = {
-	          appcache: true,
-	          cache: true,
-	          cookies: true,
-	          fileSystems: true,
-	          indexedDB: true,
-	          localStorage: true,
-	          webSQL: true
-	        };
+	        var data = {};
+	        if (num == '1') {
+	          data = {
+	            appcache: true,
+	            cache: true,
+	            cookies: true,
+	            indexedDB: true,
+	            localStorage: true,
+	            webSQL: true
+	          };
+	          window.phoneInset.postMessage({
+	            type: 'clearAllData'
+	          }, '*');
+	        } else {
+	          data = {
+	            fileSystems: true
+	          };
+	        }
 	        webview.clearData({
 	          since: 0
 	        }, data, function () {
+	          $.notice({ type: 2, text: '清除成功！请刷新当前页面。', delay: 2000 });
 	          console.info('WebviewBody.js _clearWebviewData success!');
 	        });
-	        // window.phoneInset.postMessage({
-	        //   type:'clearAllData'
-	        // },'*')
-	        // setTimeout(function(){
-	        //   $('#phone-inset').attr({src:$('#phone-inset').attr('src')})
-	        //   $('#cdt').attr({src:'about:blank'});
-	        //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
-	        // },10)
+	        evt.stopPropagation();
 	      }
 	    }, {
 	      key: 'exitProject',

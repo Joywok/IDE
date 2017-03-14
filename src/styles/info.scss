@@ -76,7 +76,7 @@ body{
   		}
   	}
   	.ide-sidebar-opear{
-  		position: absolute;left: 0;right:0;bottom: 25px;
+  		position: absolute;left: 0;right:0;bottom: 25px;z-index: 22;
   	}
   	.ide-sidebar-sep{
   		width: 70%;height: 1px;background: #dddddd;
@@ -86,25 +86,67 @@ body{
 			text-align: center;
 			cursor: pointer;
 			margin:0 auto 20px;
-			.ide-info-cache-ico{
-				margin: 0 auto 10px;
-				width: 17px;height: 18px;
-				background: url(/build/images/cache.png) no-repeat;
-  			background-size: cover;
+			position:relative;
+			.ide-info-cache-opear{
+				.ide-info-cache-ico{
+					margin: 0 auto 10px;
+					width: 17px;height: 18px;
+					background: url(/build/images/cache.png) no-repeat;
+					background-size: cover;
+				}
+				span{
+					color: #777777;
+					font-size: 13px;
+				}
 			}
-			span{
-  			color: #777777;
-  			font-size: 13px;
-  		}
+			.ide-info-cache-c{
+				display: none;
+				position:absolute;
+				top:-30%;
+				left:70px;
+				.ide-info-cache-bg{
+					position: absolute;top:0;left:-14px;right: 0;bottom: 0;
+				}
+				.ide-info-cache-circle{
+					position: absolute;
+					top:50%;
+					left:-13px;
+					margin-top: -20px;
+					width: 0;
+					height: 0;
+					border-top: 14px solid transparent;
+					border-right: 20px solid #fff;
+					border-bottom: 14px solid transparent;
+				}
+				.ide-info-cache-list{
+					position:relative;
+					z-index: 222;
+					width:125px;
+					background: #fff;
+					box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+					.ide-info-cache-i{
+						line-height: 40px;padding:0 20px;
+						color: #333333;
+					}
+					.ide-info-cache-i:hover{
+						background: #f1f1f1;
+					}
+				}
+			}
 		}
 		.ide-info-cache:hover{
-			.ide-info-cache-ico{
-				background: url(/build/images/cache-hover.png) no-repeat;
-  			background-size: cover;
+			.ide-info-cache-c{
+				display: block
 			}
-			span{
-  			color: #1b222a;
-  		}
+			.ide-info-cache-opear{
+				.ide-info-cache-ico{
+					background: url(/build/images/cache-hover.png) no-repeat;
+					background-size: cover;
+				}
+				span{
+					color: #1b222a;
+				}
+			}
 		}
   	.ide-info-exit{
   		text-align: center;
