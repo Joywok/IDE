@@ -293,11 +293,12 @@
 						}
 					});
 					webview.addEventListener('contentload', function (e) {
+						console.log('这里会加载么？contentloadcontentloadcontentload');
 						$("#phone-inset").removeClass('hide');
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');
 							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-						}, 100);
+						}, 50);
 						// if(self.props.project['remotepath']!=$('#phone-inset').attr('src')){
 						// 	$('#phone-inset')[0].reload();
 						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	

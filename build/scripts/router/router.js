@@ -6080,7 +6080,7 @@
 	  }, { path: 'info', name: 'info', getComponent: function getComponent(nextState, cb) {
 	      if (user["name"] && user['id']) {
 	        if (user['openId'] && user['openId'].length != 0) {
-	          __webpack_require__.e/* nsure */(11/* empty */, function (require) {
+	          __webpack_require__.e/* nsure */(11, function (require) {
 	            cb(null, __webpack_require__(489));
 	          });
 	        } else {

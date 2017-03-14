@@ -250,7 +250,7 @@ module.exports = function(){
     })
     // setTimeout(function(){
     //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-    // },0)
+    // },100)
   })
 
   class CountApp extends Component{
@@ -287,10 +287,9 @@ module.exports = function(){
               </div>
             }
             <div className="ide-sidebar-opear">
-              
               <div className="ide-sidebar-sep"></div>
-              <div className="ide-info-exit hide" onClick={(e)=>this.clearData(e)}>
-                <div className="ide-info-exit-ico"></div>
+              <div className="ide-info-cache" onClick={(e)=>this.clearData(e)}>
+                <div className="ide-info-cache-ico"></div>
                 <span>清空缓存</span>
               </div>
               <div className="ide-info-exit" onClick={(e)=>this.exitProject(e)}>
@@ -331,7 +330,6 @@ module.exports = function(){
     }
     clearData(){
       let webview = document.getElementById('phone-inset');
-      console.log(webview);
       var data = {
         appcache: true,
         cache: true,
@@ -341,10 +339,19 @@ module.exports = function(){
         localStorage: true,
         webSQL: true
       }
-      webview.clearData(0, data, () => {
-        webview.reload();
+      webview.clearData({
+        since:0
+      }, data, () => {
         console.info('WebviewBody.js _clearWebviewData success!')
       })
+      // window.phoneInset.postMessage({
+      //   type:'clearAllData'
+      // },'*')
+      // setTimeout(function(){
+      //   $('#phone-inset').attr({src:$('#phone-inset').attr('src')})
+      //   $('#cdt').attr({src:'about:blank'});
+      //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
+      // },10)
     }
     exitProject(e){
       let data = user;

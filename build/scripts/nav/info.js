@@ -245,11 +245,12 @@ webpackJsonp([11],[
 						}
 					});
 					webview.addEventListener('contentload', function (e) {
+						console.log('这里会加载么？contentloadcontentloadcontentload');
 						$("#phone-inset").removeClass('hide');
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');
 							document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));
-						}, 100);
+						}, 50);
 						// if(self.props.project['remotepath']!=$('#phone-inset').attr('src')){
 						// 	$('#phone-inset')[0].reload();
 						// 	document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
@@ -26887,7 +26888,7 @@ webpackJsonp([11],[
 	    });
 	    // setTimeout(function(){
 	    //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));   
-	    // },0)
+	    // },100)
 	  });
 
 	  var CountApp = function (_Component) {
@@ -27008,10 +27009,10 @@ webpackJsonp([11],[
 	              _react2.default.createElement('div', { className: 'ide-sidebar-sep' }),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'ide-info-exit hide', onClick: function onClick(e) {
+	                { className: 'ide-info-cache', onClick: function onClick(e) {
 	                    return _this2.clearData(e);
 	                  } },
-	                _react2.default.createElement('div', { className: 'ide-info-exit-ico' }),
+	                _react2.default.createElement('div', { className: 'ide-info-cache-ico' }),
 	                _react2.default.createElement(
 	                  'span',
 	                  null,
@@ -27072,7 +27073,6 @@ webpackJsonp([11],[
 	      key: 'clearData',
 	      value: function clearData() {
 	        var webview = document.getElementById('phone-inset');
-	        console.log(webview);
 	        var data = {
 	          appcache: true,
 	          cache: true,
@@ -27082,10 +27082,19 @@ webpackJsonp([11],[
 	          localStorage: true,
 	          webSQL: true
 	        };
-	        webview.clearData(0, data, function () {
-	          webview.reload();
+	        webview.clearData({
+	          since: 0
+	        }, data, function () {
 	          console.info('WebviewBody.js _clearWebviewData success!');
 	        });
+	        // window.phoneInset.postMessage({
+	        //   type:'clearAllData'
+	        // },'*')
+	        // setTimeout(function(){
+	        //   $('#phone-inset').attr({src:$('#phone-inset').attr('src')})
+	        //   $('#cdt').attr({src:'about:blank'});
+	        //   document.getElementById('phone-inset').showDevTools(true, document.getElementById('cdt'));	
+	        // },10)
 	      }
 	    }, {
 	      key: 'exitProject',
