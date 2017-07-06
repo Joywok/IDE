@@ -205,6 +205,11 @@
 									);
 								})
 							) : '',
+							_react2.default.createElement(
+								'div',
+								{ className: 'phone-loading hide' },
+								'\u52A0\u8F7D\u4E2D'
+							),
 							_react2.default.createElement('div', { className: "phone-container " + (this.props.tabs.length != 0 ? 'has-tabs' : ''), id: 'phone-container', style: phoneInsetStyle }),
 							this.props.footer.length != 0 ? _react2.default.createElement('div', { className: 'phone-footer' }) : '',
 							_react2.default.createElement('div', { className: 'phone-specail hide' })
@@ -294,6 +299,7 @@
 					});
 					webview.addEventListener('contentload', function (e) {
 						console.log('这里会加载么？contentloadcontentloadcontentload');
+						$('.phone-loading').remove();
 						$("#phone-inset").removeClass('hide');
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');

@@ -72,6 +72,7 @@ module.exports = function(app){
 							 							</div>
 							 			})
 							 		}</div>:''}
+									<div className="phone-loading hide">加载中</div>
 							 		<div className={"phone-container "+(this.props.tabs.length!=0?'has-tabs':'')} id="phone-container" style={phoneInsetStyle}></div>
 							 		{this.props.footer.length!=0?<div className="phone-footer"></div>:''}
 							 		<div className="phone-specail hide"></div>
@@ -160,6 +161,7 @@ module.exports = function(app){
       })
 			webview.addEventListener('contentload', function(e) {
 				console.log('这里会加载么？contentloadcontentloadcontentload')
+				$('.phone-loading').remove();
 				$("#phone-inset").removeClass('hide');
 				setTimeout(function(){
 					$('.info-debug').removeClass('hide');

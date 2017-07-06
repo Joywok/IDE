@@ -109,27 +109,39 @@ body{
 				}
 				.ide-info-cache-circle{
 					position: absolute;
-					top:50%;
-					left:-13px;
-					margin-top: -20px;
-					width: 0;
-					height: 0;
-					border-top: 14px solid transparent;
-					border-right: 20px solid #fff;
-					border-bottom: 14px solid transparent;
+					top:74%;
+					left:-6px;
+					margin-top: -10px;
+					// width: 0;
+					// height: 0;
+					// box-shadow: 0 0 5px rgba(0,0,0,0.1);
+					// border-top: 10px solid transparent;
+					// border-right: 10px solid #fff;
+					// border-bottom: 10px solid transparent;
+					width:6px;height: 14px;background: url(../images/circle_2.png) no-repeat;
+					background-size: cover;
+					z-index: 223;
 				}
 				.ide-info-cache-list{
 					position:relative;
 					z-index: 222;
-					width:125px;
 					background: #fff;
-					box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+					// border:1px solid #e3e2e3;
+					border-radius: 4px;
+					min-width: 126px;
+					box-shadow: 0 0px 7px rgba(0,0,0,0.2);
+					// box-shadow: -1px 0px 7px rgba(0,0,0,0.1),   /*左边阴影*/ 
+					// 						0px -1px 7px rgba(0,0,0,0.1),  /*上边阴影*/ 
+					// 						1px 0px 7px rgba(0,0,0,0.1),  /*右边阴影*/ 
+					// 						0px 1px 7px rgba(0,0,0,0.1);
+					padding:5px 0;
 					.ide-info-cache-i{
 						line-height: 40px;padding:0 20px;
-						color: #333333;
+						color: #777;
 					}
 					.ide-info-cache-i:hover{
-						background: #f1f1f1;
+						// background: #f1f1f1;
+						color: #1b222a;
 					}
 				}
 			}
@@ -504,6 +516,9 @@ body{
 	}
 	.phone-header.has-btns .phone-title{
 		float: left;
+	}
+	.info-edit-phone-container .phone-loading{
+		position: absolute;top:0;right: 0;bottom: 0;left: 0;z-index: 2;
 	}
 	.info-edit-phone-container .phone-container{
 		position: absolute;top:40px;left:0;right: 0;bottom: 45px;

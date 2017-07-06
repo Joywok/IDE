@@ -145,29 +145,31 @@ body {
 }
 .ide-info .ide-info-sidebar .ide-info-cache .ide-info-cache-c .ide-info-cache-circle {
   position: absolute;
-  top: 50%;
-  left: -13px;
-  margin-top: -20px;
-  width: 0;
-  height: 0;
-  border-top: 14px solid transparent;
-  border-right: 20px solid #fff;
-  border-bottom: 14px solid transparent;
+  top: 74%;
+  left: -6px;
+  margin-top: -10px;
+  width: 6px;
+  height: 14px;
+  background: url(../images/circle_2.png) no-repeat;
+  background-size: cover;
+  z-index: 223;
 }
 .ide-info .ide-info-sidebar .ide-info-cache .ide-info-cache-c .ide-info-cache-list {
   position: relative;
   z-index: 222;
-  width: 125px;
   background: #fff;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  min-width: 126px;
+  box-shadow: 0 0px 7px rgba(0, 0, 0, 0.2);
+  padding: 5px 0;
 }
 .ide-info .ide-info-sidebar .ide-info-cache .ide-info-cache-c .ide-info-cache-list .ide-info-cache-i {
   line-height: 40px;
   padding: 0 20px;
-  color: #333333;
+  color: #777;
 }
 .ide-info .ide-info-sidebar .ide-info-cache .ide-info-cache-c .ide-info-cache-list .ide-info-cache-i:hover {
-  background: #f1f1f1;
+  color: #1b222a;
 }
 .ide-info .ide-info-sidebar .ide-info-cache:hover .ide-info-cache-c {
   display: block;
@@ -596,6 +598,14 @@ body {
 }
 .info-edit-phone .phone-header.has-btns .phone-title {
   float: left;
+}
+.info-edit-phone .info-edit-phone-container .phone-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
 }
 .info-edit-phone .info-edit-phone-container .phone-container {
   position: absolute;

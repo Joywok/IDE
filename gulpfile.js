@@ -46,7 +46,7 @@ gulp.task('platform:mac',function(){
   var nw = new NwBuilder({
       files: './aaaaa/**/*', // use the glob format
       platforms: ['osx64'],
-      downloadUrl: 'https://dl.nwjs.io/',
+      downloadUrl: 'http://dl.nwjs.io/',
       buildDir:'./platform',
       cacheDir:'./platform',
       version:'0.19.5',
@@ -79,6 +79,47 @@ gulp.task('platform:win',function(){
   }).catch(function (error) {
       console.error(error);
   });
+})
+gulp.task('test:mac',function(){
+  var config = {
+    // Build paths
+    nwjs_path: 'platform/0.19.5-sdk/osx64/nwjs.app', // Last build tested with NW.js 0.12.2
+    source_path: 'aaaaa', // App root (the dir with the package.json file)
+    build_path: '.', // Destination dir of the .app build
+    // App informations
+    name: '乐工Web开发者工具',
+    bundle_id: 'com.joywok.JoywokWebIDE',
+    version: '1.0.0',
+    bundle_version: '100',
+    copyright: '© Sample copyright',
+    icon_path: 'nw.icns',
+    // Signing configuration
+    identity: '3rd Party Mac Developer Application: Dogesoft Inc. (625R8EDA65)', // Application signing
+    identity_installer: '3rd Party Mac Developer Installer: Dogesoft Inc. (625R8EDA65)', // Application installer signing (may be the same as identity)
+    entitlements: [
+      'com.apple.security.network.client',
+      'com.apple.security.assets.movies.read-only'
+    ],
+    // App categories
+    app_category: 'public.app-category.utilities',
+    app_sec_category: 'public.app-category.productivity',
+    // Additional keys to add in the Info.plist file (optional, remove if not needed)
+    plist: {
+        NSSampleProperty1: 'Property value 1',
+        NSSampleProperty2: {
+            NSSub1: 'Sub-property value 1',
+            NSSub2: 'Sub-property value 1'
+        }
+    },
+    // Optimization
+    uglify_js: false // Uglifies all JS files found in the app (default is FALSE)
+  }
+  var Builder = require('nwjs-macappstore-builder');
+  var show_output = true;
+  var builder = new Builder();
+  builder.build(config, function(error, app_path){
+    console.log(error ? error.message : 'Build done: ' + app_path);
+  }, show_output);
 })
 gulp.task('public',function(){
   gulp.src('.')

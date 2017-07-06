@@ -157,6 +157,11 @@ webpackJsonp([11],[
 									);
 								})
 							) : '',
+							_react2.default.createElement(
+								'div',
+								{ className: 'phone-loading hide' },
+								'\u52A0\u8F7D\u4E2D'
+							),
 							_react2.default.createElement('div', { className: "phone-container " + (this.props.tabs.length != 0 ? 'has-tabs' : ''), id: 'phone-container', style: phoneInsetStyle }),
 							this.props.footer.length != 0 ? _react2.default.createElement('div', { className: 'phone-footer' }) : '',
 							_react2.default.createElement('div', { className: 'phone-specail hide' })
@@ -246,6 +251,7 @@ webpackJsonp([11],[
 					});
 					webview.addEventListener('contentload', function (e) {
 						console.log('这里会加载么？contentloadcontentloadcontentload');
+						$('.phone-loading').remove();
 						$("#phone-inset").removeClass('hide');
 						setTimeout(function () {
 							$('.info-debug').removeClass('hide');
@@ -27009,9 +27015,7 @@ webpackJsonp([11],[
 	              _react2.default.createElement('div', { className: 'ide-sidebar-sep' }),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'ide-info-cache', onClick: function onClick(e) {
-	                    return _this2.clearData(e);
-	                  } },
+	                { className: "ide-info-cache " + (this.props.sidebar == 'edit' || this.props.sidebar == "debug" ? '' : 'hide') },
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'ide-info-cache-opear' },
@@ -27100,7 +27104,6 @@ webpackJsonp([11],[
 	    }, {
 	      key: 'clearData',
 	      value: function clearData(evt, num) {
-	        console.log(num);
 	        var webview = document.getElementById('phone-inset');
 	        var data = {};
 	        if (num == '1') {
@@ -27117,6 +27120,7 @@ webpackJsonp([11],[
 	          }, '*');
 	        } else {
 	          data = {
+	            cache: true,
 	            fileSystems: true
 	          };
 	        }

@@ -288,7 +288,7 @@ module.exports = function(){
             }
             <div className="ide-sidebar-opear">
               <div className="ide-sidebar-sep"></div>
-              <div className="ide-info-cache" onClick={(e)=>this.clearData(e)}>
+              <div className={"ide-info-cache "+(this.props.sidebar == 'edit'|| this.props.sidebar=="debug"?'':'hide')}>
                 <div className="ide-info-cache-opear">
                   <div className="ide-info-cache-ico"></div>
                   <span>缓存</span>
@@ -339,7 +339,6 @@ module.exports = function(){
       })
     }
     clearData(evt,num){
-      console.log(num);
       let webview = document.getElementById('phone-inset');
       var data = {}
       if(num == '1'){
@@ -356,6 +355,7 @@ module.exports = function(){
         },'*')
       }else{
         data = {
+          cache: true,
           fileSystems: true,
         }
       }
